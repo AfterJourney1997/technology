@@ -3,11 +3,11 @@ spring:
     active: dev
 
 
-#¹«¹²ÅäÖÃ£º
+#å…¬å…±é…ç½®ï¼š
 mybatis:
-  #È«¾ÖµÄÓ³Éä£¬²»ÓÃÔÚxmlÎÄ¼şĞ´ÊµÌåÀàµÄÈ«Â·¾¶
+  #å…¨å±€çš„æ˜ å°„ï¼Œä¸ç”¨åœ¨xmlæ–‡ä»¶å†™å®ä½“ç±»çš„å…¨è·¯å¾„
   type-aliases-package: com.technologygarden.entity
   mapper-locations: classpath:mapper/*.xml
-  #¿ªÆôÍÕ·åÓ³Éä
+  #å¼€å¯é©¼å³°æ˜ å°„
   configuration:
     map-underscore-to-camel-case: true

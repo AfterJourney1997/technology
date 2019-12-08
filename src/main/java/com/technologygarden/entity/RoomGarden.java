@@ -16,5 +16,6 @@ public class RoomGarden {
     private Integer companyId;
     private String companyName;
     private Integer buildingId;
+    private Building building = null;
 
 }

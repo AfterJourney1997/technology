@@ -9,6 +9,8 @@ import com.technologygarden.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("RoomService")
 public class RoomServiceImpl implements RoomService {
 
@@ -23,8 +25,37 @@ public class RoomServiceImpl implements RoomService {
     public ResultBean<Page<RoomGarden>> getRoomGardenByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
-        Page<RoomGarden> roomGardensList = roomGardenMapper.selectAll();
+        Page<RoomGarden> roomGardensList = roomGardenMapper.selectWithBuildingByPage();
         return new ResultBean<>(roomGardensList);
 
     }
+
+    @Override
+    public ResultBean deleteRoomGardenById(Integer gardenRoomId) {
+        roomGardenMapper.deleteByPrimaryKey(gardenRoomId);
+        return new ResultBean<>();
+    }
+
+    @Override
+    public ResultBean updateRoomGardenById(RoomGarden roomGarden) {
+        roomGardenMapper.updateRoomGradenDynamic(roomGarden);
+        return new ResultBean<>();
+    }
+
+    @Override
+    public ResultBean insertRoomGarden(List<RoomGarden> roomGardenList) {
+        roomGardenMapper.insertRoomGardenForeach(roomGardenList);
+        return new ResultBean<>();
+    }
+
+    @Override
+    public ResultBean<Page<RoomGarden>> searchRoomGarden(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        Page<RoomGarden> roomGardensList = roomGardenMapper.searchByPage(buildingId, status, roomName);
+        return new ResultBean<>(roomGardensList);
+
+    }
+
+
 }
