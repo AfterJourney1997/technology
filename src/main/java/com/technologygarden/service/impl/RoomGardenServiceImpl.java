@@ -5,19 +5,19 @@ import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.RoomGardenMapper;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.RoomGarden;
-import com.technologygarden.service.RoomService;
+import com.technologygarden.service.RoomGardenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("RoomService")
-public class RoomServiceImpl implements RoomService {
+@Service("roomGardenService")
+public class RoomGardenServiceImpl implements RoomGardenService {
 
     private final RoomGardenMapper roomGardenMapper;
 
     @Autowired
-    public RoomServiceImpl(RoomGardenMapper roomGardenMapper) {
+    public RoomGardenServiceImpl(RoomGardenMapper roomGardenMapper) {
         this.roomGardenMapper = roomGardenMapper;
     }
 
@@ -52,10 +52,9 @@ public class RoomServiceImpl implements RoomService {
     public ResultBean<Page<RoomGarden>> searchRoomGarden(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName) {
 
         PageHelper.startPage(pageNum, pageSize);
-        Page<RoomGarden> roomGardensList = roomGardenMapper.searchByPage(buildingId, status, roomName);
-        return new ResultBean<>(roomGardensList);
+        Page<RoomGarden> roomGardenList = roomGardenMapper.searchByPage(buildingId, status, roomName);
+        return new ResultBean<>(roomGardenList);
 
     }
-
 
 }

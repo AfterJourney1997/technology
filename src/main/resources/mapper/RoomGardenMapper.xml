@@ -77,13 +77,13 @@
                 status = #{status,jdbcType=INTEGER},
             </if>
             <if test="companyId != null and companyId != ''">
-                companyId = #{companyId,jdbcType=INTEGER},
+                company_id = #{companyId,jdbcType=INTEGER},
             </if>
             <if test="companyName != null and companyName != ''">
-                companyName = #{companyName,jdbcType=VARCHAR},
+                company_name = #{companyName,jdbcType=VARCHAR},
             </if>
             <if test="buildingId != null and buildingId != ''">
-                buildingId = #{buildingId,jdbcType=INTEGER},
+                building_id = #{buildingId,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

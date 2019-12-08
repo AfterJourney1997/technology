@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ff62118f-745e-4748-86e3-81635cffe0cf" name="Default Changelist" comment="新增web jar包。">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/dao/BuildingMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/entity/Building.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/BuildingMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="ff62118f-745e-4748-86e3-81635cffe0cf" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/controller/RoomCompanyController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/dao/RoomCompanyMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/entity/RoomCompany.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/RoomCompanyService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/RoomGardenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/impl/RoomCompanyServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/RoomCompanyMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/controller/RoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/dao/RoomGardenMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/dao/RoomGardenMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/controller/RoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/controller/RoomGardenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/entity/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/entity/Building.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/entity/RoomGarden.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/entity/RoomGarden.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/RoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/RoomService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/impl/RoomServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/impl/RoomServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/RoomService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/impl/RoomServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/technologygarden/service/impl/RoomGardenServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/generatorConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/RoomGardenMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/RoomGardenMapper.xml" afterDir="false" />
     </list>
@@ -56,7 +57,7 @@
         <item name="MySQL - technology@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="technology: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="room_garden: table" type="285a2a93:MysqlImplModel$Table" />
+        <item name="room_company: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -64,6 +65,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -145,7 +147,8 @@
       <option name="presentableId" value="Default" />
       <updated>1575771430016</updated>
       <workItem from="1575771432571" duration="5277000" />
-      <workItem from="1575776780982" duration="10157000" />
+      <workItem from="1575776780982" duration="13070000" />
+      <workItem from="1575790050984" duration="548000" />
     </task>
     <task id="LOCAL-00001" summary="完成样例接口，供参考。">
       <created>1575775754971</created>
@@ -154,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575775754971</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="完成园区房产功能。">
+      <created>1575787245225</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1575787245225</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +185,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="完成样例接口，供参考。" />
-    <option name="LAST_COMMIT_MESSAGE" value="完成样例接口，供参考。" />
+    <MESSAGE value="完成园区房产功能。" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成园区房产功能。" />
   </component>
 </project>
