@@ -28,3 +28,9 @@ spring:
 
 pagehelper:
   helper-dialect: mysql
+
+
+# 打印sql
+logging:
+  level:
+    com.technologygarden.dao: debug

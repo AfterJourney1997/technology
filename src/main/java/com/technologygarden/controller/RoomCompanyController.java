@@ -29,7 +29,7 @@ public class RoomCompanyController {
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取企业房产信息列表", notes = "参数包括：页数，每页数量")
-    public ResultBean<Page<RoomCompany>> getCompanyGardenByPage(Integer pageNum, Integer pageSize){
+    public ResultBean<Page<RoomCompany>> getCompanyGardenByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
         return roomCompanyService.getRoomCompanyByPage(pageNum, pageSize);
 
@@ -37,7 +37,7 @@ public class RoomCompanyController {
 
     @RequestMapping(value = "/company", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除企业房产", notes = "参数包括：企业房产主键id")
-    public ResultBean deleteCompanyGardenById(Integer companyRoomId){
+    public ResultBean deleteCompanyGardenById(Integer companyRoomId) {
 
         return roomCompanyService.deleteRoomCompanyById(companyRoomId);
 
@@ -45,7 +45,7 @@ public class RoomCompanyController {
 
     @RequestMapping(value = "/company", method = RequestMethod.PUT)
     @ApiOperation(value = "修改企业房产", notes = "参数包括：企业房产对象，无需修改的值设空")
-    public ResultBean updateCompanyGardenById(@RequestBody RoomCompany roomCompany){
+    public ResultBean updateCompanyGardenById(@RequestBody RoomCompany roomCompany) {
 
         return roomCompanyService.updateRoomCompanyById(roomCompany);
 
@@ -53,7 +53,7 @@ public class RoomCompanyController {
 
     @RequestMapping(value = "/company", method = RequestMethod.POST)
     @ApiOperation(value = "新增企业房产", notes = "参数包括：企业房产list，一个也需放进list中")
-    public ResultBean insertCompanyGarden(@RequestBody List<RoomCompany> roomCompanyList){
+    public ResultBean insertCompanyGarden(@RequestBody List<RoomCompany> roomCompanyList) {
 
         return roomCompanyService.insertRoomCompany(roomCompanyList);
 
@@ -61,7 +61,7 @@ public class RoomCompanyController {
 
     @RequestMapping(value = "/company/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索企业房产", notes = "参数包括：页数、每页数量、房区id、状态id、房间名称，不需要的填空即可")
-    public ResultBean<Page<RoomCompany>> searchCompanyGarden(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer buildingId, Integer status, String roomName){
+    public ResultBean<Page<RoomCompany>> searchCompanyGarden(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer buildingId, Integer status, String roomName) {
 
         return roomCompanyService.searchRoomCompany(pageNum, pageSize, buildingId, status, roomName);
 

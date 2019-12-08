@@ -35,4 +35,48 @@
     select id, name, area, createtime, money
     from technology.building
   </select>
+
+    <select id="selectByPage" resultMap="BaseResultMap">
+     select id, name, area, createtime, money
+     from technology.building
+    </select>
+
+  <update id="updateBuildingById" parameterType="com.technologygarden.entity.Building">
+    update technology.building
+    <set>
+      <if test="name != null and name != ''">
+        building.name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        building.area = #{area,jdbcType=FLOAT},
+      </if>
+      <if test="createtime != null">
+        building.createtime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="money != null">
+        building.money = #{money,jdbcType=FLOAT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertBuildingForeach">
+    insert into technology.building
+    (building.name, building.area, building.createtime, building.money)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.name,jdbcType=VARCHAR},
+      #{item.area,jdbcType=FLOAT},
+      #{item.createtime,jdbcType=TIMESTAMP},
+      #{item.money,jdbcType=FLOAT}
+      )
+    </foreach>
+  </insert>
+
+  <select id="searchBuildingByName" resultMap="BaseResultMap">
+    select *
+    from technology.building
+    where building.name like concat('%', #{buildingName,jdbcType=VARCHAR}, '%')
+  </select>
 </mapper>

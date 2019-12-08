@@ -70,19 +70,19 @@
             <if test="room != null and room != ''">
                 room = #{room, jdbcType=VARCHAR},
             </if>
-            <if test="area != null and area != ''">
+            <if test="area != null">
                 area = #{area,jdbcType=FLOAT},
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
-            <if test="companyId != null and companyId != ''">
+            <if test="companyId != null">
                 company_id = #{companyId,jdbcType=INTEGER},
             </if>
             <if test="companyName != null and companyName != ''">
                 company_name = #{companyName,jdbcType=VARCHAR},
             </if>
-            <if test="buildingId != null and buildingId != ''">
+            <if test="buildingId != null">
                 building_id = #{buildingId,jdbcType=INTEGER},
             </if>
         </set>
@@ -108,10 +108,10 @@
         from technology.room_garden rg, technology.building b
         <where>
             and rg.building_id = b.id
-            <if test="buildingId != null and buildingId != ''">
+            <if test="buildingId != null">
                 and rg.building_id = #{buildingId}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and rg.status = #{status}
             </if>
             <if test="roomName != null and roomName != ''">
