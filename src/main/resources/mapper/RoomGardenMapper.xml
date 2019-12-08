@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.RoomGardenMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.RoomGarden">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="room" jdbcType="VARCHAR" property="room" />
+    <result column="area" jdbcType="REAL" property="area" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+    <result column="building_id" jdbcType="INTEGER" property="buildingId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.room_garden
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.RoomGarden">
+    insert into technology.room_garden (id, room, area, 
+      status, company_id, company_name, 
+      building_id)
+    values (#{id,jdbcType=INTEGER}, #{room,jdbcType=VARCHAR}, #{area,jdbcType=REAL}, 
+      #{status,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, 
+      #{buildingId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.RoomGarden">
+    update technology.room_garden
+    set room = #{room,jdbcType=VARCHAR},
+      area = #{area,jdbcType=REAL},
+      status = #{status,jdbcType=INTEGER},
+      company_id = #{companyId,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      building_id = #{buildingId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, room, area, status, company_id, company_name, building_id
+    from technology.room_garden
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, room, area, status, company_id, company_name, building_id
+    from technology.room_garden
+  </select>
+</mapper>
