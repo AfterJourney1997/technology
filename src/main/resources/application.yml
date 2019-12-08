@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: dev
+
+
+#公共配置：
+mybatis:
+  #全局的映射，不用在xml文件写实体类的全路径
+  type-aliases-package: com.technologygarden.entity
+  mapper-locations: classpath:mapper/*.xml
+  #开启驼峰映射
+  configuration:
+    map-underscore-to-camel-case: true
