@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.PlatformApplicationMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.PlatformApplication">
+    <id column="p_Id" jdbcType="INTEGER" property="pId" />
+    <result column="p_name" jdbcType="VARCHAR" property="pName" />
+    <result column="p_category" jdbcType="VARCHAR" property="pCategory" />
+    <result column="p_grade" jdbcType="VARCHAR" property="pGrade" />
+    <result column="c_Id" jdbcType="INTEGER" property="cId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.platform_application
+    where p_Id = #{pId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.PlatformApplication">
+    insert into technology.platform_application (p_Id, p_name, p_category,
+      p_grade, c_Id, status
+      )
+    values (#{pId,jdbcType=INTEGER}, #{pName,jdbcType=VARCHAR}, #{pCategory,jdbcType=VARCHAR}, 
+      #{pGrade,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PlatformApplication">
+    update technology.platform_application
+    set p_name = #{pName,jdbcType=VARCHAR},
+      p_category = #{pCategory,jdbcType=VARCHAR},
+      p_grade = #{pGrade,jdbcType=VARCHAR},
+      c_Id = #{cId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where p_Id = #{pId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select p_Id, p_name, p_category, p_grade, c_Id, status
+    from technology.platform_application
+    where p_Id = #{pId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select p_Id, p_name, p_category, p_grade, c_Id, status
+    from technology.platform_application
+  </select>
+</mapper>

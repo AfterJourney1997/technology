@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.EnterpriseInformationMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.EnterpriseInformation">
+    <id column="e_Id" jdbcType="INTEGER" property="eId" />
+    <result column="e_name" jdbcType="VARCHAR" property="eName" />
+    <result column="e_category" jdbcType="VARCHAR" property="eCategory" />
+    <result column="e_code" jdbcType="CHAR" property="eCode" />
+    <result column="e_date" jdbcType="DATE" property="eDate" />
+    <result column="taxpayer_Type" jdbcType="VARCHAR" property="taxpayerType" />
+    <result column="e_fund" jdbcType="DOUBLE" property="eFund" />
+    <result column="e_product" jdbcType="VARCHAR" property="eProduct" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.enterprise_information
+    where e_Id = #{eId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.EnterpriseInformation">
+    insert into technology.enterprise_information (e_Id, e_name, e_category,
+      e_code, e_date, taxpayer_Type, 
+      e_fund, e_product, file_name
+      )
+    values (#{eId,jdbcType=INTEGER}, #{eName,jdbcType=VARCHAR}, #{eCategory,jdbcType=VARCHAR}, 
+      #{eCode,jdbcType=CHAR}, #{eDate,jdbcType=DATE}, #{taxpayerType,jdbcType=VARCHAR}, 
+      #{eFund,jdbcType=DOUBLE}, #{eProduct,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
+    update technology.enterprise_information
+    set e_name = #{eName,jdbcType=VARCHAR},
+      e_category = #{eCategory,jdbcType=VARCHAR},
+      e_code = #{eCode,jdbcType=CHAR},
+      e_date = #{eDate,jdbcType=DATE},
+      taxpayer_Type = #{taxpayerType,jdbcType=VARCHAR},
+      e_fund = #{eFund,jdbcType=DOUBLE},
+      e_product = #{eProduct,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR}
+    where e_Id = #{eId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select e_Id, e_name, e_category, e_code, e_date, taxpayer_Type, e_fund, e_product, 
+    file_name
+    from technology.enterprise_information
+    where e_Id = #{eId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select e_Id, e_name, e_category, e_code, e_date, taxpayer_Type, e_fund, e_product, 
+    file_name
+    from technology.enterprise_information
+  </select>
+</mapper>
