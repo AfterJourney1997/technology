@@ -12,7 +12,7 @@ import java.util.Date;
 public class Building {
     
     private Integer id;
-    private String name;
+    private String buildingName;
     private Float area;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date createtime;

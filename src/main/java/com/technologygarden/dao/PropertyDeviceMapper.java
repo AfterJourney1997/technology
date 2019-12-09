@@ -31,5 +31,5 @@ public interface PropertyDeviceMapper {
 
     int updateSystemPropertyDeviceByCategoryId(PropertyDevice propertyDevice);
 
-    Page<PropertyDevice> searchSystemPropertyDeviceByPage(@Param("categoryId") Integer categoryId, @Param("device") String device, @Param("property") String property);
+    Page<PropertyDevice> searchSystemPropertyDeviceByPage(@Param("categoryId") Integer categoryId, @Param("categoryName") String categoryName, @Param("propertyName") String propertyName);
 }

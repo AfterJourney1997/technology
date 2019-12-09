@@ -35,7 +35,7 @@ public class SystemPropertyDeviceController {
 
     @RequestMapping(value = "/propertyDevice", method = RequestMethod.POST)
     @ApiOperation(value = "新增设备或属性", notes = "参数包括：设备属性对象（如添加设备，category_id为0，name为设备名；如添加属性，category_id为属性所属的设备id，其他正常填写）")
-    public ResultBean insertSystemPropertyDevice(@RequestBody PropertyDevice propertyDevice) {
+    public ResultBean<?> insertSystemPropertyDevice(@RequestBody PropertyDevice propertyDevice) {
 
         return systemPropertyDeviceService.insertSystemPropertyDeviceDynamic(propertyDevice);
 
@@ -43,7 +43,7 @@ public class SystemPropertyDeviceController {
 
     @RequestMapping(value = "/propertyDevice", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除设备或属性", notes = "参数包括：设备或属性id")
-    public ResultBean deleteSystemPropertyDeviceById(@NonNull Integer id) {
+    public ResultBean<?> deleteSystemPropertyDeviceById(@NonNull Integer id) {
 
         return systemPropertyDeviceService.deleteSystemPropertyDeviceById(id);
 
@@ -51,17 +51,17 @@ public class SystemPropertyDeviceController {
 
     @RequestMapping(value = "/propertyDevice", method = RequestMethod.PUT)
     @ApiOperation(value = "修改设备", notes = "参数包括：设备属性对象")
-    public ResultBean updateSystemPropertyDeviceById(@RequestBody PropertyDevice propertyDevice) {
+    public ResultBean<?> updateSystemPropertyDeviceById(@RequestBody PropertyDevice propertyDevice) {
 
         return systemPropertyDeviceService.updateSystemPropertyDeviceById(propertyDevice);
 
     }
 
     @RequestMapping(value = "/propertyDevice/search", method = RequestMethod.GET)
-    @ApiOperation(value = "搜索设备属性", notes = "参数包括：页数、每页数量、设备名、属性名")
-    public ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String device, String property) {
+    @ApiOperation(value = "搜索设备属性", notes = "参数包括：页数、每页数量、类别id，类别名称、属性名（页数、每页数量必填，其他选填）")
+    public ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String categoryName, String propertyName) {
 
-        return systemPropertyDeviceService.searchSystemPropertyDeviceByPage(pageNum, pageSize, categoryId, device, property);
+        return systemPropertyDeviceService.searchSystemPropertyDeviceByPage(pageNum, pageSize, categoryId, categoryName, propertyName);
 
     }
 }

@@ -61,6 +61,6 @@
         <!--<table tableName="t_black_list" domainObjectName="BlackList"></table>-->
         <!--<table tableName="t_interaction_plugin" domainObjectName="InteractionPlugin"></table>-->
         <!--<table tableName="t_wholeplugin" domainObjectName="WholePlugin"></table>-->
-        <table catalog="technology" tableName="notice" domainObjectName="Notice"></table>
+        <table catalog="technology" tableName="device" domainObjectName="Device"></table>
     </context>
 </generatorConfiguration>

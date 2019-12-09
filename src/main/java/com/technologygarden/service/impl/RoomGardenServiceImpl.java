@@ -31,19 +31,19 @@ public class RoomGardenServiceImpl implements RoomGardenService {
     }
 
     @Override
-    public ResultBean deleteRoomGardenById(Integer gardenRoomId) {
+    public ResultBean<?> deleteRoomGardenById(Integer gardenRoomId) {
         roomGardenMapper.deleteByPrimaryKey(gardenRoomId);
         return new ResultBean<>();
     }
 
     @Override
-    public ResultBean updateRoomGardenById(RoomGarden roomGarden) {
+    public ResultBean<?> updateRoomGardenById(RoomGarden roomGarden) {
         roomGardenMapper.updateRoomGradenDynamic(roomGarden);
         return new ResultBean<>();
     }
 
     @Override
-    public ResultBean insertRoomGarden(List<RoomGarden> roomGardenList) {
+    public ResultBean<?> insertRoomGarden(List<RoomGarden> roomGardenList) {
         roomGardenMapper.insertRoomGardenForeach(roomGardenList);
         return new ResultBean<>();
     }

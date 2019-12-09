@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.DeviceMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Device">
+    <id column="id" jdbcType="INTEGER" property="deviceId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="total" jdbcType="INTEGER" property="total" />
+    <result column="remain" jdbcType="INTEGER" property="remain" />
+    <result column="owner" jdbcType="INTEGER" property="owner" />
+    <result column="kind" jdbcType="INTEGER" property="kind" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Device">
+    insert into technology.device (id, category_id, name, 
+      total, remain, owner, 
+      kind)
+    values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{total,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER}, #{owner,jdbcType=INTEGER}, 
+      #{kind,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Device">
+    update technology.device
+    set category_id = #{categoryId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      total = #{total,jdbcType=INTEGER},
+      remain = #{remain,jdbcType=INTEGER},
+      owner = #{owner,jdbcType=INTEGER},
+      kind = #{kind,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, category_id, name, total, remain, owner, kind
+    from technology.device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, category_id, name, total, remain, owner, kind
+    from technology.device
+  </select>
+
+
+  <select id="selectDeviceListWithPropertyByPage" resultMap="DeviceWithCategoryProperty">
+    SELECT
+	d.id AS d_id,
+	d.category_id AS d_category_id,
+	d.NAME AS d_name,
+	d.total AS d_total,
+	d.remain AS d_remain,
+	d.OWNER AS d_owner,
+	d.kind AS d_kind,
+	pd.id AS pd_id,
+	pd.kind AS pd_kind,
+	pd.category_id AS pd_category_id,
+	pd.NAME AS pd_name,
+	pd.property AS pd_property,
+	dp.id AS dp_id,
+	dp.device_id AS dp_device_id,
+	dp.category_id AS dp_category_id,
+	dp.property_id AS dp_property_id,
+	dp.VALUE AS dp_value
+    FROM
+	technology.device d,
+	technology.property_device pd,
+	technology.device_property dp
+	WHERE
+	d.category_id = pd.category_id and pd.id = dp.property_id and d.kind = 1
+  </select>
+  <resultMap id="DeviceWithCategoryProperty" type="com.technologygarden.entity.Device">
+    <id column="d_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="d_category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="d_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="d_total" jdbcType="INTEGER" property="total" />
+    <result column="d_remain" jdbcType="INTEGER" property="remain" />
+    <result column="d_owner" jdbcType="INTEGER" property="owner" />
+    <result column="d_kind" jdbcType="INTEGER" property="kind" />
+    <collection property="propertyDeviceList" ofType="com.technologygarden.entity.PropertyDevice">
+      <id column="pd_id" jdbcType="INTEGER" property="id" />
+      <result column="pd_kind" jdbcType="INTEGER" property="kind" />
+      <result column="pd_category_id" jdbcType="INTEGER" property="categoryId" />
+      <result column="pd_name" jdbcType="VARCHAR" property="categoryName" />
+      <result column="pd_property" jdbcType="VARCHAR" property="property" />
+      <association property="deviceProperty" javaType="com.technologygarden.entity.DeviceProperty">
+        <id column="dp_id" jdbcType="INTEGER" property="devicePropertyId" />
+        <result column="dp_device_id" jdbcType="INTEGER" property="deviceId" />
+        <result column="dp_category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="dp_property_id" jdbcType="VARCHAR" property="propertyId" />
+        <result column="dp_value" jdbcType="VARCHAR" property="propertyValue" />
+      </association>
+    </collection>
+  </resultMap>
+</mapper>

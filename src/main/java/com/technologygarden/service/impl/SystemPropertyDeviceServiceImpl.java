@@ -29,13 +29,13 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
     }
 
     @Override
-    public ResultBean insertSystemPropertyDeviceDynamic(PropertyDevice propertyDevice) {
+    public ResultBean<?> insertSystemPropertyDeviceDynamic(PropertyDevice propertyDevice) {
         propertyDeviceMapper.insertSystemPropertyDeviceDynamic(propertyDevice);
-        return new ResultBean();
+        return new ResultBean<>();
     }
 
     @Override
-    public ResultBean deleteSystemPropertyDeviceById(Integer id) {
+    public ResultBean<?> deleteSystemPropertyDeviceById(Integer id) {
 
         // 判断删除项是否有被使用
         if(1 != 1){
@@ -44,26 +44,26 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
 
         propertyDeviceMapper.deleteByPrimaryKey(id);
         propertyDeviceMapper.deleteSystemPropertyDeviceByCategoryId(id);
-        return new ResultBean();
+        return new ResultBean<>();
     }
 
     @Override
-    public ResultBean updateSystemPropertyDeviceById(PropertyDevice propertyDevice) {
+    public ResultBean<?> updateSystemPropertyDeviceById(PropertyDevice propertyDevice) {
 
         propertyDeviceMapper.updateSystemPropertyDeviceByIdDynamic(propertyDevice);
 
         // 如修改的为设备，设备属性中的设备名也需修改
-        if(propertyDevice.getName() != null){
+        if(propertyDevice.getCategoryName() != null){
             propertyDeviceMapper.updateSystemPropertyDeviceByCategoryId(propertyDevice);
         }
-        return new ResultBean();
+        return new ResultBean<>();
     }
 
     @Override
-    public ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, Integer categoryId, String device, String property) {
+    public ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, Integer categoryId, String categoryName, String propertyName) {
 
         PageHelper.startPage(pageNum, pageSize);
-        Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.searchSystemPropertyDeviceByPage(categoryId, device, property);
+        Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.searchSystemPropertyDeviceByPage(categoryId, categoryName, propertyName);
         return new ResultBean<>(propertyDeviceList);
     }
 }

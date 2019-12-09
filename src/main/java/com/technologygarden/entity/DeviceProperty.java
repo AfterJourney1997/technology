@@ -9,13 +9,12 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PropertyDevice {
+public class DeviceProperty {
 
-    private Integer propertyDeviceId;
-    private Integer kind;
+    private Integer devicePropertyId;
+    private Integer deviceId;
     private Integer categoryId;
-    private String categoryName;
-    private String property;
-    private DeviceProperty deviceProperty = null;
+    private Integer propertyId;
+    private String propertyValue;
 
 }

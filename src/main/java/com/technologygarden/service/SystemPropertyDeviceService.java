@@ -8,11 +8,11 @@ public interface SystemPropertyDeviceService {
 
     ResultBean<Page<PropertyDevice>> getSystemPropertyDeviceListByPage(Integer pageNum, Integer pageSize, Integer categoryId);
 
-    ResultBean insertSystemPropertyDeviceDynamic(PropertyDevice propertyDevice);
+    ResultBean<?> insertSystemPropertyDeviceDynamic(PropertyDevice propertyDevice);
 
-    ResultBean deleteSystemPropertyDeviceById(Integer id);
+    ResultBean<?> deleteSystemPropertyDeviceById(Integer id);
 
-    ResultBean updateSystemPropertyDeviceById(PropertyDevice propertyDevice);
+    ResultBean<?> updateSystemPropertyDeviceById(PropertyDevice propertyDevice);
 
-    ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, Integer categoryId, String device, String property);
+    ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, Integer categoryId, String categoryName, String propertyName);
 }

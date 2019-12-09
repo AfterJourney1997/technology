@@ -36,7 +36,7 @@ public class RoomGardenController {
 
     @RequestMapping(value = "/garden", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除园区房产", notes = "参数包括：园区房产主键id")
-    public ResultBean deleteRoomGardenById(Integer gardenRoomId){
+    public ResultBean<?> deleteRoomGardenById(Integer gardenRoomId){
 
         return roomGardenService.deleteRoomGardenById(gardenRoomId);
 
@@ -44,7 +44,7 @@ public class RoomGardenController {
 
     @RequestMapping(value = "/garden", method = RequestMethod.PUT)
     @ApiOperation(value = "修改园区房产", notes = "参数包括：园区房产对象，无需修改的值设空")
-    public ResultBean updateRoomGardenById(@RequestBody RoomGarden roomGarden){
+    public ResultBean<?> updateRoomGardenById(@RequestBody RoomGarden roomGarden){
 
         return roomGardenService.updateRoomGardenById(roomGarden);
 
@@ -52,7 +52,7 @@ public class RoomGardenController {
 
     @RequestMapping(value = "/garden", method = RequestMethod.POST)
     @ApiOperation(value = "新增园区房产", notes = "参数包括：园区房产list，一个也需放进list中")
-    public ResultBean insertRoomGarden(@RequestBody List<RoomGarden> roomGardenList){
+    public ResultBean<?> insertRoomGarden(@RequestBody List<RoomGarden> roomGardenList){
 
         return roomGardenService.insertRoomGarden(roomGardenList);
 

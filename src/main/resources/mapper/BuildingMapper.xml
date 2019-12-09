@@ -3,7 +3,7 @@
 <mapper namespace="com.technologygarden.dao.BuildingMapper">
   <resultMap id="BaseResultMap" type="com.technologygarden.entity.Building">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name" jdbcType="VARCHAR" property="buildingName" />
     <result column="area" jdbcType="REAL" property="area" />
     <result column="createtime" jdbcType="DATE" property="createtime" />
     <result column="money" jdbcType="REAL" property="money" />
@@ -15,12 +15,12 @@
   <insert id="insert" parameterType="com.technologygarden.entity.Building">
     insert into technology.building (id, name, area, 
       createtime, money)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{area,jdbcType=REAL}, 
+    values (#{id,jdbcType=INTEGER}, #{buildingName,jdbcType=VARCHAR}, #{area,jdbcType=REAL},
       #{createtime,jdbcType=DATE}, #{money,jdbcType=REAL})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Building">
     update technology.building
-    set name = #{name,jdbcType=VARCHAR},
+    set name = #{buildingName,jdbcType=VARCHAR},
       area = #{area,jdbcType=REAL},
       createtime = #{createtime,jdbcType=DATE},
       money = #{money,jdbcType=REAL}
@@ -44,8 +44,8 @@
   <update id="updateBuildingById" parameterType="com.technologygarden.entity.Building">
     update technology.building
     <set>
-      <if test="name != null and name != ''">
-        building.name = #{name,jdbcType=VARCHAR},
+      <if test="buildingName != null and buildingName != ''">
+        building.name = #{buildingName,jdbcType=VARCHAR},
       </if>
       <if test="area != null">
         building.area = #{area,jdbcType=FLOAT},
@@ -66,7 +66,7 @@
     values
     <foreach collection="list" index="index" item="item" separator=",">
       (
-      #{item.name,jdbcType=VARCHAR},
+      #{item.buildingName,jdbcType=VARCHAR},
       #{item.area,jdbcType=FLOAT},
       #{item.createtime,jdbcType=TIMESTAMP},
       #{item.money,jdbcType=FLOAT}

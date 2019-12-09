@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.technologygarden.dao.PropertyDeviceMapper">
   <resultMap id="BaseResultMap" type="com.technologygarden.entity.PropertyDevice">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="INTEGER" property="propertyDeviceId" />
     <result column="kind" jdbcType="INTEGER" property="kind" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="name" jdbcType="VARCHAR" property="categoryName" />
     <result column="property" jdbcType="VARCHAR" property="property" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -15,21 +15,21 @@
   <insert id="insert" parameterType="com.technologygarden.entity.PropertyDevice">
     insert into technology.property_device (id, kind, category_id, 
       name, property)
-    values (#{id,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR})
+    values (#{propertyDeviceId,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER},
+      #{propertyDeviceId,jdbcType=INTEGER}, #{property,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PropertyDevice">
     update technology.property_device
     set kind = #{kind,jdbcType=INTEGER},
       category_id = #{categoryId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
+      name = #{propertyDeviceId,jdbcType=INTEGER},
       property = #{property,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{propertyDeviceId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, kind, category_id, name, property
     from technology.property_device
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{propertyDeviceId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, kind, category_id, name, property
@@ -56,7 +56,7 @@
       <if test="categoryId != null">
         category_id,
       </if>
-      <if test="name != null and name != ''">
+      <if test="categoryName != null and categoryName != ''">
         name,
       </if>
       <if test="property != null and property != ''">
@@ -70,8 +70,8 @@
       <if test="categoryId != null">
         #{categoryId,jdbcType=INTEGER},
       </if>
-      <if test="name != null and name != ''">
-        #{name,jdbcType=VARCHAR},
+      <if test="categoryName != null and categoryName != ''">
+        #{categoryName,jdbcType=VARCHAR},
       </if>
       <if test="property != null and property != ''">
         #{property,jdbcType=VARCHAR},
@@ -93,20 +93,20 @@
       <if test="categoryId != null">
         property_device.category_id = #{categoryId,jdbcType=INTEGER},
       </if>
-      <if test="name != null and name != ''">
-        property_device.name = #{name,jdbcType=VARCHAR},
+      <if test="categoryName != null and categoryName != ''">
+        property_device.name = #{categoryName,jdbcType=VARCHAR},
       </if>
       <if test="property != null and property != ''">
         property_device.property = #{property,jdbcType=VARCHAR},
       </if>
     </set>
-    where property_device.id = #{id,jdbcType=INTEGER}
+    where property_device.id = #{propertyDeviceId,jdbcType=INTEGER}
   </update>
 
   <update id="updateSystemPropertyDeviceByCategoryId" parameterType="com.technologygarden.entity.PropertyDevice">
     update technology.property_device
-    set property_device.name = #{name,jdbcType=VARCHAR}
-    where property_device.category_id = #{id,jdbcType=INTEGER}
+    set property_device.name = #{propertyDeviceId,jdbcType=INTEGER}
+    where property_device.category_id = #{propertyDeviceId,jdbcType=INTEGER}
   </update>
 
   <select id="searchSystemPropertyDeviceByPage" resultMap="BaseResultMap">
@@ -116,11 +116,11 @@
       <if test="categoryId != null">
         and property_device.category_id = #{categoryId,jdbcType=INTEGER}
       </if>
-      <if test="device != null and device != ''">
-        and property_device.name like concat('%', #{device,jdbcType=VARCHAR}, '%')
+      <if test="categoryName != null and categoryName != ''">
+        and property_device.name like concat('%', #{categoryName,jdbcType=VARCHAR}, '%')
       </if>
-      <if test="property != null and property != ''">
-        and property_device.property like concat('%', #{property,jdbcType=VARCHAR}, '%')
+      <if test="propertyName != null and propertyName != ''">
+        and property_device.property like concat('%', #{propertyName,jdbcType=VARCHAR}, '%')
       </if>
     </where>
   </select>
