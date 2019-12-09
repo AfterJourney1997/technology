@@ -156,4 +156,79 @@
             </if>
         </where>
     </select>
+
+
+
+
+
+
+    <select id="selectFurnitureListWithPropertyByPage" resultMap="DeviceWithCategoryProperty">
+        SELECT
+        d.id AS d_id,
+        d.category_id AS d_category_id,
+        d.NAME AS d_name,
+        d.total AS d_total,
+        d.remain AS d_remain,
+        d.OWNER AS d_owner,
+        d.kind AS d_kind,
+        pd.id AS pd_id,
+        pd.kind AS pd_kind,
+        pd.category_id AS pd_category_id,
+        pd.NAME AS pd_name,
+        pd.property AS pd_property,
+        dp.id AS dp_id,
+        dp.device_id AS dp_device_id,
+        dp.category_id AS dp_category_id,
+        dp.property_id AS dp_property_id,
+        dp.VALUE AS dp_value
+        FROM
+        technology.device d,
+        technology.property_device pd,
+        technology.device_property dp
+        WHERE
+        d.category_id = pd.category_id
+        and pd.id = dp.property_id
+        and d.id = dp.device_id
+        and d.kind = 2
+    </select>
+
+    <select id="searchFurnitureListWithPropertyByPage" resultMap="DeviceWithCategoryProperty">
+        SELECT
+        d.id AS d_id,
+        d.category_id AS d_category_id,
+        d.NAME AS d_name,
+        d.total AS d_total,
+        d.remain AS d_remain,
+        d.OWNER AS d_owner,
+        d.kind AS d_kind,
+        pd.id AS pd_id,
+        pd.kind AS pd_kind,
+        pd.category_id AS pd_category_id,
+        pd.NAME AS pd_name,
+        pd.property AS pd_property,
+        dp.id AS dp_id,
+        dp.device_id AS dp_device_id,
+        dp.category_id AS dp_category_id,
+        dp.property_id AS dp_property_id,
+        dp.VALUE AS dp_value
+        FROM
+        technology.device d,
+        technology.property_device pd,
+        technology.device_property dp
+        <where>
+            and d.category_id = pd.category_id
+            and pd.id = dp.property_id
+            and d.id = dp.device_id
+            and d.kind = 2
+            <if test="categoryId != null">
+                and d.category_id = #{categoryId,jdbcType=INTEGER}
+            </if>
+            <if test="furnitureName != null and furnitureName != ''">
+                and d.name like concat('%', #{furnitureName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="owner != null">
+                and d.owner = #{owner,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
 </mapper>

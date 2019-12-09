@@ -2,14 +2,18 @@ package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Device;
+import com.technologygarden.entity.PropertyDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.AssetDeviceService;
+import com.technologygarden.service.SystemPropertyDeviceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @CrossOrigin
@@ -19,10 +23,12 @@ import org.springframework.web.bind.annotation.*;
 public class AssetDeviceController {
 
     private final AssetDeviceService assetDeviceService;
+    private final SystemPropertyDeviceService systemPropertyDeviceService;
 
     @Autowired
-    public AssetDeviceController(AssetDeviceService assetDeviceService) {
+    public AssetDeviceController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService) {
         this.assetDeviceService = assetDeviceService;
+        this.systemPropertyDeviceService = systemPropertyDeviceService;
     }
 
     @RequestMapping(value = "/device", method = RequestMethod.GET)
@@ -62,6 +68,22 @@ public class AssetDeviceController {
     public ResultBean<Page<Device>> searchDeviceListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String deviceName, Integer owner){
 
         return assetDeviceService.searchDeviceListWithPropertyByPage(pageNum, pageSize, categoryId, deviceName, owner);
+
+    }
+
+    @RequestMapping(value = "/device/category", method = RequestMethod.GET)
+    @ApiOperation(value = "获取设备类别信息", notes = "参数包括：无")
+    public ResultBean<List<PropertyDevice>> getDevicePropertyDevice(){
+
+        return systemPropertyDeviceService.getDevicePropertyDevice();
+
+    }
+
+    @RequestMapping(value = "/device/property", method = RequestMethod.GET)
+    @ApiOperation(value = "根据类别id获取相关属性", notes = "参数包括：类别id")
+    public ResultBean<List<PropertyDevice>> getPropertyByCategoryId(@NonNull Integer categoryId){
+
+        return systemPropertyDeviceService.getPropertyByCategoryId(categoryId);
 
     }
 

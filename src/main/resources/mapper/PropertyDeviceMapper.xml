@@ -125,5 +125,17 @@
     </where>
   </select>
 
+  <select id="selectCateGoryByKind" resultMap="BaseResultMap">
+    select *
+    from technology.property_device
+    where property_device.kind = #{kind,jdbcType=INTEGER} and property_device.category_id = 0
+  </select>
+
+  <select id="selectPropertyByCategoryId" resultMap="BaseResultMap">
+    select *
+    from technology.property_device
+    where property_device.category_id = #{categoryId,jdbcType=INTEGER} and property_device.category_id != 0
+  </select>
+
 
 </mapper>

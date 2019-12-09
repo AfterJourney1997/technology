@@ -10,6 +10,8 @@ import com.technologygarden.service.SystemPropertyDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("systemPropertyDeviceService")
 public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceService {
 
@@ -64,6 +66,27 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
 
         PageHelper.startPage(pageNum, pageSize);
         Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.searchSystemPropertyDeviceByPage(categoryId, categoryName, propertyName);
+        return new ResultBean<>(propertyDeviceList);
+    }
+
+    @Override
+    public ResultBean<List<PropertyDevice>> getFurniturePropertyDevice() {
+
+        List<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectCateGoryByKind(2);
+        return new ResultBean<>(propertyDeviceList);
+    }
+
+    @Override
+    public ResultBean<List<PropertyDevice>> getPropertyByCategoryId(Integer categoryId) {
+
+        List<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectPropertyByCategoryId(categoryId);
+        return new ResultBean<>(propertyDeviceList);
+    }
+
+    @Override
+    public ResultBean<List<PropertyDevice>> getDevicePropertyDevice() {
+
+        List<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectCateGoryByKind(1);
         return new ResultBean<>(propertyDeviceList);
     }
 }

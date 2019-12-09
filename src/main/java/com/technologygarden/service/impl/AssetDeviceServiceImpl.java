@@ -58,6 +58,7 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
         }
 
+        // 1为设备
         device.setKind(1);
         device.setRemain(device.getTotal());
         // 先插入设备信息
@@ -115,6 +116,60 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Device> deviceList = deviceMapper.searchDeviceListWithPropertyByPage(categoryId, deviceName, owner);
+        return new ResultBean<>(deviceList);
+
+    }
+
+
+
+
+
+
+    @Override
+    public ResultBean<Page<Device>> getFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        Page<Device> deviceList = deviceMapper.selectFurnitureListWithPropertyByPage();
+        return new ResultBean<>(deviceList);
+
+    }
+
+    @Override
+    public ResultBean<?> insertFurnitureWithPropertyDynamic(Device furniture) {
+
+        // 判断参数是否缺失
+        if(furniture.getCategoryId() == null || StringUtil.empty(furniture.getDeviceName()) || furniture.getOwner() == null){
+            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+        }
+
+        List<PropertyDevice> propertyDeviceList = furniture.getPropertyDeviceList();
+
+        for (PropertyDevice propertyDevice : propertyDeviceList) {
+
+            DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
+            if (deviceProperty.getCategoryId() == null || deviceProperty.getDeviceId() == null || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
+                return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+            }
+
+        }
+
+        // 2为家具
+        furniture.setKind(2);
+        furniture.setRemain(furniture.getTotal());
+        // 先插入设备信息
+        deviceMapper.insert(furniture);
+        // 再插入设备相关属性
+        devicePropertyMapper.insertForeach(propertyDeviceList);
+
+        return new ResultBean<>();
+
+    }
+
+    @Override
+    public ResultBean<Page<Device>> searchFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize, Integer categoryId, String furnitureName, Integer owner) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        Page<Device> deviceList = deviceMapper.searchFurnitureListWithPropertyByPage(categoryId, furnitureName, owner);
         return new ResultBean<>(deviceList);
 
     }

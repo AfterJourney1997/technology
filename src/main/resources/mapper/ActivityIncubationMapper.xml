@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.ActivityIncubationMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.ActivityIncubation">
+    <id column="ai_id" jdbcType="INTEGER" property="aiId" />
+    <result column="ai_name" jdbcType="VARCHAR" property="aiName" />
+    <result column="ai_time" jdbcType="DATE" property="aiTime" />
+    <result column="ai_category_id" jdbcType="INTEGER" property="aiCategoryId" />
+    <result column="ai_people_number" jdbcType="INTEGER" property="aiPeopleNumber" />
+    <result column="ai_pic" jdbcType="VARCHAR" property="aiPic" />
+    <result column="ai_file" jdbcType="VARCHAR" property="aiFile" />
+    <result column="ai_content" jdbcType="LONGVARCHAR" property="aiContent" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.activity_incubation
+    where ai_id = #{aiId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.ActivityIncubation">
+    insert into technology.activity_incubation ( ai_name, ai_time,
+      ai_category_id, ai_people_number, ai_pic, 
+      ai_file, ai_content)
+    values ( #{aiName,jdbcType=VARCHAR}, #{aiTime,jdbcType=DATE},
+      #{aiCategoryId,jdbcType=INTEGER}, #{aiPeopleNumber,jdbcType=INTEGER}, #{aiPic,jdbcType=VARCHAR}, 
+      #{aiFile,jdbcType=VARCHAR}, #{aiContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ActivityIncubation">
+    update technology.activity_incubation
+    set ai_name = #{aiName,jdbcType=VARCHAR},
+      ai_time = #{aiTime,jdbcType=DATE},
+      ai_category_id = #{aiCategoryId,jdbcType=INTEGER},
+      ai_people_number = #{aiPeopleNumber,jdbcType=INTEGER},
+      ai_pic = #{aiPic,jdbcType=VARCHAR},
+      ai_file = #{aiFile,jdbcType=VARCHAR},
+      ai_content = #{aiContent,jdbcType=LONGVARCHAR}
+    where ai_id = #{aiId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ai_id, ai_name, ai_time, ai_category_id, ai_people_number, ai_pic, ai_file, 
+    ai_content
+    from technology.activity_incubation
+    where ai_id = #{aiId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ai_id, ai_name, ai_time, ai_category_id, ai_people_number, ai_pic, ai_file, 
+    ai_content
+    from technology.activity_incubation
+  </select>
+
+  <select id="selectActivityIncubationListByPage" resultMap="BaseResultMap">
+    select *
+    from technology.activity_incubation
+  </select>
+
+  <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.ActivityIncubation">
+    update technology.activity_incubation
+    <set>
+      <if test="aiName != null and aiName != ''">
+        activity_incubation.ai_name = #{aiName,jdbcType=VARCHAR},
+      </if>
+      <if test="aiTime != null">
+        activity_incubation.ai_time = #{aiTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aiCategoryId != null">
+        activity_incubation.ai_category_id = #{aiCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="aiPeopleNumber != null">
+        activity_incubation.ai_people_number = #{aiPeopleNumber,jdbcType=INTEGER},
+      </if>
+      <if test="aiContent != null and aiContent != ''">
+        activity_incubation.ai_content = #{aiContent,jdbcType=VARCHAR},
+      </if>
+      <if test="aiPic != null and aiPic != ''">
+        activity_incubation.ai_pic = #{aiPic,jdbcType=VARCHAR},
+      </if>
+      <if test="aiFile != null and aiFile != ''">
+        activity_incubation.ai_file = #{aiFile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where activity_incubation.ai_id = #{aiId,jdbcType=INTEGER}
+  </update>
+
+  <select id="searchActivityIncubationListByPage" resultMap="BaseResultMap">
+    select *
+    from technology.activity_incubation
+    <where>
+      <if test="activityCategoryId != null">
+        and activity_incubation.ai_category_id = #{activityCategoryId,jdbcType=INTEGER}
+      </if>
+      <if test="activityName != null and activityName != ''">
+        and activity_incubation.ai_name like concat('%', #{activityName,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

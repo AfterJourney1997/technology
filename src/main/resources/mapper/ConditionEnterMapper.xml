@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.ConditionEnterMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.ConditionEnter">
+    <id column="ce_id" jdbcType="INTEGER" property="ceId" />
+    <result column="ce_title" jdbcType="VARCHAR" property="ceTitle" />
+    <result column="ce_time" jdbcType="DATE" property="ceTime" />
+    <result column="ce_file" jdbcType="VARCHAR" property="ceFile" />
+    <result column="ce_content" jdbcType="LONGVARCHAR" property="ceContent" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.condition_enter
+    where ce_id = #{ceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.ConditionEnter">
+    insert into technology.condition_enter (ce_title, ce_time,
+      ce_file, ce_content)
+    values (#{ceTitle,jdbcType=VARCHAR}, #{ceTime,jdbcType=DATE},
+      #{ceFile,jdbcType=VARCHAR}, #{ceContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ConditionEnter">
+    update technology.condition_enter
+    set ce_title = #{ceTitle,jdbcType=VARCHAR},
+      ce_time = #{ceTime,jdbcType=DATE},
+      ce_file = #{ceFile,jdbcType=VARCHAR},
+      ce_content = #{ceContent,jdbcType=LONGVARCHAR}
+    where ce_id = #{ceId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select ce_id, ce_title, ce_time, ce_file, ce_content
+    from technology.condition_enter
+    where ce_id = #{ceId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select ce_id, ce_title, ce_time, ce_file, ce_content
+    from technology.condition_enter
+  </select>
+
+  <select id="selectConditionEnterListByPage" resultMap="BaseResultMap">
+    select *
+    from technology.condition_enter
+  </select>
+  <update id="updateConditionEnterByIdDynamic" parameterType="com.technologygarden.entity.ConditionEnter">
+    update technology.condition_enter
+    <set>
+      <if test="ceTitle != null and ceTitle != ''">
+        condition_enter.ce_title = #{ceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ceTime != null">
+        condition_enter.ce_time = #{ceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ceContent != null and ceContent != ''">
+        condition_enter.ce_content = #{ceContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where condition_enter.ce_id = #{ceId,jdbcType=INTEGER}
+  </update>
+  <select id="searchConditionEnterListByPage" resultMap="BaseResultMap">
+    select *
+    from technology.condition_enter
+    <where>
+      <if test="title != null and title != ''">
+        and condition_enter.ce_title like concat('%', #{title,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

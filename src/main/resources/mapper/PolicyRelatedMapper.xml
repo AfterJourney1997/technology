@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.PolicyRelatedMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.PolicyRelated">
+    <id column="pr_id" jdbcType="INTEGER" property="prId" />
+    <result column="pr_title" jdbcType="VARCHAR" property="prTitle" />
+    <result column="pr_level" jdbcType="INTEGER" property="prLevel" />
+    <result column="pr_time" jdbcType="DATE" property="prTime" />
+    <result column="pr_file" jdbcType="VARCHAR" property="prFile" />
+    <result column="pr_content" jdbcType="LONGVARCHAR" property="prContent" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.policy_related
+    where pr_id = #{prId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.PolicyRelated">
+    insert into technology.policy_related (pr_title, pr_level,
+      pr_time, pr_file, pr_content
+      )
+    values (#{prTitle,jdbcType=VARCHAR}, #{prLevel,jdbcType=INTEGER},
+      #{prTime,jdbcType=DATE}, #{prFile,jdbcType=VARCHAR}, #{prContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PolicyRelated">
+    update technology.policy_related
+    set pr_title = #{prTitle,jdbcType=VARCHAR},
+      pr_level = #{prLevel,jdbcType=INTEGER},
+      pr_time = #{prTime,jdbcType=DATE},
+      pr_file = #{prFile,jdbcType=VARCHAR},
+      pr_content = #{prContent,jdbcType=LONGVARCHAR}
+    where pr_id = #{prId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select pr_id, pr_title, pr_level, pr_time, pr_file, pr_content
+    from technology.policy_related
+    where pr_id = #{prId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select pr_id, pr_title, pr_level, pr_time, pr_file, pr_content
+    from technology.policy_related
+  </select>
+
+  <select id="getPolicyRelatedListByPage" resultMap="BaseResultMap">
+    select *
+    from technology.policy_related
+  </select>
+
+  <insert id="insertPolicyRelatedDynamic" parameterType="com.technologygarden.entity.PolicyRelated">
+    insert into technology.policy_related
+  </insert>
+
+  <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.PolicyRelated">
+    update technology.policy_related
+    <set>
+      <if test="prTitle != null and prTitle != ''">
+        policy_related.pr_title = #{prTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="prLevel != null">
+        policy_related.pr_level = #{prLevel,jdbcType=INTEGER},
+      </if>
+      <if test="prTime != null">
+        policy_related.pr_time = #{prTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prContent != null and prContent != ''">
+        policy_related.pr_content = #{prContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where policy_related.pr_id = #{prId,jdbcType=INTEGER}
+  </update>
+
+  <select id="searchPolicyRelatedListByPage" resultMap="BaseResultMap">
+    select *
+    from technology.policy_related
+    <where>
+      <if test="level != null">
+        and policy_related.pr_level = #{level,jdbcType=INTEGER}
+      </if>
+      <if test="title != null and title != ''">
+        and policy_related.pr_title like concat('%', #{title,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+</mapper>

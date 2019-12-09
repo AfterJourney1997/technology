@@ -22,4 +22,13 @@ public interface DeviceMapper {
     int updateByIdDynamic(Device device);
 
     Page<Device> searchDeviceListWithPropertyByPage(@Param("categoryId") Integer categoryId, @Param("deviceName") String deviceName, @Param("owner") Integer owner);
+
+
+
+
+    Page<Device> selectFurnitureListWithPropertyByPage();
+
+    Page<Device> searchFurnitureListWithPropertyByPage(@Param("categoryId") Integer categoryId, @Param("furnitureName") String furnitureName, @Param("owner") Integer owner);
+
+
 }
