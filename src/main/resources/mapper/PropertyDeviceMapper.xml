@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.PropertyDeviceMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.PropertyDevice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="kind" jdbcType="INTEGER" property="kind" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="property" jdbcType="VARCHAR" property="property" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.property_device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.PropertyDevice">
+    insert into technology.property_device (id, kind, category_id, 
+      name, property)
+    values (#{id,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{property,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PropertyDevice">
+    update technology.property_device
+    set kind = #{kind,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      property = #{property,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, kind, category_id, name, property
+    from technology.property_device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, kind, category_id, name, property
+    from technology.property_device
+  </select>
+
+  <select id="selectSystemPropertyDeviceListByPage" resultMap="BaseResultMap">
+    select *
+    from technology.property_device
+    <if test="categoryId == null">
+      where property_device.category_id != 0
+    </if>
+    <if test="categoryId != null">
+      where property_device.category_id = 0
+    </if>
+  </select>
+
+  <insert id="insertSystemPropertyDeviceDynamic" parameterType="com.technologygarden.entity.PropertyDevice">
+    insert into technology.property_device
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="name != null and name != ''">
+        name,
+      </if>
+      <if test="property != null and property != ''">
+        property,
+      </if>
+    </trim>
+    <trim prefix="values(" suffix=")" suffixOverrides=",">
+      <if test="kind != null">
+        #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null and name != ''">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="property != null and property != ''">
+        #{property,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="deleteSystemPropertyDeviceByCategoryId" parameterType="java.lang.Integer">
+    delete from technology.property_device
+    where property_device.category_id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <update id="updateSystemPropertyDeviceByIdDynamic" parameterType="com.technologygarden.entity.PropertyDevice">
+    update technology.property_device
+    <set>
+      <if test="kind != null">
+        property_device.kind = #{kind,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        property_device.category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null and name != ''">
+        property_device.name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="property != null and property != ''">
+        property_device.property = #{property,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where property_device.id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateSystemPropertyDeviceByCategoryId" parameterType="com.technologygarden.entity.PropertyDevice">
+    update technology.property_device
+    set property_device.name = #{name,jdbcType=VARCHAR}
+    where property_device.category_id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="searchSystemPropertyDeviceByPage" resultMap="BaseResultMap">
+    select *
+    from technology.property_device
+    <where>
+      <if test="categoryId != null">
+        and property_device.category_id = #{categoryId,jdbcType=INTEGER}
+      </if>
+      <if test="device != null and device != ''">
+        and property_device.name like concat('%', #{device,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="property != null and property != ''">
+        and property_device.property like concat('%', #{property,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+
+
+</mapper>

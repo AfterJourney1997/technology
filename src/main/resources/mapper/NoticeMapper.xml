@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.NoticeMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Notice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.notice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Notice">
+    insert into technology.notice (title, time,
+      status, content)
+    values (#{title,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+      1, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Notice">
+    update technology.notice
+    set title = #{title,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, time, status, content
+    from technology.notice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, time, status, content
+    from technology.notice
+  </select>
+
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select *
+    from notice
+  </select>
+
+    <update id="updateStatusToZero">
+      update technology.notice
+      set notice.status = 0
+      where notice.status = 1
+    </update>
+
+  <update id="updateNoticeByIdDynamic" parameterType="com.technologygarden.entity.Notice">
+    update technology.notice
+    <set>
+      <if test="title != null and title != ''">
+        notice.title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        notice.time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        notice.status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="content != null and content != ''">
+        notice.content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where notice.id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="searchNoticeDynamic" resultMap="BaseResultMap">
+    select *
+    from technology.notice
+    <where>
+      <if test="title != null and title != ''">
+        and title like concat('%', #{title,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+</mapper>
