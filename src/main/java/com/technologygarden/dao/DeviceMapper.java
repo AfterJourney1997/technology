@@ -2,6 +2,8 @@ package com.technologygarden.dao;
 
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Device;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface DeviceMapper {
@@ -16,4 +18,8 @@ public interface DeviceMapper {
     int updateByPrimaryKey(Device record);
 
     Page<Device> selectDeviceListWithPropertyByPage();
+
+    int updateByIdDynamic(Device device);
+
+    Page<Device> searchDeviceListWithPropertyByPage(@Param("categoryId") Integer categoryId, @Param("deviceName") String deviceName, @Param("owner") Integer owner);
 }

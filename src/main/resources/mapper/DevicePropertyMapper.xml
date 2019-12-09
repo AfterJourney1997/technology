@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.DevicePropertyMapper">
+
+
+    <insert id="insertForeach">
+        insert into technology.device_property
+        (device_id, category_id, property_id, value)
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (
+            #{item.deviceProperty.deviceId,jdbcType=INTEGER},
+            #{item.deviceProperty.categoryId,jdbcType=INTEGER},
+            #{item.deviceProperty.propertyId,jdbcType=INTEGER},
+            #{item.deviceProperty.propertyValue,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByDeviceByDeviceId">
+        delete from technology.device_property
+        where device_property.device_id = #{deviceId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateByDeviceIdDynamic">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update technology.device_property
+            <set>
+                <if test="item.deviceProperty.propertyValue != null and item.deviceProperty.propertyValue != ''" >
+                    device_property.value = #{item.deviceProperty.propertyValue,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where device_property.id = #{item.deviceProperty.devicePropertyId,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+</mapper>
