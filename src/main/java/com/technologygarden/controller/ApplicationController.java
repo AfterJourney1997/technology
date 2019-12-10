@@ -23,10 +23,11 @@ public class ApplicationController {
     public ApplicationController(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
+
     // 企业入住申请提交
     @RequestMapping(value = "/company", method = RequestMethod.POST)
     @ApiOperation(value = "企业入住申请提交", notes = "参数包括：ApplicationAdmission对象包含当前登录Role对象")
-    public ResultBean<Integer> insertApplicationAdmission(@RequestBody ApplicationAdmission applicationAdmission){
+    public ResultBean<Integer> insertApplicationAdmission(@RequestBody ApplicationAdmission applicationAdmission) {
         applicationAdmission.setId(applicationAdmission.getRole().getInfoid());
         return applicationService.updateByPrimaryKey(applicationAdmission);
     }

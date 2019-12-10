@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.OpinionMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Opinion">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="opinion" jdbcType="VARCHAR" property="opinion" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="c_Id" jdbcType="INTEGER" property="cId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.opinion
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Opinion">
+    insert into technology.opinion (Id, opinion, status,
+      c_Id)
+    values (#{id,jdbcType=INTEGER}, #{opinion,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{cId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Opinion">
+    update technology.opinion
+    set opinion = #{opinion,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      c_Id = #{cId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, opinion, status, c_Id
+    from technology.opinion
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, opinion, status, c_Id
+    from technology.opinion
+  </select>
+  <select id="getOpinionByPage" resultMap="BaseResultMap">
+    select Id, opinion, status,c_Id
+    from technology.opinion
+    where c_Id=#{cId,jdbcType=INTEGER}
+  </select>
+</mapper>

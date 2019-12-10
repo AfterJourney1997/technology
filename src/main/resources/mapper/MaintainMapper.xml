@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.MaintainMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Maintain">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="serviceName" jdbcType="VARCHAR" property="servicename" />
+    <result column="serviceDescribe" jdbcType="VARCHAR" property="servicedescribe" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.maintain
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Maintain">
+    insert into technology.maintain (Id, serviceName, serviceDescribe
+      )
+    values (#{id,jdbcType=INTEGER}, #{servicename,jdbcType=VARCHAR}, #{servicedescribe,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Maintain">
+    update technology.maintain
+    set serviceName = #{servicename,jdbcType=VARCHAR},
+      serviceDescribe = #{servicedescribe,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, serviceName, serviceDescribe
+    from technology.maintain
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, serviceName, serviceDescribe
+    from technology.maintain
+  </select>
+  <select id="getMaintainByPage" resultMap="BaseResultMap">
+    select Id, serviceName, serviceDescribe
+    from technology.maintain
+  </select>
+  <select id="searchMaintainByName" resultMap="BaseResultMap">
+    select Id, serviceName, serviceDescribe
+    from technology.maintain
+    where serviceName like concat('%', #{maintainName,jdbcType=VARCHAR}, '%')
+  </select>
+</mapper>

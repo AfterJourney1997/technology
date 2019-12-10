@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.AwardsMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Awards">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="awards_name" jdbcType="VARCHAR" property="awardsName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.awards
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Awards">
+    insert into technology.awards (Id, awards_name)
+    values (#{id,jdbcType=INTEGER}, #{awardsName,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Awards">
+    update technology.awards
+    set awards_name = #{awardsName,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, awards_name
+    from technology.awards
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, awards_name
+    from technology.awards
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select Id, awards_name
+    from technology.awards
+  </select>
+  <select id="searchAwardsName" resultMap="BaseResultMap">
+    select Id, awards_name
+    from technology.awards
+    where awards_name like concat('%', #{awardsName,jdbcType=VARCHAR}, '%')
+  </select>
+</mapper>

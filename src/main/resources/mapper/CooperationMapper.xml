@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.CooperationMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Cooperation">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="partner" jdbcType="VARCHAR" property="partner" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="people" jdbcType="INTEGER" property="people" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="day" jdbcType="INTEGER" property="day" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="c_Id" jdbcType="INTEGER" property="cId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.cooperation
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Cooperation">
+    insert into technology.cooperation (Id, name, partner,
+      money, major, people, 
+      category, day, date, c_Id
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{partner,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DOUBLE}, #{major,jdbcType=VARCHAR}, #{people,jdbcType=INTEGER}, 
+      #{category,jdbcType=VARCHAR}, #{day,jdbcType=INTEGER}, #{date,jdbcType=DATE}, #{cId,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Cooperation">
+    update technology.cooperation
+    set name = #{name,jdbcType=VARCHAR},
+      partner = #{partner,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      major = #{major,jdbcType=VARCHAR},
+      people = #{people,jdbcType=INTEGER},
+      category = #{category,jdbcType=VARCHAR},
+      day = #{day,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      c_Id = #{cId,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, name, partner, money, major, people, category, day, date, c_Id
+    from technology.cooperation
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, name, partner, money, major, people, category, day, date, c_Id
+    from technology.cooperation
+  </select>
+  <select id="getCooperationByPage" resultMap="BaseResultMap">
+    select Id, name, partner, money, major, people, category, day, date, c_Id
+    from technology.cooperation
+    where c_Id = #{cId,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -34,7 +34,7 @@ public class EnterpriseInformationController {
     }
     @RequestMapping(value = "/information", method = RequestMethod.POST)
     @ApiOperation(value = "录入企业信息", notes = "参数包括：EnterpriseInformation对象包含当前登录的Role对象")
-    public ResultBean<EnterpriseInformation> getApplicationAdmission(@RequestBody EnterpriseInformation enterpriseInformation){
+    public ResultBean getApplicationAdmission(@RequestBody EnterpriseInformation enterpriseInformation){
         enterpriseInformation.setEId(enterpriseInformation.getRole().getInfoid());
         return enterpriseInformationService.updateEnterpriseInformation(enterpriseInformation);
     }

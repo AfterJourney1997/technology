@@ -1,6 +1,8 @@
 package com.technologygarden.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -17,7 +19,7 @@ public class ApplicationAdmission {
     private String cCategory;
 
     private String cLegalperson;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date cDate;
 
     private Double cFund;
@@ -28,7 +30,9 @@ public class ApplicationAdmission {
 
     private String cInformation;
 
-    private Integer cStatus;
+    private int cStatus;
+
+    private MultipartFile blFile;
 
     private String fileName;
     private Role role=null;

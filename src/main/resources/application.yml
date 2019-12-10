@@ -1,6 +1,10 @@
 spring:
   profiles:
     active: dev
+  #设置上传文件大小
+  servlet:
+    multipart:
+      max-file-size: 2MB
 
 
 #公共配置：
@@ -11,3 +15,7 @@ mybatis:
   #开启驼峰映射
   configuration:
     map-underscore-to-camel-case: true
+
+
+
+

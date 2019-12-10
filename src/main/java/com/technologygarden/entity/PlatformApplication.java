@@ -18,7 +18,7 @@ public class PlatformApplication {
 
     private Integer cId;
 
-    private Integer status;
+    private int status;
 
     private String cName;
 
