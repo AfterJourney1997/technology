@@ -37,7 +37,7 @@ public class DeclareAwardController {
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
     @ApiOperation(value = "添加申报奖项", notes = "参数：奖项申报对象")
-    public ResultBean insertDeclareAward(DeclareAward declareAward){
+    public ResultBean insertDeclareAward(DeclareAward declareAward) throws IOException {
         return declareAwardService.insertDeclareAward(declareAward);
     }
 

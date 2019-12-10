@@ -2,7 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.technologygarden.dao.ApplicationAdmissionMapper;
+import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.dao.PlatformApplicationMapper;
 import com.technologygarden.entity.PlatformApplication;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -15,11 +15,11 @@ import java.util.List;
 @Service("PlaformService")
 public class PlaformServiceImpl implements PlaformService {
     private final PlatformApplicationMapper platformApplicationMapper;
-    private final ApplicationAdmissionMapper applicationAdmissionMapper;
+    private final EnterpriseInformationMapper enterpriseInformationMapper;
     @Autowired
-    public PlaformServiceImpl(PlatformApplicationMapper platformApplicationMapper, ApplicationAdmissionMapper applicationAdmissionMapper) {
+    public PlaformServiceImpl(PlatformApplicationMapper platformApplicationMapper, EnterpriseInformationMapper enterpriseInformationMapper) {
         this.platformApplicationMapper = platformApplicationMapper;
-        this.applicationAdmissionMapper = applicationAdmissionMapper;
+        this.enterpriseInformationMapper = enterpriseInformationMapper;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class PlaformServiceImpl implements PlaformService {
         List<PlatformApplication> platformApplication=platformApplicationMapper.selectByPage(cId);
         if(platformApplication!=null){
            for (PlatformApplication list:platformApplication){
-               list.setCName(applicationAdmissionMapper.selectByPrimaryKey(list.getCId()).getCName());
+               list.setCName(enterpriseInformationMapper.selectByPrimaryKey(list.getCId()).getCName());
            }
         }
         Page<PlatformApplication> platformList= (Page<PlatformApplication>) platformApplication;
