@@ -8,8 +8,11 @@ import com.technologygarden.dao.PoliticsStatusMapper;
 import com.technologygarden.entity.Employee;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.EmployeeService;
+import com.technologygarden.util.FilUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service("EmployeeService")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -24,10 +27,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResultBean<Page<Employee>> selectByPage(Integer pageNum, Integer pageSize,Integer cId) {
+    public ResultBean<Page<Employee>> selectByPage(Integer pageNum, Integer pageSize,Integer cId) throws IOException {
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByPage(cId);
         for(Employee employee:employeeList){
+            String filePath=FilUploadUtils.getFilePath()+"\\"+employee.getFileName();
+            employee.setFilePath(filePath);
             employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
             employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
         }
@@ -35,12 +40,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResultBean insertEmployee(Employee employee) {
+    public ResultBean insertEmployee(Employee employee) throws IOException {
+        FilUploadUtils.saveFile(employee.getBlFile());
+        employee.setFileName(employee.getBlFile().getOriginalFilename());
+        employee.setCId(employee.getRole().getInfoid());
         return new ResultBean(employeeMapper.insert(employee));
     }
 
     @Override
-    public ResultBean updateEmployee(Employee employee) {
+    public ResultBean updateEmployee(Employee employee) throws IOException {
+        FilUploadUtils.saveFile(employee.getBlFile());
+        employee.setFileName(employee.getBlFile().getOriginalFilename());
         return new ResultBean(employeeMapper.updateByPrimaryKey(employee));
     }
 
@@ -49,11 +59,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ResultBean(employeeMapper.deleteByPrimaryKey(eId));
     }
     @Override
-    public ResultBean<Page<Employee>> selectByNamePage(Integer pageNum, Integer pageSize,Integer cId,String employeeName) {
+    public ResultBean<Page<Employee>> selectByNamePage(Integer pageNum, Integer pageSize,Integer cId,String employeeName) throws IOException {
         System.out.println("pageNum:"+pageNum+"pageSize:"+pageSize+"cId:"+cId+"employeeName:"+employeeName);
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByNamePage(cId,employeeName);
         for(Employee employee:employeeList){
+            String filePath=FilUploadUtils.getFilePath()+"\\"+employee.getFileName();
+            employee.setFilePath(filePath);
             employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
             employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
         }

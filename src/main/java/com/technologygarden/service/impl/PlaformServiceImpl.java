@@ -23,9 +23,9 @@ public class PlaformServiceImpl implements PlaformService {
     }
 
     @Override
-    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(Integer pageNum, Integer pageSize, Integer cId) {
         PageHelper.startPage(pageNum, pageSize);
-        List<PlatformApplication> platformApplication=platformApplicationMapper.selectAll();
+        List<PlatformApplication> platformApplication=platformApplicationMapper.selectByPage(cId);
         if(platformApplication!=null){
            for (PlatformApplication list:platformApplication){
                list.setCName(applicationAdmissionMapper.selectByPrimaryKey(list.getCId()).getCName());

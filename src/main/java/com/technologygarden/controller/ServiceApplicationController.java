@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/serviceApplication")
 @Api(tags = "服务申报接口", value = "ServiceApplicationController")

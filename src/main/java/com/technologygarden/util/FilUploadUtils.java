@@ -6,14 +6,25 @@ import java.io.File;
 import java.io.IOException;
 
 public class FilUploadUtils {
-    public static void saveFile(MultipartFile Mfile) throws IOException {
+
+    public static Boolean saveFile(MultipartFile mfile) throws IOException {
         File directory = new File("");// 参数为空
         String path = directory.getCanonicalPath()+"\\upload";
+        if(mfile.isEmpty()){
+            return false;
+        }
+
         File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }
-        String filename = Mfile.getOriginalFilename();
-        Mfile.transferTo(new File(file, filename));
+        String filename = mfile.getOriginalFilename();
+        mfile.transferTo(new File(file, filename));
+        return true;
+    }
+    public static String getFilePath() throws IOException {
+        File directory = new File("");// 参数为空
+        String path = directory.getCanonicalPath()+"\\upload";
+        return path;
     }
 }

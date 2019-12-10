@@ -17,5 +17,7 @@ public interface PlatformApplicationMapper {
 
     Page<PlatformApplication> selectAll();
 
+    Page<PlatformApplication> selectByPage(Integer cId);
+
     int updateByPrimaryKey(PlatformApplication record);
 }

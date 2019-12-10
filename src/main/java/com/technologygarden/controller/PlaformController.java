@@ -3,9 +3,11 @@ package com.technologygarden.controller;
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.PlatformApplication;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.Role;
 import com.technologygarden.service.PlaformService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,9 +26,9 @@ private final PlaformService plaformService;
         this.plaformService = plaformService;
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取平台申请列表", notes = "参数包括：页数，每页数量")
-    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(Integer pageNum, Integer pageSize){
-        return plaformService.getPlatformApplicationByPage(pageNum,pageSize);
+    @ApiOperation(value = "分页获取平台申请列表", notes = "参数包括：页数，每页数量,当前对象Role")
+    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Role role){
+        return plaformService.getPlatformApplicationByPage(pageNum,pageSize,role.getInfoid());
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.POST)
     @ApiOperation(value = "新增平台申请", notes = "参数包括：PlatformApplication对象包含当前登录Role对象")
@@ -41,10 +43,10 @@ private final PlaformService plaformService;
         return plaformService.updatePlatformApplication(platformApplication);
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.DELETE)
-    @ApiOperation(value = "平台申请删除", notes = "参数包括：PlatformApplication对象")
-    public ResultBean deletePlatformApplication(@RequestBody PlatformApplication platformApplication){
+    @ApiOperation(value = "平台申请删除", notes = "参数包括：PlatformApplication对象的pId")
+    public ResultBean deletePlatformApplication(@RequestBody Integer pId){
 
-        return plaformService.deletePlatformApplication(platformApplication.getPId());
+        return plaformService.deletePlatformApplication(pId);
     }
 
 }

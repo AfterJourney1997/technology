@@ -25,6 +25,8 @@ public class DeclareAward {
 
     private String aName;
 
+    private String filePath;
+
     private MultipartFile blFile;
 
 }

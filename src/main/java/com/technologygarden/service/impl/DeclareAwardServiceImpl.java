@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @Service("DeclareAwardService")
 public class DeclareAwardServiceImpl implements DeclareAwardService {
     private final DeclareAwardMapper declareAwardMapper;
@@ -24,11 +26,13 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
 
 
     @Override
-    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(Integer pageNum, Integer pageSize, Integer cId) {
+    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(Integer pageNum, Integer pageSize, Integer cId) throws IOException {
         PageHelper.startPage(pageNum,pageSize);
         Page<DeclareAward> declareAwardList=declareAwardMapper.getDeclareAwardByPage(cId);
         for(DeclareAward declareAward:declareAwardList){
             declareAward.setAName(awardsMapper.selectByPrimaryKey(declareAward.getAId()).getAwardsName());
+            String filePath=FilUploadUtils.getFilePath()+"\\"+declareAward.getFilename();
+            declareAward.setFilePath(filePath);
         }
         return new ResultBean<>(declareAwardList);
     }
@@ -37,7 +41,7 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
     public ResultBean insertDeclareAward(DeclareAward declareAward) {
         declareAward.setCId(declareAward.getRole().getInfoid());
         MultipartFile blFile=declareAward.getBlFile();
-        //declareAward.setFilename(blFile.getOriginalFilename());
+        declareAward.setFilename(blFile.getOriginalFilename());
         try {
             FilUploadUtils.saveFile(blFile);
         }catch (Exception e){

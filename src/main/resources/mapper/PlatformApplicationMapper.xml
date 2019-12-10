@@ -39,4 +39,9 @@
     select p_Id, p_name, p_category, p_grade, c_Id, status
     from technology.platform_application
   </select>
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select p_Id, p_name, p_category, p_grade, c_Id, status
+    from technology.platform_application
+    where c_Id = #{cId,jdbcType=INTEGER}
+  </select>
 </mapper>

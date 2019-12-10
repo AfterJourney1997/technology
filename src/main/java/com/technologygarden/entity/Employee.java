@@ -25,7 +25,7 @@ public class Employee {
 
     private String fileName;
 
-    private MultipartFile blFilm;
+    private MultipartFile blFile;
 
     private Integer cId;
 
@@ -34,5 +34,8 @@ public class Employee {
     private String xName;
 
     private Role role;
+
+    private String filePath;
+
 
 }
