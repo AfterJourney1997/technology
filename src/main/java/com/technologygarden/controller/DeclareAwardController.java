@@ -30,9 +30,9 @@ public class DeclareAwardController {
         this.declareAwardService = declareAwardService;
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
-    @ApiOperation(value = "获取分页奖项申报列表", notes = "参数包括：页数,每页数量,当前role对象,均必填")
-    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Role role) throws IOException {
-        return declareAwardService.getDeclareAwardByPage(pageNum,pageSize,role.getInfoid());
+    @ApiOperation(value = "获取分页奖项申报列表", notes = "参数包括：页数,每页数量,当前role对象的infoid,均必填")
+    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId) throws IOException {
+        return declareAwardService.getDeclareAwardByPage(pageNum,pageSize,cId);
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)

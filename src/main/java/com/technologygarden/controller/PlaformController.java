@@ -26,9 +26,9 @@ private final PlaformService plaformService;
         this.plaformService = plaformService;
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取平台申请列表", notes = "参数包括：页数，每页数量,当前对象Role")
-    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Role role){
-        return plaformService.getPlatformApplicationByPage(pageNum,pageSize,role.getInfoid());
+    @ApiOperation(value = "分页获取平台申请列表", notes = "参数包括：页数，每页数量,当前对象Role的infoid")
+    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId){
+        return plaformService.getPlatformApplicationByPage(pageNum,pageSize,cId);
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.POST)
     @ApiOperation(value = "新增平台申请", notes = "参数包括：PlatformApplication对象包含当前登录Role对象")

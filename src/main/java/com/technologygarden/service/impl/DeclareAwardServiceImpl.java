@@ -32,21 +32,19 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
         for(DeclareAward declareAward:declareAwardList){
             declareAward.setAName(awardsMapper.selectByPrimaryKey(declareAward.getAId()).getAwardsName());
             String filePath=FilUploadUtils.getFilePath()+"\\"+declareAward.getFilename();
+            declareAward.setFilename(FilUploadUtils.getfileName(declareAward.getFilename()));
             declareAward.setFilePath(filePath);
         }
         return new ResultBean<>(declareAwardList);
     }
 
     @Override
-    public ResultBean insertDeclareAward(DeclareAward declareAward) {
+    public ResultBean insertDeclareAward(DeclareAward declareAward) throws IOException {
         declareAward.setCId(declareAward.getRole().getInfoid());
         MultipartFile blFile=declareAward.getBlFile();
         declareAward.setFilename(blFile.getOriginalFilename());
-        try {
-            FilUploadUtils.saveFile(blFile);
-        }catch (Exception e){
-
-        }
+        String UUName=FilUploadUtils.saveFile(blFile);
+        declareAward.setFilename(UUName);
         return new ResultBean(declareAwardMapper.insert(declareAward));
     }
 }

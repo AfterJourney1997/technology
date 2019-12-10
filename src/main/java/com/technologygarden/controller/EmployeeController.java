@@ -1,5 +1,6 @@
 package com.technologygarden.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Employee;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -26,9 +27,9 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取员工列表", notes = "参数包括：页数，每页数量，当前登录对象，均必填")
-    public ResultBean<Page<Employee>> getEmployeeByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Role role) throws IOException {
-        return employeeService.selectByPage(pageNum,pageSize,role.getInfoid());
+    @ApiOperation(value = "分页获取员工列表", notes = "参数包括：页数，每页数量，当前登录对象的infoid，均必填")
+    public ResultBean<Page<Employee>> getEmployeeByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId) throws IOException {
+        return employeeService.selectByPage(pageNum,pageSize,cId);
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
@@ -47,8 +48,8 @@ public class EmployeeController {
         return employeeService.deleteEmployee(eId);
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)
-    @ApiOperation(value = "按名称分页获取员工列表", notes = "参数包括：页数，每页数量，当前登录对象，搜索内容，均必填")
-    public ResultBean<Page<Employee>> selectByNamePage(@NonNull Integer pageNum, @NonNull Integer pageSize, Role role,String employeeName) throws IOException {
-        return employeeService.selectByNamePage(pageNum,pageSize,role.getInfoid(),employeeName);
+    @ApiOperation(value = "按名称分页获取员工列表", notes = "参数包括：页数，每页数量，当前登录对象的infoid，搜索内容，均必填")
+    public ResultBean<Page<Employee>> selectByNamePage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId,@NonNull String employeeName) throws IOException {
+        return employeeService.selectByNamePage(pageNum,pageSize,cId,employeeName);
     }
 }

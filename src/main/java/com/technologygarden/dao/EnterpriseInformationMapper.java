@@ -8,11 +8,11 @@ import java.util.List;
 @Mapper
 @Component
 public interface EnterpriseInformationMapper {
-    int deleteByPrimaryKey(Integer eId);
+    int deleteByPrimaryKey(Integer cId);
 
     int insert(EnterpriseInformation record);
 
-    EnterpriseInformation selectByPrimaryKey(Integer eId);
+    EnterpriseInformation selectByPrimaryKey(Integer cId);
 
     List<EnterpriseInformation> selectAll();
 

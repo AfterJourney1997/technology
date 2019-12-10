@@ -33,7 +33,7 @@ public class Employee {
 
     private String xName;
 
-    private Role role;
+    private Role role=null;
 
     private String filePath;
 

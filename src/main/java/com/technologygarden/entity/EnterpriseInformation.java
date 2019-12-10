@@ -1,37 +1,49 @@
 package com.technologygarden.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
 @Data
-@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnterpriseInformation {
-    private Integer eId;
+    private Integer cId;
 
-    private String eName;
+    private String cName;
 
-    private String eCategory;
+    private String cCategory;
 
-    private String eCode;
+    private String cLegalperson;
+
+    private String cCode;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
-    private Date eDate;
+    private Date cDate;
 
     private String taxpayerType;
 
-    private Double eFund;
+    private Double cFund;
 
-    private String eProduct;
+    private String cProduct;
 
     private String fileName;
 
+    private Integer cEmployee;
+
+    private String cInformation;
+
+    private Integer cStatus;
+
     private MultipartFile blFile;
 
-    private Role role =null;
+    private String filePath;
 
-    }
+    private Role role;
+
+}

@@ -2,51 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.technologygarden.dao.EnterpriseInformationMapper">
   <resultMap id="BaseResultMap" type="com.technologygarden.entity.EnterpriseInformation">
-    <id column="e_Id" jdbcType="INTEGER" property="eId" />
-    <result column="e_name" jdbcType="VARCHAR" property="eName" />
-    <result column="e_category" jdbcType="VARCHAR" property="eCategory" />
-    <result column="e_code" jdbcType="CHAR" property="eCode" />
-    <result column="e_date" jdbcType="DATE" property="eDate" />
+    <id column="c_Id" jdbcType="INTEGER" property="cId" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="c_category" jdbcType="VARCHAR" property="cCategory" />
+    <result column="c_legalPerson" jdbcType="VARCHAR" property="cLegalperson" />
+    <result column="c_code" jdbcType="CHAR" property="cCode" />
+    <result column="c_date" jdbcType="TIMESTAMP" property="cDate" />
     <result column="taxpayer_Type" jdbcType="VARCHAR" property="taxpayerType" />
-    <result column="e_fund" jdbcType="DOUBLE" property="eFund" />
-    <result column="e_product" jdbcType="VARCHAR" property="eProduct" />
+    <result column="c_fund" jdbcType="DOUBLE" property="cFund" />
+    <result column="c_product" jdbcType="VARCHAR" property="cProduct" />
     <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="c_employee" jdbcType="INTEGER" property="cEmployee" />
+    <result column="c_information" jdbcType="VARCHAR" property="cInformation" />
+    <result column="c_status" jdbcType="INTEGER" property="cStatus" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from technology.enterprise_information
-    where e_Id = #{eId,jdbcType=INTEGER}
+    where c_Id = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.EnterpriseInformation">
-    insert into technology.enterprise_information (e_Id, e_name, e_category,
-      e_code, e_date, taxpayer_Type, 
-      e_fund, e_product, file_name
-      )
-    values (#{eId,jdbcType=INTEGER}, #{eName,jdbcType=VARCHAR}, #{eCategory,jdbcType=VARCHAR}, 
-      #{eCode,jdbcType=CHAR}, #{eDate,jdbcType=DATE}, #{taxpayerType,jdbcType=VARCHAR}, 
-      #{eFund,jdbcType=DOUBLE}, #{eProduct,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}
-      )
+    insert into technology.enterprise_information (c_Id, c_name, c_category,
+      c_legalPerson, c_code, c_date, 
+      taxpayer_Type, c_fund, c_product, 
+      file_name, c_employee, c_information, 
+      c_status)
+    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR}, 
+      #{cLegalperson,jdbcType=VARCHAR}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=TIMESTAMP}, 
+      #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR}, 
+      #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR}, 
+      #{cStatus,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
     update technology.enterprise_information
-    set e_name = #{eName,jdbcType=VARCHAR},
-      e_category = #{eCategory,jdbcType=VARCHAR},
-      e_code = #{eCode,jdbcType=CHAR},
-      e_date = #{eDate,jdbcType=DATE},
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_category = #{cCategory,jdbcType=VARCHAR},
+      c_legalPerson = #{cLegalperson,jdbcType=VARCHAR},
+      c_code = #{cCode,jdbcType=CHAR},
+      c_date = #{cDate,jdbcType=TIMESTAMP},
       taxpayer_Type = #{taxpayerType,jdbcType=VARCHAR},
-      e_fund = #{eFund,jdbcType=DOUBLE},
-      e_product = #{eProduct,jdbcType=VARCHAR},
-      file_name = #{fileName,jdbcType=VARCHAR}
-    where e_Id = #{eId,jdbcType=INTEGER}
+      c_fund = #{cFund,jdbcType=DOUBLE},
+      c_product = #{cProduct,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      c_employee = #{cEmployee,jdbcType=INTEGER},
+      c_information = #{cInformation,jdbcType=VARCHAR},
+      c_status = #{cStatus,jdbcType=INTEGER}
+    where c_Id = #{cId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select e_Id, e_name, e_category, e_code, e_date, taxpayer_Type, e_fund, e_product, 
-    file_name
+    select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund, 
+    c_product, file_name, c_employee, c_information, c_status
     from technology.enterprise_information
-    where e_Id = #{eId,jdbcType=INTEGER}
+    where c_Id = #{cId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select e_Id, e_name, e_category, e_code, e_date, taxpayer_Type, e_fund, e_product, 
-    file_name
+    select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund, 
+    c_product, file_name, c_employee, c_information, c_status
     from technology.enterprise_information
   </select>
 </mapper>

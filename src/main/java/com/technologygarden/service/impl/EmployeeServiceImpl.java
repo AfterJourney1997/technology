@@ -41,6 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ResultBean insertEmployee(Employee employee) throws IOException {
+        System.out.println(employee);
         FilUploadUtils.saveFile(employee.getBlFile());
         employee.setFileName(employee.getBlFile().getOriginalFilename());
         employee.setCId(employee.getRole().getInfoid());
