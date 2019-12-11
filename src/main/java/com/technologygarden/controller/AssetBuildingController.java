@@ -17,7 +17,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/asset")
-@Api(tags = "资产管理 / 房产接口", value = "AssetBuildingController")
+@Api(tags = "资产管理 / 房区接口", value = "AssetBuildingController")
 public class AssetBuildingController {
 
     private final AssetBuildingService assetBuildingService;

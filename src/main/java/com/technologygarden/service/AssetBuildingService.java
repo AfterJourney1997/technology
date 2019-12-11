@@ -18,4 +18,6 @@ public interface AssetBuildingService {
     ResultBean updateBuildingById(Building building);
 
     ResultBean<Page<Building>> searchBuildingByName(Integer pageNum, Integer pageSize, String buildingName);
+
+    ResultBean<List<Building>> getAllBuilding();
 }

@@ -30,21 +30,21 @@ public class AssetBuildingServiceImpl implements AssetBuildingService {
     }
 
     @Override
-    public ResultBean insertBuildingForeach(List<Building> buildingList) {
+    public ResultBean<?> insertBuildingForeach(List<Building> buildingList) {
         buildingMapper.insertBuildingForeach(buildingList);
-        return new ResultBean();
+        return new ResultBean<>();
     }
 
     @Override
-    public ResultBean deleteBuildingById(Integer buildingId) {
+    public ResultBean<?> deleteBuildingById(Integer buildingId) {
         buildingMapper.deleteByPrimaryKey(buildingId);
-        return new ResultBean();
+        return new ResultBean<>();
     }
 
     @Override
-    public ResultBean updateBuildingById(Building building) {
+    public ResultBean<?> updateBuildingById(Building building) {
         buildingMapper.updateBuildingById(building);
-        return new ResultBean();
+        return new ResultBean<>();
     }
 
     @Override
@@ -54,5 +54,12 @@ public class AssetBuildingServiceImpl implements AssetBuildingService {
         Page<Building> buildingList = buildingMapper.searchBuildingByName(buildingName);
         return new ResultBean<>(buildingList);
 
+    }
+
+    @Override
+    public ResultBean<List<Building>> getAllBuilding() {
+
+        List<Building> buildingList = buildingMapper.selectAll();
+        return new ResultBean<>(buildingList);
     }
 }

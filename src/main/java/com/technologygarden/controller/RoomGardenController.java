@@ -1,10 +1,11 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.technologygarden.entity.Building;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Room;
-import com.technologygarden.entity.RoomGarden;
+import com.technologygarden.service.AssetBuildingService;
 import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.RoomGardenService;
 import io.swagger.annotations.Api;
@@ -23,11 +24,13 @@ public class RoomGardenController {
 
     private final RoomGardenService roomGardenService;
     private final EnterpriseInformationService enterpriseInformationService;
+    private final AssetBuildingService assetBuildingService;
 
     @Autowired
-    public RoomGardenController(RoomGardenService roomGardenService, EnterpriseInformationService enterpriseInformationService) {
+    public RoomGardenController(RoomGardenService roomGardenService, EnterpriseInformationService enterpriseInformationService, AssetBuildingService assetBuildingService) {
         this.roomGardenService = roomGardenService;
         this.enterpriseInformationService = enterpriseInformationService;
+        this.assetBuildingService = assetBuildingService;
     }
 
     @RequestMapping(value = "/garden", method = RequestMethod.GET)
@@ -75,6 +78,14 @@ public class RoomGardenController {
     public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
 
         return enterpriseInformationService.getEnterpriseInformationList();
+
+    }
+
+    @RequestMapping(value = "/garden/building", method = RequestMethod.GET)
+    @ApiOperation(value = "获取全部房区的列表", notes = "参数包括：无")
+    public ResultBean<List<Building>> getBuildingList() {
+
+        return assetBuildingService.getAllBuilding();
 
     }
 

@@ -1,7 +1,6 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
-import com.technologygarden.entity.Building;
 import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.AssetAssetCountService;

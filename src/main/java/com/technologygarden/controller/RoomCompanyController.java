@@ -1,17 +1,17 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.technologygarden.entity.Building;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Room;
-import com.technologygarden.entity.RoomCompany;
+import com.technologygarden.service.AssetBuildingService;
 import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.RoomCompanyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,11 +24,13 @@ public class RoomCompanyController {
 
     private final RoomCompanyService roomCompanyService;
     private final EnterpriseInformationService enterpriseInformationService;
+    private final AssetBuildingService assetBuildingService;
 
     @Autowired
-    public RoomCompanyController(RoomCompanyService roomCompanyService, EnterpriseInformationService enterpriseInformationService) {
+    public RoomCompanyController(RoomCompanyService roomCompanyService, EnterpriseInformationService enterpriseInformationService, AssetBuildingService assetBuildingService) {
         this.roomCompanyService = roomCompanyService;
         this.enterpriseInformationService = enterpriseInformationService;
+        this.assetBuildingService = assetBuildingService;
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
@@ -76,6 +78,14 @@ public class RoomCompanyController {
     public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
 
         return enterpriseInformationService.getEnterpriseInformationList();
+
+    }
+
+    @RequestMapping(value = "/company/building", method = RequestMethod.GET)
+    @ApiOperation(value = "获取全部房区的列表", notes = "参数包括：无")
+    public ResultBean<List<Building>> getBuildingList() {
+
+        return assetBuildingService.getAllBuilding();
 
     }
 }
