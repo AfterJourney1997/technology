@@ -27,17 +27,17 @@ private final PlaformService plaformService;
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取平台申请列表", notes = "参数包括：页数，每页数量,当前对象Role的infoid")
-    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId){
-        return plaformService.getPlatformApplicationByPage(pageNum,pageSize,cId);
+    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid){
+        return plaformService.getPlatformApplicationByPage(pageNum,pageSize,infoid);
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.POST)
-    @ApiOperation(value = "新增平台申请", notes = "参数包括：PlatformApplication对象包含当前登录Role对象")
+    @ApiOperation(value = "新增平台申请", notes = "参数包括：PlatformApplication对象包含当前登录对象infoid")
     public ResultBean insertPlatformApplication(@RequestBody PlatformApplication platformApplication){
 
         return plaformService.insertPlatformApplication(platformApplication);
     }
     @RequestMapping(value = "/plaform", method = RequestMethod.PUT)
-    @ApiOperation(value = "平台申请修改", notes = "参数包括：PlatformApplication对象包含当前登录Role对象")
+    @ApiOperation(value = "平台申请修改", notes = "参数包括：PlatformApplication对象包含当前登录对象infoid")
     public ResultBean updatePlatformApplication(@RequestBody PlatformApplication platformApplication){
 
         return plaformService.updatePlatformApplication(platformApplication);

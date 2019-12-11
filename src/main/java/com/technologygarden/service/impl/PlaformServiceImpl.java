@@ -37,13 +37,13 @@ public class PlaformServiceImpl implements PlaformService {
 
     @Override
     public ResultBean insertPlatformApplication(PlatformApplication platformApplication) {
-        platformApplication.setCId(platformApplication.getRole().getInfoid());
+        platformApplication.setCId(platformApplication.getInfoid());
         return new ResultBean(platformApplicationMapper.insert(platformApplication));
     }
 
     @Override
     public ResultBean updatePlatformApplication(PlatformApplication platformApplication) {
-        platformApplication.setCId(platformApplication.getRole().getInfoid());
+        platformApplication.setCId(platformApplication.getInfoid());
         return new ResultBean(platformApplicationMapper.updateByPrimaryKey(platformApplication));
     }
 

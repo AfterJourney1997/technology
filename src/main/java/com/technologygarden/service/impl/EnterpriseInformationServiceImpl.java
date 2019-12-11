@@ -3,7 +3,6 @@ package com.technologygarden.service.impl;
 import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
-import com.technologygarden.entity.Role;
 import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.util.FilUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +17,31 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
     public EnterpriseInformationServiceImpl(EnterpriseInformationMapper enterpriseInformationMapper) {
         this.enterpriseInformationMapper = enterpriseInformationMapper;
     }
-
+//入住申请提交
     @Override
     public ResultBean updateEnterpriseInformation(EnterpriseInformation enterpriseInformation) throws IOException {
         String UUName=FilUploadUtils.saveFile(enterpriseInformation.getBlFile());
         enterpriseInformation.setFileName(UUName);
         enterpriseInformation.setFileName(enterpriseInformation.getBlFile().getOriginalFilename());
+        enterpriseInformation.setCId(enterpriseInformation.getInfoid());
+        System.out.println(enterpriseInformation);
         return new ResultBean(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
     }
 
     @Override
-    public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer cId) throws IOException {
-        EnterpriseInformation enterpriseInformation= enterpriseInformationMapper.selectByPrimaryKey(cId);
+    public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer info) throws IOException {
+        EnterpriseInformation enterpriseInformation= enterpriseInformationMapper.selectByPrimaryKey(info);
         enterpriseInformation.setFilePath(FilUploadUtils.getFilePath()+"\\"+enterpriseInformation.getFileName());
         enterpriseInformation.setFileName(FilUploadUtils.getfileName(enterpriseInformation.getFileName()));
-        return new ResultBean<>(enterpriseInformationMapper.selectByPrimaryKey(cId));
+        return new ResultBean<>(enterpriseInformation);
     }
 
     @Override
-    public ResultBean updateByPrimaryKey(EnterpriseInformation enterpriseInformation) {
-        Role role=enterpriseInformation.getRole();
-        EnterpriseInformation enterprise=enterpriseInformationMapper.selectByPrimaryKey(role.getInfoid());
+    public ResultBean updateByPrimaryKey(EnterpriseInformation enterpriseInformation) throws IOException {
+        String UUName= FilUploadUtils.saveFile(enterpriseInformation.getBlFile());//保存文件
+        Integer infoid=enterpriseInformation.getInfoid();
+        EnterpriseInformation enterprise=enterpriseInformationMapper.selectByPrimaryKey(infoid);
+        enterpriseInformation.setFileName(UUName);//获取文件名
         enterprise.setCName(enterpriseInformation.getCName());//企业名称
         enterprise.setCCategory(enterpriseInformation.getCCategory());//企业类别
         enterprise.setCLegalperson(enterpriseInformation.getCLegalperson());//法人
@@ -47,7 +50,7 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
         enterprise.setCProduct(enterpriseInformation.getCProduct());//主要产品
         enterprise.setCEmployee(enterpriseInformation.getCEmployee());//入职员工数
         enterprise.setCInformation(enterpriseInformation.getCInformation());//员工信息
-        enterprise.setFileName(enterpriseInformation.getBlFile().getOriginalFilename());//附件名
-        return new ResultBean(enterprise);
+        enterprise.setFileName(enterpriseInformation.getFileName());//附件名
+        return new ResultBean(enterpriseInformationMapper.updateByPrimaryKey(enterprise));
     }
 }

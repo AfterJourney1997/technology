@@ -26,7 +26,7 @@ public class CooperationServiceImpl implements CooperationService {
 
     @Override
     public ResultBean insertCooperation(Cooperation cooperation) {
-        cooperation.setCId(cooperation.getRole().getInfoid());
+        cooperation.setCId(cooperation.getInfoid());
         return new ResultBean(cooperationMapper.insert(cooperation));
     }
 

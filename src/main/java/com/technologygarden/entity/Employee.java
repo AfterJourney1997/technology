@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.Serializable;
+
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee {
+public class Employee implements Serializable {
     private Integer eId;
 
     private String eName;
@@ -29,13 +31,13 @@ public class Employee {
 
     private Integer cId;
 
-    private String zName;
+    private String zName;//用来显示政治面貌，前端便于显示
 
-    private String xName;
+    private String xName;//用来显示学历，前端便于显示
 
-    private Role role=null;
+    private Integer infoid;//用来接收前端对象的infoid
 
-    private String filePath;
+    private String filePath;//用来返回给前端文件的路径
 
 
 }

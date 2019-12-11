@@ -22,6 +22,6 @@ public class PlatformApplication {
 
     private String cName;
 
-    private Role role =null;
+    private Integer infoid;//获取当前登录对象的infoid
 
 }

@@ -26,11 +26,11 @@ public class CooperationController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "获取分页合作列表", notes = "参数包括：页数,每页数量,当前role对象的infoid,均必填")
-    public ResultBean<Page<Cooperation>> getCooperationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId){
-        return cooperationService.getCooperationByPage(pageNum,pageSize,cId);
+    public ResultBean<Page<Cooperation>> getCooperationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid){
+        return cooperationService.getCooperationByPage(pageNum,pageSize,infoid);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    @ApiOperation(value = "新增合作", notes = "参数包括：cooperation对象包含Role对象")
+    @ApiOperation(value = "新增合作", notes = "参数包括：cooperation对象包含当前登录对象的infoid")
     public ResultBean insertCooperation(@RequestBody Cooperation cooperation){
         return cooperationService.insertCooperation(cooperation);
     }

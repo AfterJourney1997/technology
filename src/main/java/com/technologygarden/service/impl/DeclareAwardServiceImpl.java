@@ -40,11 +40,15 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
 
     @Override
     public ResultBean insertDeclareAward(DeclareAward declareAward) throws IOException {
-        declareAward.setCId(declareAward.getRole().getInfoid());
+        declareAward.setCId(declareAward.getInfoid());
         MultipartFile blFile=declareAward.getBlFile();
-        declareAward.setFilename(blFile.getOriginalFilename());
         String UUName=FilUploadUtils.saveFile(blFile);
         declareAward.setFilename(UUName);
         return new ResultBean(declareAwardMapper.insert(declareAward));
+    }
+
+    @Override
+    public ResultBean deleteDeclareAward(Integer dId) {
+        return new ResultBean(declareAwardMapper.deleteByPrimaryKey(dId));
     }
 }

@@ -40,10 +40,10 @@ public class EnterpriseInformation {
 
     private Integer cStatus;
 
-    private MultipartFile blFile;
+    private MultipartFile blFile;//用来接受文件
 
-    private String filePath;
+    private String filePath;//用来返回给前端文件路径
 
-    private Role role;
+    private Integer infoid;//接受当前用户的infoid
 
 }

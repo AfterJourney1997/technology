@@ -23,8 +23,8 @@ public class ServiceApplication {
 
     private Integer cId;
 
-    private String servicename;
+    private String servicename;//存放maintain对应的servicename服务名，便于显示
 
-    private Role role=null;
+    private Integer infoid;//存放当前登录对象的infoid
 
 }

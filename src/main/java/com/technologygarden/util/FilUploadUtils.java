@@ -37,6 +37,9 @@ public class FilUploadUtils {
     * 去除UUID，获得fileName
     * */
     public static String getfileName(String UUName) {
+        if(UUName.length()<=32){
+            return UUName;
+        }
         StringBuffer sb = new StringBuffer();
         for (int i =32; i < UUName.length(); i++) {
             sb.append(UUName.charAt(i));

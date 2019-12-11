@@ -21,12 +21,12 @@ public class DeclareAward {
 
     private Integer cId;
 
-    private Role role=null;
+    private Integer infoid;//用来接收当前用户的infoid
 
-    private String aName;
+    private String aName;//存放aId对应的名字，奖项名称
 
-    private String filePath;
+    private String filePath;//用来存放文件路径
 
-    private MultipartFile blFile;
+    private MultipartFile blFile;//用来接受文件
 
 }

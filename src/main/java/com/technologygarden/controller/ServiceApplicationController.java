@@ -29,9 +29,9 @@ public class ServiceApplicationController {
         this.maintainService = maintainService;
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
-    @ApiOperation(value = "获取分页服务申请列表", notes = "参数包括：页数,每页数量,当前role对象的infoid,均必填")
-    public ResultBean<Page<ServiceApplication>> getServiceApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer cId){
-        return serviceApplicationService.getServiceApplicationByPage(pageNum,pageSize,cId);
+    @ApiOperation(value = "获取分页服务申请列表", notes = "参数包括：页数,每页数量,当前登录对象的infoid,均必填")
+    public ResultBean<Page<ServiceApplication>> getServiceApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer infoid){
+        return serviceApplicationService.getServiceApplicationByPage(pageNum,pageSize,infoid);
     }
     @RequestMapping(value = "/maintain", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有的服务", notes = "参数包括：")
@@ -39,9 +39,9 @@ public class ServiceApplicationController {
         return maintainService.selectAll();
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    @ApiOperation(value = "新增服务申请", notes = "参数包括：date申请时间，服务id，当前对象role")
+    @ApiOperation(value = "新增服务申请", notes = "参数包括：date申请时间，服务id，当前登录对象的infoid")
     public ResultBean insertServiceApplication(@RequestBody ServiceApplication serviceApplication){
-        serviceApplication.setCId(serviceApplication.getRole().getInfoid());
+        serviceApplication.setCId(serviceApplication.getInfoid());
         return new ResultBean(serviceApplicationService.insertServiceApplication(serviceApplication));
     }
     @RequestMapping(value = "/manage", method = RequestMethod.PUT)

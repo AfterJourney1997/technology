@@ -32,6 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> employeeList=employeeMapper.selectByPage(cId);
         for(Employee employee:employeeList){
             String filePath=FilUploadUtils.getFilePath()+"\\"+employee.getFileName();
+            employee.setFileName(FilUploadUtils.getfileName(employee.getFileName()));
             employee.setFilePath(filePath);
             employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
             employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
@@ -42,16 +43,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResultBean insertEmployee(Employee employee) throws IOException {
         System.out.println(employee);
-        FilUploadUtils.saveFile(employee.getBlFile());
-        employee.setFileName(employee.getBlFile().getOriginalFilename());
-        employee.setCId(employee.getRole().getInfoid());
+        String UUName=FilUploadUtils.saveFile(employee.getBlFile());
+        employee.setFileName(UUName);
+        employee.setCId(employee.getInfoid());
         return new ResultBean(employeeMapper.insert(employee));
     }
 
     @Override
     public ResultBean updateEmployee(Employee employee) throws IOException {
-        FilUploadUtils.saveFile(employee.getBlFile());
-        employee.setFileName(employee.getBlFile().getOriginalFilename());
+        String UUName=FilUploadUtils.saveFile(employee.getBlFile());
+        employee.setFileName(UUName);
         return new ResultBean(employeeMapper.updateByPrimaryKey(employee));
     }
 
@@ -66,6 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> employeeList=employeeMapper.selectByNamePage(cId,employeeName);
         for(Employee employee:employeeList){
             String filePath=FilUploadUtils.getFilePath()+"\\"+employee.getFileName();
+            employee.setFileName(FilUploadUtils.getfileName(employee.getFileName()));
             employee.setFilePath(filePath);
             employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
             employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());

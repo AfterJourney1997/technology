@@ -18,6 +18,6 @@ public class Opinion {
 
     private Integer cId;
 
-    private Role role=null;
+    private Integer infoid;//获取当前登录对象的infoid
 
 }

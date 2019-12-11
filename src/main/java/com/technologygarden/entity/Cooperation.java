@@ -30,6 +30,6 @@ public class Cooperation {
 
     private Integer cId;
 
-    private Role role=null;
+    private Integer infoid;
 
 }

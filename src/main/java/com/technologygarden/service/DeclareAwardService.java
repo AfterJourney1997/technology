@@ -10,4 +10,5 @@ import java.io.IOException;
 public interface DeclareAwardService {
     public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(Integer pageNum, Integer pageSize,Integer cId) throws IOException;
     public ResultBean insertDeclareAward(DeclareAward declareAward) throws IOException;
+    public ResultBean deleteDeclareAward(Integer dId);
 }

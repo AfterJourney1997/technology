@@ -26,11 +26,11 @@ public class OpinionController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取意见列表", notes = "参数包括：页数，每页数量，当前Role对象的infoid")
-    public ResultBean<Page<Opinion>> getOpinionByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId){
-        return opinionService.getOpinionByPage(pageNum,pageSize,cId);
+    public ResultBean<Page<Opinion>> getOpinionByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid){
+        return opinionService.getOpinionByPage(pageNum,pageSize,infoid);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    @ApiOperation(value = "新增意见", notes = "参数包括：页数，每页数量，当前Role对象")
+    @ApiOperation(value = "新增意见", notes = "参数包括：Opinion对象，携带当前登录对象的infoid")
     public ResultBean insertOpinionByPage(@RequestBody Opinion opinion){
         return opinionService.insertOpinionByPage(opinion);
     }

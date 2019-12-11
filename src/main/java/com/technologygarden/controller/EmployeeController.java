@@ -28,13 +28,15 @@ public class EmployeeController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取员工列表", notes = "参数包括：页数，每页数量，当前登录对象的infoid，均必填")
-    public ResultBean<Page<Employee>> getEmployeeByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId) throws IOException {
-        return employeeService.selectByPage(pageNum,pageSize,cId);
+    public ResultBean<Page<Employee>> getEmployeeByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid) throws IOException {
+        System.out.println(pageNum+pageSize+infoid);
+        return employeeService.selectByPage(pageNum,pageSize,infoid);
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    @ApiOperation(value = "新增员工", notes = "参数包括：员工对象employee包含当前登录role对象,政治面貌和学位传对应的Id")
+    @ApiOperation(value = "新增员工", notes = "参数包括：员工对象employee包含当前登录对象的infoid,政治面貌和学位传对应的Id")
     public ResultBean insertEmployee(Employee employee) throws IOException {
+        System.out.println(employee);
         return employeeService.insertEmployee(employee);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.PUT)
@@ -49,7 +51,7 @@ public class EmployeeController {
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)
     @ApiOperation(value = "按名称分页获取员工列表", notes = "参数包括：页数，每页数量，当前登录对象的infoid，搜索内容，均必填")
-    public ResultBean<Page<Employee>> selectByNamePage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId,@NonNull String employeeName) throws IOException {
-        return employeeService.selectByNamePage(pageNum,pageSize,cId,employeeName);
+    public ResultBean<Page<Employee>> selectByNamePage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid,@NonNull String employeeName) throws IOException {
+        return employeeService.selectByNamePage(pageNum,pageSize,infoid,employeeName);
     }
 }

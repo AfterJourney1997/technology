@@ -25,7 +25,7 @@ public class OpinionServiceImpl implements OpinionService {
 
     @Override
     public ResultBean insertOpinionByPage(Opinion opinion) {
-        opinion.setCId(opinion.getRole().getInfoid());
+        opinion.setCId(opinion.getInfoid());
         return new ResultBean(opinionMapper.insert(opinion));
     }
 

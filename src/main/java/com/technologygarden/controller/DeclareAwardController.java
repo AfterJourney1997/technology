@@ -30,15 +30,20 @@ public class DeclareAwardController {
         this.declareAwardService = declareAwardService;
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
-    @ApiOperation(value = "获取分页奖项申报列表", notes = "参数包括：页数,每页数量,当前role对象的infoid,均必填")
-    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer cId) throws IOException {
-        return declareAwardService.getDeclareAwardByPage(pageNum,pageSize,cId);
+    @ApiOperation(value = "获取分页奖项申报列表", notes = "参数包括：页数,每页数量,当前登录对象的infoid,均必填")
+    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid) throws IOException {
+        return declareAwardService.getDeclareAwardByPage(pageNum,pageSize,infoid);
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    @ApiOperation(value = "添加申报奖项", notes = "参数：奖项申报对象")
+    @ApiOperation(value = "添加申报奖项", notes = "参数：奖项申报对象，infoid写到DeclareAward对象里")
     public ResultBean insertDeclareAward(DeclareAward declareAward) throws IOException {
         return declareAwardService.insertDeclareAward(declareAward);
+    }
+    @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
+    @ApiOperation(value = "取消申报奖项", notes = "参数：奖项申报对象的dId主键")
+    public ResultBean deleteDeclareAward(Integer dId) throws IOException {
+        return declareAwardService.deleteDeclareAward(dId);
     }
 
 }

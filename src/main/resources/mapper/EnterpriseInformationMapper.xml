@@ -6,7 +6,7 @@
     <result column="c_name" jdbcType="VARCHAR" property="cName" />
     <result column="c_category" jdbcType="VARCHAR" property="cCategory" />
     <result column="c_legalPerson" jdbcType="VARCHAR" property="cLegalperson" />
-    <result column="c_code" jdbcType="CHAR" property="cCode" />
+    <result column="c_code" jdbcType="VARCHAR" property="cCode" />
     <result column="c_date" jdbcType="TIMESTAMP" property="cDate" />
     <result column="taxpayer_Type" jdbcType="VARCHAR" property="taxpayerType" />
     <result column="c_fund" jdbcType="DOUBLE" property="cFund" />
@@ -27,7 +27,7 @@
       file_name, c_employee, c_information, 
       c_status)
     values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR}, 
-      #{cLegalperson,jdbcType=VARCHAR}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=TIMESTAMP}, 
+      #{cLegalperson,jdbcType=VARCHAR}, #{cCode,jdbcType=VARCHAR}, #{cDate,jdbcType=TIMESTAMP},
       #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR}, 
       #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR}, 
       #{cStatus,jdbcType=INTEGER})
@@ -37,7 +37,7 @@
     set c_name = #{cName,jdbcType=VARCHAR},
       c_category = #{cCategory,jdbcType=VARCHAR},
       c_legalPerson = #{cLegalperson,jdbcType=VARCHAR},
-      c_code = #{cCode,jdbcType=CHAR},
+      c_code = #{cCode,jdbcType=VARCHAR},
       c_date = #{cDate,jdbcType=TIMESTAMP},
       taxpayer_Type = #{taxpayerType,jdbcType=VARCHAR},
       c_fund = #{cFund,jdbcType=DOUBLE},
