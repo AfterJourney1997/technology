@@ -6,6 +6,7 @@ import com.technologygarden.entity.Role;
 import io.swagger.models.auth.In;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface EnterpriseInformationService {
 
@@ -14,5 +15,7 @@ public interface EnterpriseInformationService {
     ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer cId) throws IOException;
 
     ResultBean<?> updateByPrimaryKey(EnterpriseInformation enterpriseInformation) throws IOException;
+
+    ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList();
 
 }

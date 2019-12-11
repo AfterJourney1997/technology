@@ -17,4 +17,5 @@ public interface EnterpriseInformationMapper {
     List<EnterpriseInformation> selectAll();
 
     int updateByPrimaryKey(EnterpriseInformation record);
+
 }
