@@ -8,10 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -33,4 +30,22 @@ public class AssetAssetCountController {
         return assetAssetCountService.getAssetCountByPage(pageNum, pageSize);
 
     }
+
+    @RequestMapping(value = "/assetCount/search", method = RequestMethod.GET)
+    @ApiOperation(value = "分页搜索资产统计列表", notes = "参数包括：页数，每页数量，企业名称，房间名称")
+    public ResultBean<Page<CompanyRoomDevice>> searchAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String companyName, String roomName){
+
+        return assetAssetCountService.searchAssetCountByPage(pageNum, pageSize, companyName, roomName);
+
+    }
+
+    @RequestMapping(value = "/assetCount", method = RequestMethod.DELETE)
+    @ApiOperation(value = "回收资产", notes = "参数包括：资产分配对象，只需资产分配id crdId，设备id crdDeviceId，设备分配数量 crdNumber")
+    public ResultBean<?> deleteAssetCount(@RequestBody CompanyRoomDevice companyRoomDevice){
+
+        return assetAssetCountService.deleteAssetCount(companyRoomDevice);
+
+    }
+
+
 }

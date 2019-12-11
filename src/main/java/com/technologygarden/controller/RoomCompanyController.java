@@ -34,7 +34,7 @@ public class RoomCompanyController {
     }
 
     @RequestMapping(value = "/company", method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取企业房产信息列表", notes = "参数包括：页数，每页数量")
+    @ApiOperation(value = "分页获取企业房产信息列表", notes = "参数包括：页数，每页数量（rStatus为房产状态，1为空闲，2为入驻）")
     public ResultBean<Page<Room>> getCompanyGardenByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
         return roomCompanyService.getRoomCompanyByPage(pageNum, pageSize);

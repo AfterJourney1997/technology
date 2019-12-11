@@ -14,5 +14,7 @@ public class CompanyRoomDevice {
     private Integer crdRoomId;
     private Integer crdDeviceId;
     private Integer crdNumber;
+    private Room room = null;
+    private Device device = null;
 
 }
