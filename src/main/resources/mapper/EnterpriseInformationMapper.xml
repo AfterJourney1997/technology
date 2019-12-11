@@ -5,8 +5,8 @@
     <id column="c_Id" jdbcType="INTEGER" property="cId" />
     <result column="c_name" jdbcType="VARCHAR" property="cName" />
     <result column="c_category" jdbcType="VARCHAR" property="cCategory" />
-    <result column="c_legalPerson" jdbcType="VARCHAR" property="cLegalperson" />
-    <result column="c_code" jdbcType="VARCHAR" property="cCode" />
+    <result column="c_legalPerson" jdbcType="INTEGER" property="cLegalperson" />
+    <result column="c_code" jdbcType="CHAR" property="cCode" />
     <result column="c_date" jdbcType="TIMESTAMP" property="cDate" />
     <result column="taxpayer_Type" jdbcType="VARCHAR" property="taxpayerType" />
     <result column="c_fund" jdbcType="DOUBLE" property="cFund" />
@@ -22,22 +22,22 @@
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.EnterpriseInformation">
     insert into technology.enterprise_information (c_Id, c_name, c_category,
-      c_legalPerson, c_code, c_date, 
-      taxpayer_Type, c_fund, c_product, 
-      file_name, c_employee, c_information, 
+      c_legalPerson, c_code, c_date,
+      taxpayer_Type, c_fund, c_product,
+      file_name, c_employee, c_information,
       c_status)
-    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR}, 
-      #{cLegalperson,jdbcType=VARCHAR}, #{cCode,jdbcType=VARCHAR}, #{cDate,jdbcType=TIMESTAMP},
-      #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR}, 
-      #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR}, 
+    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR},
+      #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=TIMESTAMP},
+      #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR},
+      #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR},
       #{cStatus,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
     update technology.enterprise_information
     set c_name = #{cName,jdbcType=VARCHAR},
       c_category = #{cCategory,jdbcType=VARCHAR},
-      c_legalPerson = #{cLegalperson,jdbcType=VARCHAR},
-      c_code = #{cCode,jdbcType=VARCHAR},
+      c_legalPerson = #{cLegalperson,jdbcType=INTEGER},
+      c_code = #{cCode,jdbcType=CHAR},
       c_date = #{cDate,jdbcType=TIMESTAMP},
       taxpayer_Type = #{taxpayerType,jdbcType=VARCHAR},
       c_fund = #{cFund,jdbcType=DOUBLE},

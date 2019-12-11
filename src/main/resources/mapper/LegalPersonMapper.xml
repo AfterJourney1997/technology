@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.LegalPersonMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.LegalPerson">
+    <id column="lp_id" jdbcType="INTEGER" property="lpId" />
+    <result column="lp_name" jdbcType="VARCHAR" property="lpName" />
+    <result column="lp_sex" jdbcType="INTEGER" property="lpSex" />
+    <result column="lp_degree_id" jdbcType="INTEGER" property="lpDegreeId" />
+    <result column="lp_jt_id" jdbcType="INTEGER" property="lpJtId" />
+    <result column="lp_c_name" jdbcType="VARCHAR" property="lpCName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.legal_person
+    where lp_id = #{lpId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.LegalPerson">
+    insert into technology.legal_person (lp_name, lp_sex,
+      lp_degree_id, lp_jt_id, lp_c_name
+      )
+    values (#{lpName,jdbcType=VARCHAR}, #{lpSex,jdbcType=INTEGER},
+      #{lpDegreeId,jdbcType=INTEGER}, #{lpJtId,jdbcType=INTEGER}, #{lpCName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.LegalPerson">
+    update technology.legal_person
+    set lp_name = #{lpName,jdbcType=VARCHAR},
+      lp_sex = #{lpSex,jdbcType=INTEGER},
+      lp_degree_id = #{lpDegreeId,jdbcType=INTEGER},
+      lp_jt_id = #{lpJtId,jdbcType=INTEGER},
+      lp_c_name = #{lpCName,jdbcType=VARCHAR}
+    where lp_id = #{lpId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select lp_id, lp_name, lp_sex, lp_degree_id, lp_jt_id, lp_c_name
+    from technology.legal_person
+    where lp_id = #{lpId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select lp_id, lp_name, lp_sex, lp_degree_id, lp_jt_id, lp_c_name
+    from technology.legal_person
+  </select>
+
+  <select id="selectLegalPersonByPage" resultMap="BaseResultMap">
+    select *
+    from technology.legal_person
+  </select>
+
+  <select id="selectLegalPersonByDegreeId" resultMap="BaseResultMap">
+    select *
+    from technology.legal_person
+    where legal_person.lp_degree_id = #{degreeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectLegalPersonByJobTitleId" resultMap="BaseResultMap">
+    select *
+    from technology.legal_person
+    where legal_person.lp_jt_id = #{jobTitleId,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.LegalPerson">
+    insert into technology.legal_person
+    (lp_name, lp_sex,lp_degree_id, lp_jt_id, lp_c_name)
+    values
+    (#{lpName,jdbcType=VARCHAR}, #{lpSex,jdbcType=INTEGER},#{lpDegreeId,jdbcType=INTEGER},
+    #{lpJtId,jdbcType=INTEGER}, #{lpCName,jdbcType=VARCHAR})
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="lpId">
+      SELECT LAST_INSERT_ID();
+    </selectKey>
+  </insert>
+</mapper>

@@ -13,6 +13,6 @@ public interface EnterpriseInformationService {
 
     ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer cId) throws IOException;
 
-    ResultBean<?> updateByPrimaryKey(EnterpriseInformation enterpriseInformation);
+    ResultBean<?> updateByPrimaryKey(EnterpriseInformation enterpriseInformation) throws IOException;
 
 }

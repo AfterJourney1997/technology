@@ -9,6 +9,8 @@ import com.technologygarden.service.DegreeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("DegreeService")
 public class DegreeServiceImpl implements DegreeService {
     private final DegreeMapper degreeMapper;
@@ -35,8 +37,8 @@ public class DegreeServiceImpl implements DegreeService {
     }
 
     @Override
-    public ResultBean deleteDegree(Integer id) {
-        return new ResultBean(degreeMapper.deleteByPrimaryKey(id));
+    public ResultBean<?> deleteDegree(Integer id) {
+        return new ResultBean<>(degreeMapper.deleteByPrimaryKey(id));
     }
 
     @Override
@@ -44,5 +46,12 @@ public class DegreeServiceImpl implements DegreeService {
         PageHelper.startPage(pageNum,pageSize);
         Page<Degree> degreeList=degreeMapper.searchDegreeName(degreeName);
         return new ResultBean<>(degreeList);
+    }
+
+    @Override
+    public ResultBean<List<Degree>> getAllDegree() {
+
+        List<Degree> degrees = degreeMapper.selectAll();
+        return new ResultBean<>(degrees);
     }
 }

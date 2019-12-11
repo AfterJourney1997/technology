@@ -14,36 +14,24 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnterpriseInformation {
+
     private Integer cId;
-
     private String cName;
-
     private String cCategory;
-
-    private String cLegalperson;
-
+    private Integer cLegalperson;
     private String cCode;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date cDate;
-
     private String taxpayerType;
-
     private Double cFund;
-
     private String cProduct;
-
     private String fileName;
-
     private Integer cEmployee;
-
     private String cInformation;
-
     private Integer cStatus;
-
-    private MultipartFile blFile;//用来接受文件
-
-    private String filePath;//用来返回给前端文件路径
-
-    private Integer infoid;//接受当前用户的infoid
+    private MultipartFile blFile;
+    private String filePath;
+    private Integer infoid;
+    private LegalPerson legalPerson = null;
 
 }
