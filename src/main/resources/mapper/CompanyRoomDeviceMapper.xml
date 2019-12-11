@@ -69,4 +69,15 @@
     set crd_number = #{number,jdbcType=INTEGER}
     where crd_id = #{crdId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectWithInfoByPage" resultMap="AssetCountWithInfo">
+
+  </select>
+  <resultMap id="AssetCountWithInfo" type="com.technologygarden.entity.CompanyRoomDevice">
+    <id column="crd_id" jdbcType="INTEGER" property="crdId" />
+    <result column="crd_company_id" jdbcType="INTEGER" property="crdCompanyId" />
+    <result column="crd_room_id" jdbcType="INTEGER" property="crdRoomId" />
+    <result column="crd_device_id" jdbcType="INTEGER" property="crdDeviceId" />
+    <result column="crd_number" jdbcType="INTEGER" property="crdNumber" />
+  </resultMap>
 </mapper>

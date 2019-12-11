@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@Controller
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/asset")

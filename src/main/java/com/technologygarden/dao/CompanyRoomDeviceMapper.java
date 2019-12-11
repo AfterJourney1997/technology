@@ -1,5 +1,6 @@
 package com.technologygarden.dao;
 
+import com.github.pagehelper.Page;
 import com.technologygarden.entity.CompanyRoomDevice;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,6 @@ public interface CompanyRoomDeviceMapper {
     int updateDynamic(CompanyRoomDevice companyRoomDevice);
 
     int updateNumber(@Param("crdId") Integer crdId, @Param("number") Integer number);
+
+    Page<CompanyRoomDevice> selectWithInfoByPage();
 }

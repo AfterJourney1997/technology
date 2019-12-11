@@ -145,8 +145,8 @@
   </insert>
 
   <select id="searchRoomGardenByPage" resultMap="RoomWithBuilding">
-    select *
-    from technology.room
+    select room.*, building.*
+    from technology.room, technology.building
     <where>
       <if test="buildingId != null">
         and room.r_building_id = #{buildingId,jdbcType=INTEGER}
@@ -158,12 +158,13 @@
         and room.r_status = #{status,jdbcType=INTEGER}
       </if>
       and room.r_room_kind = 1
+      and room.r_building_id = building.id
     </where>
   </select>
 
   <select id="searchRoomCompanyByPage" resultMap="RoomWithBuilding">
-    select *
-    from technology.room
+    select room.*, building.*
+    from technology.room, technology.building
     <where>
       <if test="buildingId != null">
         and room.r_building_id = #{buildingId,jdbcType=INTEGER}
@@ -175,6 +176,7 @@
         and room.r_status = #{status,jdbcType=INTEGER}
       </if>
       and room.r_room_kind = 2
+      and room.r_building_id = building.id
     </where>
   </select>
 
