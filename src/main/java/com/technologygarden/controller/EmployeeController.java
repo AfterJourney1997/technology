@@ -12,6 +12,7 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -34,15 +35,16 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    @ApiOperation(value = "新增员工", notes = "参数包括：员工对象employee包含当前登录对象的infoid,政治面貌和学位传对应的Id")
-    public ResultBean insertEmployee(Employee employee) throws IOException {
-        System.out.println(employee);
-        return employeeService.insertEmployee(employee);
+    @ApiOperation(value = "新增员工", notes = "参数包括：文件数组，员工对象employee包含当前登录对象的infoid,政治面貌和学位传对应的Id")
+    public ResultBean insertEmployee(MultipartFile[] blFile,String employee) throws IOException {
+        Employee employee1 =JSONArray.parseObject(employee,Employee.class);
+        return employeeService.insertEmployee(blFile,employee1);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.PUT)
     @ApiOperation(value = "员工信息修改", notes = "参数包括：员工对象employee,政治面貌和学位传对应的Id")
-    public ResultBean updateEmployee(Employee employee) throws IOException {
-        return employeeService.updateEmployee(employee);
+    public ResultBean updateEmployee(MultipartFile[] blFile,String employee) throws IOException {
+        Employee employee1 =JSONArray.parseObject(employee,Employee.class);
+        return employeeService.updateEmployee(blFile,employee1);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除员工", notes = "参数包括：要删除员工对象对应的eId")

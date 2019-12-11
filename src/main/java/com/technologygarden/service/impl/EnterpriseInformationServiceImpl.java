@@ -1,31 +1,61 @@
 package com.technologygarden.service.impl;
 
+import cn.hutool.core.util.ArrayUtil;
+import com.technologygarden.dao.DegreeMapper;
 import com.technologygarden.dao.EnterpriseInformationMapper;
+import com.technologygarden.dao.JobTitleMapper;
+import com.technologygarden.dao.LegalPersonMapper;
 import com.technologygarden.entity.EnterpriseInformation;
+import com.technologygarden.entity.LegalPerson;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.util.FilUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("EnterpriseInformationService")
 public class EnterpriseInformationServiceImpl implements EnterpriseInformationService {
     private final EnterpriseInformationMapper enterpriseInformationMapper;
+    private final LegalPersonMapper legalPersonMapper;
+    private final DegreeMapper degreeMapper;
+    private final JobTitleMapper jobTitleMapper;
 
     @Autowired
-    public EnterpriseInformationServiceImpl(EnterpriseInformationMapper enterpriseInformationMapper) {
+    public EnterpriseInformationServiceImpl(EnterpriseInformationMapper enterpriseInformationMapper, LegalPersonMapper legalPersonMapper, DegreeMapper degreeMapper, JobTitleMapper jobTitleMapper) {
         this.enterpriseInformationMapper = enterpriseInformationMapper;
+        this.legalPersonMapper = legalPersonMapper;
+        this.degreeMapper = degreeMapper;
+        this.jobTitleMapper = jobTitleMapper;
     }
 
     //入住申请提交
     @Override
+    public ResultBean<?> updateByPrimaryKey(MultipartFile[] blFile,EnterpriseInformation enterpriseInformation) throws IOException {
+        String []fileNameList=new String[blFile.length];
+        String UUName;
+        int i=0;
+        for (MultipartFile file:blFile){
+            UUName=FilUploadUtils.saveFile(file);
+            fileNameList[i]=UUName;
+            i++;
+        }
+        LegalPerson legalPerson=enterpriseInformation.getLegalPerson();
+        legalPersonMapper.insertReturnPrimaryKey(legalPerson);
+        String fileName = ArrayUtil.join(fileNameList, "/");//保存文件
+        Integer infoid = enterpriseInformation.getInfoid();;
+        enterpriseInformation.setCId(infoid);
+        enterpriseInformation.setCLegalperson(legalPerson.getLpDegreeId());
+        enterpriseInformation.setFileName(fileName);//获取文件名
+        return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
+    }
+    //企业信息完善
+    @Override
     public ResultBean<?> updateEnterpriseInformation(EnterpriseInformation enterpriseInformation) throws IOException {
-        String UUName = FilUploadUtils.saveFile(enterpriseInformation.getBlFile());
-        enterpriseInformation.setFileName(UUName);
-        enterpriseInformation.setFileName(enterpriseInformation.getBlFile().getOriginalFilename());
         enterpriseInformation.setCId(enterpriseInformation.getInfoid());
         System.out.println(enterpriseInformation);
         return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
@@ -34,32 +64,27 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
     @Override
     public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer info) throws IOException {
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(info);
-        enterpriseInformation.setFilePath(FilUploadUtils.getFilePath() + "\\" + enterpriseInformation.getFileName());
-        enterpriseInformation.setFileName(FilUploadUtils.getfileName(enterpriseInformation.getFileName()));
-        return new ResultBean<>(enterpriseInformation);
+            String fileNameString= enterpriseInformation.getFileName();
+            String fileNameArray []=fileNameString.split("/");
+            List<String> fileNameList=new ArrayList<>();
+            List<String> filePathList=new ArrayList<>();
+            for(int i=0;i<fileNameArray.length;i++){
+                filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
+                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+            }
+            enterpriseInformation.setFilePathName(fileNameList);
+            enterpriseInformation.setFilePathList(filePathList);
+            LegalPerson legalPerson=legalPersonMapper.selectByPrimaryKey(enterpriseInformation.getCLegalperson());
+            legalPerson.setDegree(degreeMapper.selectByPrimaryKey(legalPerson.getLpDegreeId()));
+            legalPerson.setJobTitle(jobTitleMapper.selectByPrimaryKey(legalPerson.getLpJtId()));
+            enterpriseInformation.setLegalPerson(legalPerson);
+            return new ResultBean<>(enterpriseInformation);
     }
 
-    @Override
-    public ResultBean<?> updateByPrimaryKey(EnterpriseInformation enterpriseInformation) throws IOException {
-        String UUName = FilUploadUtils.saveFile(enterpriseInformation.getBlFile());//保存文件
-        Integer infoid = enterpriseInformation.getInfoid();
-        EnterpriseInformation enterprise = enterpriseInformationMapper.selectByPrimaryKey(infoid);
-        enterpriseInformation.setFileName(UUName);//获取文件名
-        enterprise.setCName(enterpriseInformation.getCName());//企业名称
-        enterprise.setCCategory(enterpriseInformation.getCCategory());//企业类别
-        enterprise.setCLegalperson(enterpriseInformation.getCLegalperson());//法人
-        enterprise.setCDate(enterpriseInformation.getCDate());//注册时间
-        enterprise.setCFund(enterpriseInformation.getCFund());//注册资金
-        enterprise.setCProduct(enterpriseInformation.getCProduct());//主要产品
-        enterprise.setCEmployee(enterpriseInformation.getCEmployee());//入职员工数
-        enterprise.setCInformation(enterpriseInformation.getCInformation());//员工信息
-        enterprise.setFileName(enterpriseInformation.getFileName());//附件名
-        return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterprise));
-    }
+
 
     @Override
     public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
-
         List<EnterpriseInformation> enterpriseInformations = enterpriseInformationMapper.selectAll();
         return new ResultBean<>(enterpriseInformations);
     }

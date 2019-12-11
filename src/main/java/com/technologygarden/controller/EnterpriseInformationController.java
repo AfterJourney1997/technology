@@ -1,5 +1,6 @@
 package com.technologygarden.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.technologygarden.entity.Degree;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.JobTitle;
@@ -12,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,24 +37,24 @@ public class EnterpriseInformationController {
 
     // 企业入住申请提交
     @RequestMapping(value = "/company", method = RequestMethod.POST)
-    @ApiOperation(value = "企业入住申请提交", notes = "参数包括：EnterpriseInformation对象包含当前登录Role对象，和法人信息")
-    public ResultBean<?> insertApplicationAdmission(@RequestBody EnterpriseInformation enterpriseInformation) throws IOException {
-        String UUName = FilUploadUtils.saveFile(enterpriseInformation.getBlFile());//保存文件
-        enterpriseInformation.setFileName(UUName);//获取文件名
-        return enterpriseInformationService.updateByPrimaryKey(enterpriseInformation);
+    @ApiOperation(value = "企业入住申请提交", notes = "参数包括：EnterpriseInformation对象包含当前登录对象的infoid，和法人信息")
+    public ResultBean<?> insertApplicationAdmission(MultipartFile[] blFile, String enterpriseInformation) throws IOException {
+        EnterpriseInformation enterprise= JSONArray.parseObject(enterpriseInformation,EnterpriseInformation.class);
+        return enterpriseInformationService.updateByPrimaryKey(blFile,enterprise);
     }
-
-    @RequestMapping(value = "/information", method = RequestMethod.GET)
-    @ApiOperation(value = "获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的Role对象的cId")
-    public ResultBean<EnterpriseInformation> getEnterpriseInformation(@RequestBody Integer cId) throws IOException {
-        return enterpriseInformationService.getEnterpriseInformation(cId);
-    }
-
+    //企业信息完善
     @RequestMapping(value = "/information", method = RequestMethod.POST)
-    @ApiOperation(value = "录入企业信息", notes = "参数包括：EnterpriseInformation对象")
+    @ApiOperation(value = "录入企业信息", notes = "参数包括：EnterpriseInformation对象，包含当前登录对象的infoid，文件信息不改动")
     public ResultBean<?> updateEnterpriseInformation(@RequestBody EnterpriseInformation enterpriseInformation) throws IOException {
         return enterpriseInformationService.updateEnterpriseInformation(enterpriseInformation);
     }
+
+    @RequestMapping(value = "/information", method = RequestMethod.GET)
+    @ApiOperation(value = "获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
+    public ResultBean<EnterpriseInformation> getEnterpriseInformation(@RequestBody Integer infoid) throws IOException {
+        return enterpriseInformationService.getEnterpriseInformation(infoid);
+    }
+
 
     @RequestMapping(value = "/company/degree", method = RequestMethod.GET)
     @ApiOperation(value = "获取学位列表", notes = "参数包括：无")

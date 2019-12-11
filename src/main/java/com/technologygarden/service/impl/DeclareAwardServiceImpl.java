@@ -1,5 +1,6 @@
 package com.technologygarden.service.impl;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.AwardsMapper;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("DeclareAwardService")
 public class DeclareAwardServiceImpl implements DeclareAwardService {
@@ -31,26 +34,44 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
         Page<DeclareAward> declareAwardList=declareAwardMapper.getDeclareAwardByPage(cId);
         for(DeclareAward declareAward:declareAwardList){
             declareAward.setAName(awardsMapper.selectByPrimaryKey(declareAward.getAId()).getAwardsName());
-            String filePath=FilUploadUtils.getFilePath()+"\\"+declareAward.getFilename();
-            declareAward.setFilename(FilUploadUtils.getfileName(declareAward.getFilename()));
-            declareAward.setFilePath(filePath);
+            String fileNameString= declareAward.getFilename();
+            String fileNameArray []=fileNameString.split("/");
+            List<String> fileNameList=new ArrayList<>();
+            List<String> filePathList=new ArrayList<>();
+            for(int i=0;i<fileNameArray.length;i++){
+                filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
+                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+            }
+            declareAward.setFileNameList(fileNameList);
+            declareAward.setFilePathList(filePathList);
         }
         return new ResultBean<>(declareAwardList);
     }
 
     @Override
-    public ResultBean insertDeclareAward(DeclareAward declareAward) throws IOException {
+    public ResultBean insertDeclareAward(MultipartFile[] blFile,DeclareAward declareAward) throws IOException {
+        String []fileNameList=new String[blFile.length];
+        String UUName;
+        int i=0;
         declareAward.setCId(declareAward.getInfoid());
-        MultipartFile blFile=declareAward.getBlFile();
-        String UUName=FilUploadUtils.saveFile(blFile);
-        declareAward.setFilename(UUName);
+        for (MultipartFile file:blFile){
+            UUName=FilUploadUtils.saveFile(file);
+            fileNameList[i]=UUName;
+            i++;
+        }
+        String fileName = ArrayUtil.join(fileNameList, "/");
+        declareAward.setFilename(fileName);
         return new ResultBean(declareAwardMapper.insert(declareAward));
     }
 
     @Override
     public ResultBean deleteDeclareAward(Integer dId) throws IOException {
         DeclareAward declareAward = declareAwardMapper.selectByPrimaryKey(dId);
-        FilUploadUtils.deleteFile(declareAward.getFilename());
+        String fileNameString= declareAward.getFilename();
+        String fileNameArray []=fileNameString.split("/");
+        for(int i=0;i<fileNameArray.length;i++) {
+            FilUploadUtils.deleteFile(fileNameArray[i]);
+        }
         return new ResultBean(declareAwardMapper.deleteByPrimaryKey(dId));
     }
 }

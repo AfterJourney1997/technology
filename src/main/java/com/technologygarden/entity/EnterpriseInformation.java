@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ToString
@@ -29,9 +30,10 @@ public class EnterpriseInformation {
     private Integer cEmployee;
     private String cInformation;
     private Integer cStatus;
-    private MultipartFile blFile;
-    private String filePath;
-    private Integer infoid;
-    private LegalPerson legalPerson = null;
+
+    private List<String> filePathList;//存放所有的文件路径
+    private List<String> filePathName;//存放所有的文件名字
+    private Integer infoid;//当前登录对象的infoid
+    private LegalPerson legalPerson = null;//存放法人信息
 
 }

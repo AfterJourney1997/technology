@@ -1,5 +1,6 @@
 package com.technologygarden.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Awards;
 import com.technologygarden.entity.DeclareAward;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -36,9 +38,10 @@ public class DeclareAwardController {
     }
 
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
-    @ApiOperation(value = "添加申报奖项", notes = "参数：奖项申报对象，infoid写到DeclareAward对象里")
-    public ResultBean insertDeclareAward(DeclareAward declareAward) throws IOException {
-        return declareAwardService.insertDeclareAward(declareAward);
+    @ApiOperation(value = "添加申报奖项", notes = "参数：文件数组，奖项申报对象，infoid写到DeclareAward对象里")
+    public ResultBean insertDeclareAward(MultipartFile[] blFile,String declareAward) throws IOException {
+        DeclareAward declareAward1= JSONArray.parseObject(declareAward,DeclareAward.class);
+        return declareAwardService.insertDeclareAward(blFile,declareAward1);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "取消申报奖项", notes = "参数：奖项申报对象的dId主键")

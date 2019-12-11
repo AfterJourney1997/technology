@@ -3,6 +3,9 @@ package com.technologygarden.entity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.reflect.Array;
+import java.util.*;
+
 @Data
 @Builder
 @ToString
@@ -25,8 +28,9 @@ public class DeclareAward {
 
     private String aName;//存放aId对应的名字，奖项名称
 
-    private String filePath;//用来存放文件路径
+    private List<String> filePathList;//用来存放文件路径
 
-    private MultipartFile blFile;//用来接受文件
+    private List<String> fileNameList;//用来存放文件名称
+
 
 }

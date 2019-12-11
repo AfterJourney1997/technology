@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @ToString
@@ -27,8 +28,6 @@ public class Employee implements Serializable {
 
     private String fileName;
 
-    private MultipartFile blFile;
-
     private Integer cId;
 
     private String zName;//用来显示政治面貌，前端便于显示
@@ -37,7 +36,9 @@ public class Employee implements Serializable {
 
     private Integer infoid;//用来接收前端对象的infoid
 
-    private String filePath;//用来返回给前端文件的路径
+    private List<String> filePathList;//用来返回给前端文件的路径
+
+    private List<String> fileNameList;//用来返回给前端文件的路径
 
 
 }

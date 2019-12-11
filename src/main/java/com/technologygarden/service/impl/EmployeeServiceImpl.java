@@ -1,18 +1,23 @@
 package com.technologygarden.service.impl;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.DegreeMapper;
 import com.technologygarden.dao.EmployeeMapper;
 import com.technologygarden.dao.PoliticsStatusMapper;
+import com.technologygarden.entity.DeclareAward;
 import com.technologygarden.entity.Employee;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.EmployeeService;
 import com.technologygarden.util.FilUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("EmployeeService")
 public class EmployeeServiceImpl implements EmployeeService {
@@ -31,35 +36,59 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByPage(cId);
         for(Employee employee:employeeList){
-            String filePath=FilUploadUtils.getFilePath()+"\\"+employee.getFileName();
-            employee.setFileName(FilUploadUtils.getfileName(employee.getFileName()));
-            employee.setFilePath(filePath);
-            employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
-            employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
+            String fileNameString= employee.getFileName();
+            String fileNameArray []=fileNameString.split("/");
+            List<String> fileNameList=new ArrayList<>();
+            List<String> filePathList=new ArrayList<>();
+            for(int i=0;i<fileNameArray.length;i++){
+                filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
+                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+            }
+            employee.setFileNameList(fileNameList);
+            employee.setFilePathList(filePathList);
         }
         return new ResultBean<>(employeeList);
     }
 
     @Override
-    public ResultBean insertEmployee(Employee employee) throws IOException {
-        System.out.println(employee);
-        String UUName=FilUploadUtils.saveFile(employee.getBlFile());
-        employee.setFileName(UUName);
+    public ResultBean insertEmployee(MultipartFile[] blFile, Employee employee) throws IOException {
+        String []fileNameList=new String[blFile.length];
+        String UUName;
+        int i=0;
+        for (MultipartFile file:blFile){
+            UUName=FilUploadUtils.saveFile(file);
+            fileNameList[i]=UUName;
+            i++;
+        }
+        String fileName = ArrayUtil.join(fileNameList, "/");
+        employee.setFileName(fileName);
         employee.setCId(employee.getInfoid());
         return new ResultBean(employeeMapper.insert(employee));
     }
 
     @Override
-    public ResultBean updateEmployee(Employee employee) throws IOException {
-        String UUName=FilUploadUtils.saveFile(employee.getBlFile());
-        employee.setFileName(UUName);
+    public ResultBean updateEmployee(MultipartFile blFile[], Employee employee) throws IOException {
+        String []fileNameList=new String[blFile.length];
+        String UUName;
+        int i=0;
+        for (MultipartFile file:blFile){
+            UUName=FilUploadUtils.saveFile(file);
+            fileNameList[i]=UUName;
+            i++;
+        }
+        String fileName = ArrayUtil.join(fileNameList, "/");
+        employee.setFileName(fileName);
         return new ResultBean(employeeMapper.updateByPrimaryKey(employee));
     }
 
     @Override
     public ResultBean deleteEmployee(Integer eId) throws IOException {
         Employee employee=employeeMapper.selectByPrimaryKey(eId);
-        FilUploadUtils.deleteFile(employee.getFileName());
+        String fileNameString= employee.getFileName();
+        String fileNameArray []=fileNameString.split("/");
+        for(int i=0;i<fileNameArray.length;i++) {
+            FilUploadUtils.deleteFile(fileNameArray[i]);
+        }
         return new ResultBean(employeeMapper.deleteByPrimaryKey(eId));
     }
     @Override
@@ -68,11 +97,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByNamePage(cId,employeeName);
         for(Employee employee:employeeList){
-            String filePath=FilUploadUtils.getFilePath()+"\\"+employee.getFileName();
-            employee.setFileName(FilUploadUtils.getfileName(employee.getFileName()));
-            employee.setFilePath(filePath);
-            employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
-            employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
+            String fileNameString= employee.getFileName();
+            String fileNameArray []=fileNameString.split("/");
+            List<String> fileNameList=new ArrayList<>();
+            List<String> filePathList=new ArrayList<>();
+            for(int i=0;i<fileNameArray.length;i++){
+                filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
+                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+            }
+            employee.setFileNameList(fileNameList);
+            employee.setFilePathList(filePathList);
         }
         return new ResultBean<>(employeeList);
     }
