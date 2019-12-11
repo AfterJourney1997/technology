@@ -8,7 +8,6 @@ import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.DegreeService;
 import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.SystemJobTitleService;
-import com.technologygarden.util.FilUploadUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/enterprise")
 @Api(tags = "企业信息管理接口", value = "EnterpriseInformationController")

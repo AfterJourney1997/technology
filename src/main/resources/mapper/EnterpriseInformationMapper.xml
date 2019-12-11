@@ -59,4 +59,25 @@
     c_product, file_name, c_employee, c_information, c_status
     from technology.enterprise_information
   </select>
+  <select id="selectAllByPage" resultMap="BaseResultMap">
+    select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
+    c_product, file_name, c_employee, c_information, c_status
+    from technology.enterprise_information
+  </select>
+
+  <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
+    insert into technology.enterprise_information (c_Id, c_name, c_category,
+    c_legalPerson, c_code, c_date,
+    taxpayer_Type, c_fund, c_product,
+    file_name, c_employee, c_information,
+    c_status)
+    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR},
+    #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=TIMESTAMP},
+    #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR},
+    #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR},
+    #{cStatus,jdbcType=INTEGER})
+    <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="cId">
+      SELECT LAST_INSERT_ID();
+    </selectKey>
+  </insert>
 </mapper>
