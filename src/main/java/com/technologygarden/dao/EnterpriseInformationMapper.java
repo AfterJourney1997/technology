@@ -1,6 +1,8 @@
 package com.technologygarden.dao;
 
+import com.github.pagehelper.Page;
 import com.technologygarden.entity.EnterpriseInformation;
+import com.technologygarden.entity.LegalPerson;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,10 @@ public interface EnterpriseInformationMapper {
 
     List<EnterpriseInformation> selectAll();
 
+    Page<EnterpriseInformation> selectAllByPage();
+
     int updateByPrimaryKey(EnterpriseInformation record);
+
+    int insertReturnPrimaryKey(EnterpriseInformation enterpriseInformation);
 
 }

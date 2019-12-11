@@ -51,6 +51,7 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
         enterpriseInformation.setCId(infoid);
         enterpriseInformation.setCLegalperson(legalPerson.getLpDegreeId());
         enterpriseInformation.setFileName(fileName);//获取文件名
+        enterpriseInformation.setCStatus(1);//提交企业信息，状态改为1
         return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
     }
     //企业信息完善
