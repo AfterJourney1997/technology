@@ -55,7 +55,7 @@
   <select id="selectRoomGardenWithBuildingByPage" resultMap="RoomWithBuilding">
     select *
     from technology.room, technology.building
-    where room.r_id = building.id and room.r_room_kind = 1
+    where room.r_building_id = building.id and room.r_room_kind = 1
   </select>
   <resultMap id="RoomWithBuilding" type="com.technologygarden.entity.Room">
     <id column="r_id" jdbcType="INTEGER" property="rId" />
@@ -80,7 +80,7 @@
   <select id="selectRoomCompanyWithBuildingByPage" resultMap="RoomWithBuilding">
     select *
     from technology.room, technology.building
-    where room.r_id = building.id and room.r_room_kind = 2
+    where room.r_building_id = building.id and room.r_room_kind = 2
   </select>
 
   <update id="updateRoomDynamic" parameterType="com.technologygarden.entity.Room">
