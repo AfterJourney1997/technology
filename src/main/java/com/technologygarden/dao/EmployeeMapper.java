@@ -18,6 +18,10 @@ public interface EmployeeMapper {
 
     List<Employee> selectAll();
 
+    List<Employee> selectByxId(Integer xId);
+
+    List<Employee> selectByzId(Integer zId);
+
     Page<Employee> selectByNamePage(@Param("cId") Integer cId, @Param("employeeName") String employeeName);
 
     Page<Employee> selectByPage(Integer cId);

@@ -53,4 +53,14 @@
     from technology.employee
     where c_Id=#{cId,jdbcType=INTEGER} and e_name like concat('%', #{employeeName,jdbcType=VARCHAR}, '%')
   </select>
+  <select id="selectByxId" resultMap="BaseResultMap">
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    from technology.employee
+    where x_Id=#{xId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByzId" resultMap="BaseResultMap">
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    from technology.employee
+    where z_Id=#{zId,jdbcType=INTEGER}
+  </select>
 </mapper>

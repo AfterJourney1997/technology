@@ -40,4 +40,9 @@
     from technology.service_application
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
+  <select id="selectBymaintainId" resultMap="BaseResultMap">
+    select Id, maintain_id, date, status, c_Id
+    from technology.service_application
+    where maintain_id = #{maintainId,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -3,17 +3,24 @@ package com.technologygarden.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.MaintainMapper;
+import com.technologygarden.dao.ServiceApplicationMapper;
 import com.technologygarden.entity.Maintain;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.ResultBean.ResultStatus;
+import com.technologygarden.entity.ServiceApplication;
 import com.technologygarden.service.MaintainService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("MaintainService")
 public class MaintainServiceImpl implements MaintainService {
     private final MaintainMapper maintainMapper;
+    private final ServiceApplicationMapper serviceApplicationMapper;
 
-    public MaintainServiceImpl(MaintainMapper maintainMapper) {
+    public MaintainServiceImpl(MaintainMapper maintainMapper, ServiceApplicationMapper serviceApplicationMapper) {
         this.maintainMapper = maintainMapper;
+        this.serviceApplicationMapper = serviceApplicationMapper;
     }
 
     @Override
@@ -39,6 +46,10 @@ public class MaintainServiceImpl implements MaintainService {
 
     @Override
     public ResultBean deleteMaintain(Integer id) {
+        List<ServiceApplication> serviceApplication =serviceApplicationMapper.selectBymaintainId(id);
+        if(serviceApplication.size()>0){
+            return new ResultBean<>(ResultStatus.DELETE_ERROR.getCode(), ResultStatus.DELETE_ERROR.getMessage());
+        }
         return new ResultBean(maintainMapper.deleteByPrimaryKey(id));
     }
 

@@ -44,4 +44,9 @@
     from technology.declare_award
     where c_Id=#{cId,jdbcType=INTEGER}
   </select>
+  <select id="selectByaId" resultMap="BaseResultMap">
+    select d_Id, d_name, a_id, filename, d_status, c_Id
+    from technology.declare_award
+    where a_id=#{aId,jdbcType=INTEGER}
+  </select>
 </mapper>

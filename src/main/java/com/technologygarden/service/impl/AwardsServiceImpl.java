@@ -3,18 +3,25 @@ package com.technologygarden.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.AwardsMapper;
+import com.technologygarden.dao.DeclareAwardMapper;
 import com.technologygarden.entity.Awards;
+import com.technologygarden.entity.DeclareAward;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.AwardsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("AwardsService")
 public class AwardsServiceImpl implements AwardsService {
     private final AwardsMapper awardsMapper;
+    private final DeclareAwardMapper declareAwardMapper;
     @Autowired
-    public AwardsServiceImpl(AwardsMapper awardsMapper) {
+    public AwardsServiceImpl(AwardsMapper awardsMapper, DeclareAwardMapper declareAwardMapper) {
         this.awardsMapper = awardsMapper;
+        this.declareAwardMapper = declareAwardMapper;
     }
 
     @Override
@@ -36,6 +43,10 @@ public class AwardsServiceImpl implements AwardsService {
 
     @Override
     public ResultBean deleteAwards(Integer id) {
+        List<DeclareAward> declareAwardList=declareAwardMapper.selectByaId(id);
+        if(declareAwardList.size()>0){
+            return new ResultBean<>(ResultStatus.DELETE_ERROR.getCode(), ResultStatus.DELETE_ERROR.getMessage());
+        }
         return new ResultBean(awardsMapper.deleteByPrimaryKey(id));
     }
 

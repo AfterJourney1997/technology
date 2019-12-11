@@ -2,19 +2,26 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.technologygarden.dao.EmployeeMapper;
 import com.technologygarden.dao.PoliticsStatusMapper;
+import com.technologygarden.entity.Employee;
 import com.technologygarden.entity.PoliticsStatus;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.PoliticsStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("PoliticsStatusService")
 public class PoliticsStatusServiceImpl implements PoliticsStatusService {
     private final PoliticsStatusMapper politicsStatusMapper;
+    private final EmployeeMapper employeeMapper;
     @Autowired
-    public PoliticsStatusServiceImpl(PoliticsStatusMapper politicsStatusMapper) {
+    public PoliticsStatusServiceImpl(PoliticsStatusMapper politicsStatusMapper, EmployeeMapper employeeMapper) {
         this.politicsStatusMapper = politicsStatusMapper;
+        this.employeeMapper = employeeMapper;
     }
 
     @Override
@@ -34,6 +41,11 @@ public class PoliticsStatusServiceImpl implements PoliticsStatusService {
 
     @Override
     public ResultBean deletePoliticsStatus(Integer id) {
+        //判断有无员工与要删除的政治面貌相关联
+        List<Employee> employeeList=employeeMapper.selectByzId(id);
+        if(employeeList.size()>0){
+            return new ResultBean<>(ResultStatus.DELETE_ERROR.getCode(), ResultStatus.DELETE_ERROR.getMessage());
+        }
         return new ResultBean(politicsStatusMapper.deleteByPrimaryKey(id));
     }
 

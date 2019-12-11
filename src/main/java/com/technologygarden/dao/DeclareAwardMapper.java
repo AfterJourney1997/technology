@@ -18,6 +18,8 @@ public interface DeclareAwardMapper {
 
     List<DeclareAward> selectAll();
 
+    List<DeclareAward> selectByaId(Integer aId);
+
     Page<DeclareAward> getDeclareAwardByPage(Integer cId);
 
     int updateByPrimaryKey(DeclareAward record);
