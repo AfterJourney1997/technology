@@ -2,8 +2,10 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.technologygarden.dao.CompanyRoomDeviceMapper;
 import com.technologygarden.dao.DeviceMapper;
 import com.technologygarden.dao.DevicePropertyMapper;
+import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.Device;
 import com.technologygarden.entity.DeviceProperty;
 import com.technologygarden.entity.PropertyDevice;
@@ -22,11 +24,13 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
     private final DeviceMapper deviceMapper;
     private final DevicePropertyMapper devicePropertyMapper;
+    private final CompanyRoomDeviceMapper companyRoomDeviceMapper;
 
     @Autowired
-    public AssetDeviceServiceImpl(DeviceMapper deviceMapper, DevicePropertyMapper devicePropertyMapper) {
+    public AssetDeviceServiceImpl(DeviceMapper deviceMapper, DevicePropertyMapper devicePropertyMapper, CompanyRoomDeviceMapper companyRoomDeviceMapper) {
         this.deviceMapper = deviceMapper;
         this.devicePropertyMapper = devicePropertyMapper;
+        this.companyRoomDeviceMapper = companyRoomDeviceMapper;
     }
 
     @Override
@@ -65,7 +69,6 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         deviceMapper.insert(device);
         // 再插入设备相关属性
         devicePropertyMapper.insertForeach(propertyDeviceList);
-
 
         return new ResultBean<>();
 
@@ -119,6 +122,45 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         return new ResultBean<>(deviceList);
 
     }
+
+    @Override
+    @Transactional
+    public ResultBean<?> distributeDevice(Integer deviceId, Integer deviceNum, Integer companyId, Integer roomId) {
+
+        // 判断是否有足够的数量可供分配
+        Device device = deviceMapper.selectByPrimaryKey(deviceId);
+        if(device.getRemain() <= 0 || device.getRemain() < deviceNum){
+            return new ResultBean<>(ResultStatus.PARAMETER_ERROR.getCode(), ResultStatus.PARAMETER_ERROR.getMessage());
+        }
+
+        // 判断是否已分配过，已分配需修改之前分配记录的数量
+        CompanyRoomDevice companyRoomDevice = companyRoomDeviceMapper.selectByCompanyDeviceRoom(companyId, deviceId, roomId);
+        if(companyRoomDevice != null){
+            companyRoomDeviceMapper.updateNumber(companyRoomDevice.getCrdId(), companyRoomDevice.getCrdNumber()+deviceNum);
+        }else {
+            companyRoomDeviceMapper.insert(CompanyRoomDevice.builder()
+                        .crdCompanyId(companyId)
+                        .crdRoomId(roomId)
+                        .crdDeviceId(deviceId)
+                        .crdNumber(deviceNum)
+                        .build());
+        }
+
+        // 修改设备剩余数量
+        deviceMapper.updateByIdDynamic(Device.builder()
+                        .deviceId(deviceId)
+                        .remain(device.getRemain() - deviceNum)
+                        .build());
+
+        return new ResultBean<>();
+    }
+
+
+
+
+
+
+
 
 
 

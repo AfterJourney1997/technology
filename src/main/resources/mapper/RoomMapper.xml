@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.RoomMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Room">
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="r_name" jdbcType="VARCHAR" property="rName" />
+    <result column="r_area" jdbcType="REAL" property="rArea" />
+    <result column="r_status" jdbcType="INTEGER" property="rStatus" />
+    <result column="r_company_id" jdbcType="INTEGER" property="rCompanyId" />
+    <result column="r_company_name" jdbcType="VARCHAR" property="rCompanyName" />
+    <result column="r_owner" jdbcType="VARCHAR" property="rOwner" />
+    <result column="r_owning_time" jdbcType="INTEGER" property="rOwningTime" />
+    <result column="r_building_id" jdbcType="INTEGER" property="rBuildingId" />
+    <result column="r_room_kind" jdbcType="INTEGER" property="rRoomKind" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.room
+    where r_id = #{rId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Room">
+    insert into technology.room (r_id, r_name, r_area, 
+      r_status, r_company_id, r_company_name, 
+      r_owner, r_owning_time, r_building_id, 
+      r_room_kind)
+    values (#{rId,jdbcType=INTEGER}, #{rName,jdbcType=VARCHAR}, #{rArea,jdbcType=REAL}, 
+      #{rStatus,jdbcType=INTEGER}, #{rCompanyId,jdbcType=INTEGER}, #{rCompanyName,jdbcType=VARCHAR},
+      #{rOwner,jdbcType=VARCHAR}, #{rOwningTime,jdbcType=INTEGER}, #{rBuildingId,jdbcType=INTEGER}, 
+      #{rRoomKind,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Room">
+    update technology.room
+    set r_name = #{rName,jdbcType=VARCHAR},
+      r_area = #{rArea,jdbcType=REAL},
+      r_status = #{rStatus,jdbcType=INTEGER},
+      r_company_id = #{rCompanyId,jdbcType=INTEGER},
+      r_company_name = #{rCompanyName,jdbcType=VARCHAR},
+      r_owner = #{rOwner,jdbcType=VARCHAR},
+      r_owning_time = #{rOwningTime,jdbcType=INTEGER},
+      r_building_id = #{rBuildingId,jdbcType=INTEGER},
+      r_room_kind = #{rRoomKind,jdbcType=INTEGER}
+    where r_id = #{rId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select r_id, r_name, r_area, r_status, r_company_id, r_company_name, r_owner, r_owning_time, 
+    r_building_id, r_room_kind
+    from technology.room
+    where r_id = #{rId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select r_id, r_name, r_area, r_status, r_company_id, r_company_name, r_owner, r_owning_time, 
+    r_building_id, r_room_kind
+    from technology.room
+  </select>
+
+  <select id="selectRoomGardenWithBuildingByPage" resultMap="RoomWithBuilding">
+    select *
+    from technology.room, technology.building
+    where room.r_id = building.id and room.r_room_kind = 1
+  </select>
+  <resultMap id="RoomWithBuilding" type="com.technologygarden.entity.Room">
+    <id column="r_id" jdbcType="INTEGER" property="rId" />
+    <result column="r_name" jdbcType="VARCHAR" property="rName" />
+    <result column="r_area" jdbcType="REAL" property="rArea" />
+    <result column="r_status" jdbcType="INTEGER" property="rStatus" />
+    <result column="r_company_id" jdbcType="INTEGER" property="rCompanyId" />
+    <result column="r_company_name" jdbcType="VARCHAR" property="rCompanyName" />
+    <result column="r_owner" jdbcType="VARCHAR" property="rOwner" />
+    <result column="r_owning_time" jdbcType="INTEGER" property="rOwningTime" />
+    <result column="r_building_id" jdbcType="INTEGER" property="rBuildingId" />
+    <result column="r_room_kind" jdbcType="INTEGER" property="rRoomKind" />
+    <association property="building" javaType="com.technologygarden.entity.Building">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="buildingName" />
+      <result column="area" jdbcType="REAL" property="area" />
+      <result column="createtime" jdbcType="DATE" property="createtime" />
+      <result column="money" jdbcType="REAL" property="money" />
+    </association>
+  </resultMap>
+
+  <select id="selectRoomCompanyWithBuildingByPage" resultMap="RoomWithBuilding">
+    select *
+    from technology.room, technology.building
+    where room.r_id = building.id and room.r_room_kind = 2
+  </select>
+
+  <update id="updateRoomDynamic" parameterType="com.technologygarden.entity.Room">
+    update technology.room
+    <set>
+      <if test="rName != null and rName != ''">
+        room.r_name = #{rName,jdbcType=VARCHAR},
+      </if>
+      <if test="rArea != null">
+        room.r_area = #{rArea,jdbcType=FLOAT},
+      </if>
+      <if test="rStatus != null">
+        room.r_status = #{rStatus,jdbcType=INTEGER},
+      </if>
+      <if test="rCompanyId != null">
+        room.r_company_id = #{rCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="rCompanyName != null and rCompanyName != ''">
+        room.r_company_name = #{rCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="rOwner != null and rOwner != ''">
+        room.r_owner = #{rOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="rOwningTime != null">
+        room.r_owning_time = #{rOwningTime,jdbcType=INTEGER},
+      </if>
+      <if test="rBuildingId != null">
+        room.r_building_id = #{rBuildingId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where room.r_id = #{rId,jdbcType=INTEGER}
+  </update>
+
+  <insert id="insertRoomGardenForeach">
+    insert into technology.room
+    (r_name, r_area, r_status, r_building_id, r_room_kind)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+        (
+            #{item.rName,jdbcType=VARCHAR},
+            #{item.rArea,jdbcType=FLOAT},
+            1,
+            #{item.rBuildingId,jdbcType=INTEGER},
+            1
+        )
+    </foreach>
+  </insert>
+
+  <insert id="insertRoomCompanyForeach">
+    insert into technology.room
+    (r_name, r_area, r_status, r_building_id, r_room_kind)
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      (
+      #{item.rName,jdbcType=VARCHAR},
+      #{item.rArea,jdbcType=FLOAT},
+      1,
+      #{item.rBuildingId,jdbcType=INTEGER},
+      2
+      )
+    </foreach>
+  </insert>
+
+  <select id="searchRoomGardenByPage" resultMap="RoomWithBuilding">
+    select *
+    from technology.room
+    <where>
+      <if test="buildingId != null">
+        and room.r_building_id = #{buildingId,jdbcType=INTEGER}
+      </if>
+      <if test="roomName != null and roomName != ''">
+        and room.r_name like concat('%', #{roomName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="status != null">
+        and room.r_status = #{status,jdbcType=INTEGER}
+      </if>
+      and room.r_room_kind = 1
+    </where>
+  </select>
+
+  <select id="searchRoomCompanyByPage" resultMap="RoomWithBuilding">
+    select *
+    from technology.room
+    <where>
+      <if test="buildingId != null">
+        and room.r_building_id = #{buildingId,jdbcType=INTEGER}
+      </if>
+      <if test="roomName != null and roomName != ''">
+        and room.r_name like concat('%', #{roomName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="status != null">
+        and room.r_status = #{status,jdbcType=INTEGER}
+      </if>
+      and room.r_room_kind = 2
+    </where>
+  </select>
+
+</mapper>

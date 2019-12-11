@@ -16,6 +16,10 @@ public interface AssetDeviceService {
 
     ResultBean<Page<Device>> searchDeviceListWithPropertyByPage(Integer pageNum, Integer pageSize, Integer categoryId, String deviceName, Integer owner);
 
+    ResultBean<?> distributeDevice(Integer deviceId, Integer deviceNum, Integer companyId, Integer roomId);
+
+
+
 
 
     ResultBean<Page<Device>> getFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize);
@@ -23,4 +27,6 @@ public interface AssetDeviceService {
     ResultBean<?> insertFurnitureWithPropertyDynamic(Device furniture);
 
     ResultBean<Page<Device>> searchFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize, Integer categoryId, String furnitureName, Integer owner);
+
+
 }

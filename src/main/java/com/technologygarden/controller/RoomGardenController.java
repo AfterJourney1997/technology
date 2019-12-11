@@ -1,19 +1,20 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
-import com.technologygarden.entity.RoomCompany;
+import com.technologygarden.entity.Room;
 import com.technologygarden.entity.RoomGarden;
+import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.RoomGardenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/room")
@@ -21,14 +22,17 @@ import java.util.List;
 public class RoomGardenController {
 
     private final RoomGardenService roomGardenService;
+    private final EnterpriseInformationService enterpriseInformationService;
 
-    public RoomGardenController(RoomGardenService roomGardenService) {
+    @Autowired
+    public RoomGardenController(RoomGardenService roomGardenService, EnterpriseInformationService enterpriseInformationService) {
         this.roomGardenService = roomGardenService;
+        this.enterpriseInformationService = enterpriseInformationService;
     }
 
     @RequestMapping(value = "/garden", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取园区房产信息列表", notes = "参数包括：页数，每页数量")
-    public ResultBean<Page<RoomGarden>> getRoomGardenByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<Page<Room>> getRoomGardenByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return roomGardenService.getRoomGardenByPage(pageNum, pageSize);
 
@@ -44,15 +48,15 @@ public class RoomGardenController {
 
     @RequestMapping(value = "/garden", method = RequestMethod.PUT)
     @ApiOperation(value = "修改园区房产", notes = "参数包括：园区房产对象，无需修改的值设空")
-    public ResultBean<?> updateRoomGardenById(@RequestBody RoomGarden roomGarden){
+    public ResultBean<?> updateRoomGardenById(@RequestBody Room roomGarden){
 
         return roomGardenService.updateRoomGardenById(roomGarden);
 
     }
 
     @RequestMapping(value = "/garden", method = RequestMethod.POST)
-    @ApiOperation(value = "新增园区房产", notes = "参数包括：园区房产list，一个也需放进list中")
-    public ResultBean<?> insertRoomGarden(@RequestBody List<RoomGarden> roomGardenList){
+    @ApiOperation(value = "新增园区房产", notes = "参数包括：园区房产list，一个也需放进list中（rStatus为状态，1为空闲，2为入驻，kind为种类，1为园区房产，2为企业房产）")
+    public ResultBean<?> insertRoomGarden(@RequestBody List<Room> roomGardenList){
 
         return roomGardenService.insertRoomGarden(roomGardenList);
 
@@ -60,12 +64,18 @@ public class RoomGardenController {
 
     @RequestMapping(value = "/garden/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索园区房产", notes = "参数包括：页数、每页数量、房区id、状态id、房间名称，不需要的填空即可")
-    public ResultBean<Page<RoomGarden>> searchRoomGarden(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer buildingId, Integer status, String roomName){
+    public ResultBean<Page<Room>> searchRoomGarden(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer buildingId, Integer status, String roomName){
 
         return roomGardenService.searchRoomGarden(pageNum, pageSize, buildingId, status, roomName);
 
     }
 
+    @RequestMapping(value = "/garden/enterprise", method = RequestMethod.GET)
+    @ApiOperation(value = "获取全部企业信息列表", notes = "参数包括：无")
+    public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
 
+        return enterpriseInformationService.getEnterpriseInformationList();
+
+    }
 
 }

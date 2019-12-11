@@ -46,10 +46,25 @@
     from technology.activity_incubation
   </select>
 
-  <select id="selectActivityIncubationListByPage" resultMap="BaseResultMap">
-    select *
-    from technology.activity_incubation
+  <select id="selectActivityIncubationListByPage" resultMap="ActivityIncubationWithCategory">
+    select ai.*, ac.*
+    from technology.activity_incubation ai, technology.activity_category ac
+    where ai.ai_category_id = ac.ac_id
   </select>
+  <resultMap id="ActivityIncubationWithCategory" type="com.technologygarden.entity.ActivityIncubation">
+    <id column="ai_id" jdbcType="INTEGER" property="aiId" />
+    <result column="ai_name" jdbcType="VARCHAR" property="aiName" />
+    <result column="ai_time" jdbcType="DATE" property="aiTime" />
+    <result column="ai_category_id" jdbcType="INTEGER" property="aiCategoryId" />
+    <result column="ai_people_number" jdbcType="INTEGER" property="aiPeopleNumber" />
+    <result column="ai_pic" jdbcType="VARCHAR" property="aiPic" />
+    <result column="ai_file" jdbcType="VARCHAR" property="aiFile" />
+    <result column="ai_content" jdbcType="LONGVARCHAR" property="aiContent" />
+    <association property="activityCategory" javaType="com.technologygarden.entity.ActivityCategory">
+      <id column="ac_id" jdbcType="INTEGER" property="acId" />
+      <result column="ac_category" jdbcType="VARCHAR" property="acCategory" />
+    </association>
+  </resultMap>
 
   <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.ActivityIncubation">
     update technology.activity_incubation

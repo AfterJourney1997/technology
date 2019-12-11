@@ -2,9 +2,11 @@ package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Device;
+import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.PropertyDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.AssetDeviceService;
+import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.SystemPropertyDeviceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,11 +26,13 @@ public class AssetFurnitureController {
 
     private final AssetDeviceService assetDeviceService;
     private final SystemPropertyDeviceService systemPropertyDeviceService;
+    private final EnterpriseInformationService enterpriseInformationService;
 
     @Autowired
-    public AssetFurnitureController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService) {
+    public AssetFurnitureController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService, EnterpriseInformationService enterpriseInformationService) {
         this.assetDeviceService = assetDeviceService;
         this.systemPropertyDeviceService = systemPropertyDeviceService;
+        this.enterpriseInformationService = enterpriseInformationService;
     }
 
     @RequestMapping(value = "/furniture", method = RequestMethod.GET)
@@ -84,6 +88,22 @@ public class AssetFurnitureController {
     public ResultBean<List<PropertyDevice>> getPropertyByCategoryId(@NonNull Integer categoryId){
 
         return systemPropertyDeviceService.getPropertyByCategoryId(categoryId);
+
+    }
+
+    @RequestMapping(value = "/furniture/enterprise", method = RequestMethod.GET)
+    @ApiOperation(value = "获取全部企业信息列表", notes = "参数包括：无")
+    public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
+
+        return enterpriseInformationService.getEnterpriseInformationList();
+
+    }
+
+    @RequestMapping(value = "/furniture/distribution", method = RequestMethod.POST)
+    @ApiOperation(value = "分配设备到企业入驻的房间", notes = "参数包括：设备id、设备分配数量、企业id、房间id")
+    public ResultBean<?> distributeDevice(@NonNull Integer deviceId, @NonNull Integer deviceNum, @NonNull Integer companyId, @NonNull Integer roomId) {
+
+        return assetDeviceService.distributeDevice(deviceId, deviceNum, companyId, roomId);
 
     }
 
