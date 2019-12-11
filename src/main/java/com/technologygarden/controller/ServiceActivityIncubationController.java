@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/service")

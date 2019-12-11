@@ -11,6 +11,8 @@ public interface DeviceMapper {
 
     int insert(Device record);
 
+    int insertReturnPrimaryKey(Device device);
+
     Device selectByPrimaryKey(Integer id);
 
     List<Device> selectAll();

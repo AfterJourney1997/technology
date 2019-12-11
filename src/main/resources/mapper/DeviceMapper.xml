@@ -27,12 +27,12 @@
     <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Device">
     update technology.device
     set category_id = #{categoryId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
+      name = #{deviceName,jdbcType=VARCHAR},
       total = #{total,jdbcType=INTEGER},
       remain = #{remain,jdbcType=INTEGER},
       owner = #{owner,jdbcType=INTEGER},
       kind = #{kind,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{deviceId,jdbcType=INTEGER}
   </update>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, category_id, name, total, remain, owner, kind
@@ -231,4 +231,16 @@
             </if>
         </where>
     </select>
+
+    <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.Device">
+        insert into technology.device
+        (category_id, name, total, remain, owner, kind)
+        values
+        (#{categoryId,jdbcType=INTEGER}, #{deviceName,jdbcType=VARCHAR},
+        #{total,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER}, #{owner,jdbcType=INTEGER},
+        #{kind,jdbcType=INTEGER})
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="deviceId">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+    </insert>
 </mapper>

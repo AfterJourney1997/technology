@@ -56,7 +56,7 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         for (PropertyDevice propertyDevice : propertyDeviceList) {
 
             DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
-            if (deviceProperty.getCategoryId() == null || deviceProperty.getDeviceId() == null || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
+            if (deviceProperty.getCategoryId() == null  || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
                 return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
             }
 
@@ -66,10 +66,12 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         device.setKind(1);
         device.setRemain(device.getTotal());
         // 先插入设备信息
-        deviceMapper.insert(device);
+        deviceMapper.insertReturnPrimaryKey(device);
         // 再插入设备相关属性
+        for (PropertyDevice propertyDevice : propertyDeviceList) {
+            propertyDevice.getDeviceProperty().setDeviceId(device.getDeviceId());
+        }
         devicePropertyMapper.insertForeach(propertyDeviceList);
-
         return new ResultBean<>();
 
     }
@@ -189,7 +191,7 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         for (PropertyDevice propertyDevice : propertyDeviceList) {
 
             DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
-            if (deviceProperty.getCategoryId() == null || deviceProperty.getDeviceId() == null || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
+            if (deviceProperty.getCategoryId() == null || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
                 return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
             }
 
@@ -199,8 +201,11 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         furniture.setKind(2);
         furniture.setRemain(furniture.getTotal());
         // 先插入设备信息
-        deviceMapper.insert(furniture);
+        deviceMapper.insertReturnPrimaryKey(furniture);
         // 再插入设备相关属性
+        for (PropertyDevice propertyDevice : propertyDeviceList) {
+            propertyDevice.getDeviceProperty().setDeviceId(furniture.getDeviceId());
+        }
         devicePropertyMapper.insertForeach(propertyDeviceList);
 
         return new ResultBean<>();

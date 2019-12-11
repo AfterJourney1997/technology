@@ -1,12 +1,23 @@
 package com.technologygarden.util;
 
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 public class FilUploadUtils {
+
+    private static Path path;
 
     public static String saveFile(MultipartFile mfile) throws IOException {
         File directory = new File("");// 参数为空
@@ -64,6 +75,36 @@ public class FilUploadUtils {
             System.out.println("删除单个文件" + UUName + "失败！");
             return false;
         }
+
+    }
+
+    public static ResponseEntity<Resource> downloadFile(String fileName, HttpServletRequest request) throws IOException {
+
+        File directory = new File("");// 参数为空
+        String storagePath = directory.getCanonicalPath() + "\\upload";
+
+        path = Paths.get(storagePath).toAbsolutePath().normalize();
+
+        Path filePath = path.resolve(fileName).normalize();
+        Resource resource = new UrlResource(filePath.toUri());
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            System.out.println("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
 
     }
 }

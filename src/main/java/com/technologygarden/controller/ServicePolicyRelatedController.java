@@ -1,5 +1,6 @@
 package com.technologygarden.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.PolicyRelated;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -39,14 +41,10 @@ public class ServicePolicyRelatedController {
 
     @RequestMapping(value = "/policyRelated", method = RequestMethod.POST)
     @ApiOperation(value = "新增相关政策", notes = "参数包括：相关政策对象")
-    public ResultBean<?> insertPolicyRelated(@Valid PolicyRelated policyRelated, BindingResult errors){
+    public ResultBean<?> insertPolicyRelated(MultipartFile file, String policyRelated){
 
-        // 判断是否有参数缺失
-        if(errors.hasErrors()){
-            errors.getAllErrors().forEach(p-> System.out.println(p.getDefaultMessage()));
-            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
-        }
-        return servicePolicyRelatedService.insertPolicyRelated(policyRelated);
+        PolicyRelated policyRelatedObject = JSONObject.parseObject(policyRelated, PolicyRelated.class);
+        return servicePolicyRelatedService.insertPolicyRelated(policyRelatedObject);
 
     }
 

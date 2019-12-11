@@ -35,4 +35,10 @@
     select id, account, password, role, infoid
     from technology.role
   </select>
+
+  <select id="selectByAccount" resultMap="BaseResultMap">
+    select *
+    from technology.role
+    where role.account = #{account,jdbcType=VARCHAR}
+  </select>
 </mapper>
