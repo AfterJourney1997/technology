@@ -48,7 +48,9 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
     }
 
     @Override
-    public ResultBean deleteDeclareAward(Integer dId) {
+    public ResultBean deleteDeclareAward(Integer dId) throws IOException {
+        DeclareAward declareAward = declareAwardMapper.selectByPrimaryKey(dId);
+        FilUploadUtils.deleteFile(declareAward.getFilename());
         return new ResultBean(declareAwardMapper.deleteByPrimaryKey(dId));
     }
 }

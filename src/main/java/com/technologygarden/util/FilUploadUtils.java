@@ -46,4 +46,24 @@ public class FilUploadUtils {
         }
         return sb.toString();
     }
+
+    public static boolean deleteFile(String UUName) throws IOException {
+        File directory = new File("");// 参数为空
+        String filePath=UUName+directory.getCanonicalPath()+"\\upload";
+        File file = new File(filePath);
+        if (file.isFile() && file.exists()) {
+            Boolean succeedDelete = file.delete();
+            if (succeedDelete) {
+                System.out.println("删除单个文件" + UUName + "成功！");
+                return true;
+            } else {
+                System.out.println("删除单个文件" + UUName + "失败！");
+                return true;
+            }
+        } else {
+            System.out.println("删除单个文件" + UUName + "失败！");
+            return false;
+        }
+
+    }
 }

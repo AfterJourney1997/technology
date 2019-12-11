@@ -57,7 +57,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResultBean deleteEmployee(Integer eId) {
+    public ResultBean deleteEmployee(Integer eId) throws IOException {
+        Employee employee=employeeMapper.selectByPrimaryKey(eId);
+        FilUploadUtils.deleteFile(employee.getFileName());
         return new ResultBean(employeeMapper.deleteByPrimaryKey(eId));
     }
     @Override
