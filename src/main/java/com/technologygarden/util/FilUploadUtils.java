@@ -1,9 +1,9 @@
 package com.technologygarden.util;
 
 
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,8 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 public class FilUploadUtils {
@@ -58,6 +58,53 @@ public class FilUploadUtils {
         return sb.toString();
     }
 
+    //filename要么是绝对路径，要么是从数据库中查出的UUFileName
+    public static ResponseEntity<byte[]> downloadFile(String filename, HttpServletRequest request) throws IOException {
+        System.out.println("接受的参数："+filename);
+        HttpHeaders headers = new HttpHeaders();
+        File isFile=new File(filename);
+        //如果是绝对路径则，需要剪出filename
+        if(isFile.exists()){
+            String name=shearPath(filename);
+            System.out.println("filename："+name);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            //filename设置utf-8编码格式，中文会重新编码成一串字符串 %E6%B5%8B
+            name = URLEncoder.encode(name,"utf-8");
+            headers.setContentDispositionFormData("attachment",name);
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(isFile),
+                    headers, HttpStatus.OK);
+        }else{
+            File directory = new File("");// 参数为空
+            String path = directory.getCanonicalPath()+"\\upload";
+            //因为filename是UUName，所以调用getfileName()方法获得真正的filename名字
+            String nameReal = getfileName(filename);
+            File file = new File(path+"/"+nameReal);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            //filename设置utf-8编码格式，中文会重新编码成一串字符串 %E6%B5%8B
+            nameReal = URLEncoder.encode(nameReal,"utf-8");
+            System.out.println("参数path："+path);
+            headers.setContentDispositionFormData("attachment",nameReal);
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                    headers, HttpStatus.OK);
+        }
+
+
+    }
+    public static String shearPath(String absolutePath) throws IOException {
+        File directory = new File("");// 参数为空
+        String path = directory.getCanonicalPath()+"\\upload";
+        Integer extraengthL=path.length()+33;
+        StringBuffer sb = new StringBuffer();
+        for (int i =extraengthL; i < absolutePath.length(); i++) {
+            sb.append(absolutePath.charAt(i));
+        }
+        return sb.toString();
+    }
+
+
+
+
+
     public static boolean deleteFile(String UUName) throws IOException {
         File directory = new File("");// 参数为空
         String filePath=UUName+directory.getCanonicalPath()+"\\upload";
@@ -75,36 +122,6 @@ public class FilUploadUtils {
             System.out.println("删除单个文件" + UUName + "失败！");
             return false;
         }
-
-    }
-
-    public static ResponseEntity<Resource> downloadFile(String fileName, HttpServletRequest request) throws IOException {
-
-        File directory = new File("");// 参数为空
-        String storagePath = directory.getCanonicalPath() + "\\upload";
-
-        path = Paths.get(storagePath).toAbsolutePath().normalize();
-
-        Path filePath = path.resolve(fileName).normalize();
-        Resource resource = new UrlResource(filePath.toUri());
-
-        // Try to determine file's content type
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            System.out.println("Could not determine file type.");
-        }
-
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
 
     }
 }
