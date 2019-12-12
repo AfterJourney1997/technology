@@ -8,6 +8,7 @@ import com.technologygarden.service.SystemJobTitleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Controller
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/system/jobTitle")
 @RequestMapping(value = "/system")
 @Api(tags = "系统配置 / 职称管理接口", value = "SystemJobTitleController")
 public class SystemJobTitleController {

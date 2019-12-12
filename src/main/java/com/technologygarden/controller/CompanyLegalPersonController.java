@@ -8,12 +8,14 @@ import com.technologygarden.service.CompanyLegalPersonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/company")
+//@RequiresPermissions("/company/legalPerson")
 @Api(tags = "入驻企业 / 企业法人接口", value = "CompanyLegalPersonService")
 public class CompanyLegalPersonController {
 

@@ -21,7 +21,7 @@ public interface PropertyDeviceMapper {
 
     int updateByPrimaryKey(PropertyDevice record);
 
-    Page<PropertyDevice> selectSystemPropertyDeviceListByPage(Integer categoryId);
+    Page<PropertyDevice> selectSystemPropertyDeviceListByPage(@Param("categoryId") Integer categoryId);
 
     int insertSystemPropertyDeviceDynamic(PropertyDevice propertyDevice);
 

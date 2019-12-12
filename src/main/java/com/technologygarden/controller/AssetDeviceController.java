@@ -11,15 +11,15 @@ import com.technologygarden.service.SystemPropertyDeviceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/asset/device")
 @RequestMapping(value = "/asset")
 @Api(tags = "资产管理 / 设备接口", value = "AssetDeviceController")
 public class AssetDeviceController {

@@ -36,7 +36,8 @@ logging:
 
 #shiro
 shiro:
-  enabled: false
+  enabled: true
+  loginUrl: /notLogin
 
 file:
   storagePath: D:/file

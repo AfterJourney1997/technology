@@ -7,11 +7,13 @@ import com.technologygarden.service.AssetAssetCountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/asset/assetCount")
 @RequestMapping(value = "/asset")
 @Api(tags = "资产管理 / 资产统计接口", value = "AssetAssetCountController")
 public class AssetAssetCountController {

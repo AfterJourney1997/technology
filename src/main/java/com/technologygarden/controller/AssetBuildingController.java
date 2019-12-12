@@ -1,12 +1,14 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Building;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.AssetBuildingService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/asset/building")
 @RequestMapping(value = "/asset")
 @Api(tags = "资产管理 / 房区接口", value = "AssetBuildingController")
 public class AssetBuildingController {
@@ -29,7 +32,7 @@ public class AssetBuildingController {
 
     @RequestMapping(value = "/building", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取房产列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<Building>> getBuildingByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getBuildingByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return assetBuildingService.getBuildingByPage(pageNum, pageSize);
 

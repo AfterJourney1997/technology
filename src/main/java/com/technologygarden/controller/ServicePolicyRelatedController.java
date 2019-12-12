@@ -9,6 +9,7 @@ import com.technologygarden.service.ServicePolicyRelatedService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,9 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
-@Controller
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/service/policyRelated")
 @RequestMapping(value = "/service")
 @Api(tags = "孵化服务 / 相关政策接口", value = "ServicePolicyRelatedController")
 public class ServicePolicyRelatedController {

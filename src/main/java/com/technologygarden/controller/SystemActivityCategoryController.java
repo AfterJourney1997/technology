@@ -7,13 +7,14 @@ import com.technologygarden.service.SystemActivityCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/system/activityCategory")
 @RequestMapping(value = "/system")
 @Api(tags = "系统配置 / 活动类别管理接口", value = "SystemActivityCategoryController")
 public class SystemActivityCategoryController {

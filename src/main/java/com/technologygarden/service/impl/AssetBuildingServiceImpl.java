@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.BuildingMapper;
 import com.technologygarden.entity.Building;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -22,11 +23,12 @@ public class AssetBuildingServiceImpl implements AssetBuildingService {
     }
 
     @Override
-    public ResultBean<Page<Building>> getBuildingByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getBuildingByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Building> buildingList = buildingMapper.selectByPage();
-        return new ResultBean<>(buildingList);
+        PageInfo<?> page = new PageInfo<>(buildingList);
+        return new ResultBean<>(page);
     }
 
     @Override

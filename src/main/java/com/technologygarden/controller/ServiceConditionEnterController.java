@@ -8,6 +8,7 @@ import com.technologygarden.service.ServiceConditionEnterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-@Controller
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/service/conditionEnter")
 @RequestMapping(value = "/service")
 @Api(tags = "孵化服务 / 入驻条件接口", value = "ServiceConditionEnterController")
 public class ServiceConditionEnterController {

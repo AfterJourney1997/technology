@@ -8,6 +8,7 @@ import com.technologygarden.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/Approval/account")
 @RequestMapping(value = "/Approval")
 @Api(tags = "企业审批管理接口", value = "EnterpriseApprovalController")
 public class EnterpriseApprovalController {

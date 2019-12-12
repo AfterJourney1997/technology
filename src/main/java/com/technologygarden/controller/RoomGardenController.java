@@ -11,6 +11,7 @@ import com.technologygarden.service.RoomGardenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/room")
+//@RequiresPermissions("/room/garden")
 @Api(tags = "房产管理 / 园区房产接口", value = "RoomGardenController")
 public class RoomGardenController {
 

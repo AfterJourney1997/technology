@@ -10,6 +10,7 @@ import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.SystemJobTitleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/enterprise/information")
 @RequestMapping(value = "/enterprise")
 @Api(tags = "企业信息管理接口", value = "EnterpriseInformationController")
 public class EnterpriseInformationController {

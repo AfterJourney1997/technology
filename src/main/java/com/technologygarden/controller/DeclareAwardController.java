@@ -11,6 +11,7 @@ import com.technologygarden.util.FilUploadUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,9 @@ import springfox.documentation.spring.web.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@Controller
 @CrossOrigin
 @RestController
+//@RequiresPermissions("/declareAward/manage")
 @RequestMapping(value = "/declareAward")
 @Api(tags = "奖项申报接口", value = "DeclareAwardController")
 public class DeclareAwardController {
