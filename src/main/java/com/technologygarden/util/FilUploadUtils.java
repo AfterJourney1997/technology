@@ -12,12 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.file.Path;
 import java.util.UUID;
 
 public class FilUploadUtils {
-
-    private static Path path;
 
     public static String saveFile(MultipartFile mfile) throws IOException {
         File directory = new File("");// 参数为空

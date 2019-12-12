@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.dao.PlatformApplicationMapper;
+import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.PlatformApplication;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.PlaformService;
@@ -50,6 +51,24 @@ public class PlaformServiceImpl implements PlaformService {
     @Override
     public ResultBean deletePlatformApplication(Integer pId) {
         return new ResultBean(platformApplicationMapper.deleteByPrimaryKey(pId));
+    }
+
+    @Override
+    public ResultBean<Page<PlatformApplication>> selectAll(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        Page<PlatformApplication> platformApplication=platformApplicationMapper.selectAll();
+        if(platformApplication!=null){
+            for (PlatformApplication list:platformApplication){
+                list.setCName(enterpriseInformationMapper.selectByPrimaryKey(list.getCId()).getCName());
+            }
+        }
+        return new ResultBean<>(platformApplication);
+    }
+
+    @Override
+    public ResultBean<List<EnterpriseInformation>> getAllEnterprise() {
+
+        return new ResultBean<>(enterpriseInformationMapper.selectAll());
     }
 
 

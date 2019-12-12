@@ -18,6 +18,8 @@ public interface CooperationMapper {
 
     List<Cooperation> selectAll();
 
+    Page<Cooperation> selectAllByManage();
+
     Page<Cooperation> getCooperationByPage(Integer cId);
 
     int updateByPrimaryKey(Cooperation record);

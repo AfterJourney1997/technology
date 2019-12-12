@@ -24,4 +24,5 @@ public class PlatformApplication {
 
     private Integer infoid;//获取当前登录对象的infoid
 
+
 }

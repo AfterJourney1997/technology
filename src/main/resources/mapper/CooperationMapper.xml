@@ -54,4 +54,8 @@
     from technology.cooperation
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
+  <select id="selectAllByManage" resultMap="BaseResultMap">
+    select Id, name, partner, money, major, people, category, day, date, c_Id
+    from technology.cooperation
+  </select>
 </mapper>
