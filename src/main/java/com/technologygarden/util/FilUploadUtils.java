@@ -75,7 +75,7 @@ public class FilUploadUtils {
             String path = directory.getCanonicalPath()+"\\upload";
             //因为filename是UUName，所以调用getfileName()方法获得真正的filename名字
             String nameReal = getfileName(filename);
-            File file = new File(path+"/"+nameReal);
+            File file = new File(path+"/"+filename);
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             //filename设置utf-8编码格式，中文会重新编码成一串字符串 %E6%B5%8B
             nameReal = URLEncoder.encode(nameReal,"utf-8");

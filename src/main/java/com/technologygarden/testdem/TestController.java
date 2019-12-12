@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
-@ResponseBody
 public class TestController {
     @Autowired
     EnterpriseInformationMapper enterpriseInformationMapper;
@@ -37,10 +36,9 @@ public class TestController {
 
     @GetMapping("/test")
     public ResponseEntity<byte[]> srad(String fileName, HttpServletRequest request){
-
+        System.out.println("@@@@@@@"+fileName);
         try {
             ResponseEntity<byte[]> responseEntity = FilUploadUtils.downloadFile(fileName, request);
-            System.out.println("@@@@@@@"+fileName);
             return responseEntity;
         } catch (IOException e) {
             e.printStackTrace();

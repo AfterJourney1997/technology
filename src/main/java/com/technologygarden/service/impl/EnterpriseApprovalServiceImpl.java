@@ -49,6 +49,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     public ResultBean operationEnterpriseAccount(Integer cId, Integer state) {
         EnterpriseInformation enterpriseInformation=enterpriseInformationMapper.selectByPrimaryKey(cId);
         enterpriseInformation.setCStatus(state);
+        enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation);
         return new ResultBean(enterpriseInformation);
     }
 }
