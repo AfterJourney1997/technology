@@ -66,4 +66,8 @@ public class CooperationServiceImpl implements CooperationService {
 
         return new ResultBean<>(enterpriseInformationMapper.selectAll());
     }
+    @Override
+    public ResultBean insertManageCooperation(Cooperation cooperation) {
+        return new ResultBean(cooperationMapper.insert(cooperation));
+    }
 }

@@ -47,7 +47,7 @@ public class IncubationPlatformController {
 
     @RequestMapping(value = "/plaform", method = RequestMethod.PUT)
     @ApiOperation(value = "平台申请修改", notes = "参数包括：PlatformApplication对象，如果修改企业，直接修改对应的cId")
-    public ResultBean updatePlatformApplication(@RequestBody PlatformApplication platformApplication) {
+    public ResultBean updatePlatformApplication(@RequestBody  PlatformApplication platformApplication) {
 
         return plaformService.updatePlatformApplication(platformApplication);
     }

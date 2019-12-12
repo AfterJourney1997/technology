@@ -11,6 +11,7 @@ import java.util.List;
 public interface CooperationService {
     public ResultBean<Page<Cooperation>> getCooperationByPage( Integer pageNum,Integer pageSize, Integer cId);
     public ResultBean insertCooperation(Cooperation cooperation);
+    public ResultBean insertManageCooperation(Cooperation cooperation);
     public ResultBean updateCooperation(Cooperation cooperation);
     public ResultBean deleteCooperation(Integer id);
     public ResultBean<Page<Cooperation>> getCooperationByManage( Integer pageNum,Integer pageSize);

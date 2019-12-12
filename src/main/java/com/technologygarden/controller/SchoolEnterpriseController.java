@@ -36,7 +36,7 @@ public class SchoolEnterpriseController {
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
     @ApiOperation(value = "新增合作", notes = "参数包括：cooperation对象，企业传选择的cId")
     public ResultBean insertCooperation(@RequestBody Cooperation cooperation){
-        return cooperationService.insertCooperation(cooperation);
+        return cooperationService.insertManageCooperation(cooperation);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.PUT)
     @ApiOperation(value = "修改合作", notes = "参数包括：修改后的cooperation对象，企业传选择的cId")
