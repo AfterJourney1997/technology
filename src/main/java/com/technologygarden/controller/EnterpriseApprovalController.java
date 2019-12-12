@@ -10,10 +10,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 @CrossOrigin
@@ -31,8 +30,8 @@ public class EnterpriseApprovalController {
     //新增企业账号
     @RequestMapping(value = "/account", method = RequestMethod.POST)
     @ApiOperation(value = "新增账号", notes = "参数包括：账号，企业名称")
-    public ResultBean  insertEnterpriseAccount(String account,String enterpriseName) {
-        return enterpriseApprovalService.insertEnterpriseAccount(account,enterpriseName);
+    public ResultBean  insertEnterpriseAccount(@RequestBody Map<String,String> param) {
+        return enterpriseApprovalService.insertEnterpriseAccount(param.get("account"),param.get("enterpriseName"));
     }
     //获取所有的企业和企业账号
     @RequestMapping(value = "/account", method = RequestMethod.GET)

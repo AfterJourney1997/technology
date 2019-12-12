@@ -35,6 +35,11 @@
     select id, account, password, role, infoid
     from technology.role
   </select>
+  <select id="selectBycId" resultMap="BaseResultMap">
+    select id, account, password, role, infoid
+    from technology.role
+    where infoid = #{cId,jdbcType=INTEGER}
+  </select>
 
   <select id="selectByAccount" resultMap="BaseResultMap">
     select *
