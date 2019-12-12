@@ -40,7 +40,7 @@ public class AwardsController {
 
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除奖项", notes = "参数：要删除奖项的id")
-    public ResultBean updateAwards(@RequestBody Integer id){
+    public ResultBean updateAwards(Integer id){
         return awardsService.deleteAwards(id);
     }
 

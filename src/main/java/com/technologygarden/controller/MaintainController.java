@@ -39,7 +39,7 @@ public class MaintainController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除服务", notes = "删除对象的id")
-    public ResultBean<Page<Maintain>> updateMaintain(@RequestBody Integer id){
+    public ResultBean<Page<Maintain>> updateMaintain(Integer id){
         return maintainService.deleteMaintain(id);
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)

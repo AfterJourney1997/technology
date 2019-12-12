@@ -36,7 +36,7 @@ public class OpinionController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除意见", notes = "当前对象的Id")
-    public ResultBean<Page> deleteOpinionByPage(@RequestBody Integer id){
+    public ResultBean<Page> deleteOpinionByPage(Integer id){
         return opinionService.deleteOpinionByPage(id);
     }
 }

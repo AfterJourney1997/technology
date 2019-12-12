@@ -41,7 +41,7 @@ public class DegreeController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除学位", notes = "参数包括：Degree对象的xId")
-    public ResultBean deleteDegree(@RequestBody Integer xId){
+    public ResultBean deleteDegree(Integer xId){
         return degreeService.deleteDegree(xId);
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)

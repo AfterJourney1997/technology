@@ -48,7 +48,7 @@ public class EmployeeController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除员工", notes = "参数包括：要删除员工对象对应的eId")
-    public ResultBean deleteEmployee(@RequestBody Integer eId) throws IOException {
+    public ResultBean deleteEmployee(Integer eId) throws IOException {
         return employeeService.deleteEmployee(eId);
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)

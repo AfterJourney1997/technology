@@ -54,7 +54,7 @@ public class IncubationPlatformController {
 
     @RequestMapping(value = "/plaform", method = RequestMethod.DELETE)
     @ApiOperation(value = "平台申请删除", notes = "参数包括：PlatformApplication对象的pId")
-    public ResultBean deletePlatformApplication(@RequestBody Integer pId) {
+    public ResultBean deletePlatformApplication(Integer pId) {
 
         return plaformService.deletePlatformApplication(pId);
     }

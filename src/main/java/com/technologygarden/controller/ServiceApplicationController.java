@@ -51,7 +51,7 @@ public class ServiceApplicationController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "服务取消", notes = "参数包括：serviceApplication对象的id")
-    public ResultBean deleteServiceApplication(@RequestBody Integer id){
+    public ResultBean deleteServiceApplication(Integer id){
         return new ResultBean(serviceApplicationService.deleteServiceApplication(id));
     }
 }

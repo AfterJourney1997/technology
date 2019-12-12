@@ -45,7 +45,7 @@ public class SchoolEnterpriseController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除合作", notes = "参数包括：当前cooperation对象id")
-    public ResultBean deleteCooperation(@RequestBody Integer id){
+    public ResultBean deleteCooperation(Integer id){
         return cooperationService.deleteCooperation(id);
     }
 }

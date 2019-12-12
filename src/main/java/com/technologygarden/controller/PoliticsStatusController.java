@@ -43,7 +43,7 @@ public class PoliticsStatusController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除政治面貌", notes = "参数包括：删除对象的zId")
-    public ResultBean updatePoliticsStatus(@RequestBody Integer zId){
+    public ResultBean updatePoliticsStatus(Integer zId){
         return politicsStatusService.deletePoliticsStatus(zId);
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)
