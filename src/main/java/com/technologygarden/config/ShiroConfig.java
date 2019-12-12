@@ -1,5 +1,6 @@
 package com.technologygarden.config;
 
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -24,6 +25,13 @@ public class ShiroConfig {
         manager.setRealm(myRealm());
         return manager;
     }
+
+    //自定义sessionManager
+    @Bean
+    public SessionManager sessionManager() {
+        return new MySessionManager();
+    }
+
 
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
@@ -64,6 +72,7 @@ public class ShiroConfig {
 
         //除了以上的请求外，其它请求都需要登录
         chain.addPathDefinition("/**", "authc");
+
 
         return chain;
     }

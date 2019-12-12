@@ -50,11 +50,12 @@ public class AssetBuildingServiceImpl implements AssetBuildingService {
     }
 
     @Override
-    public ResultBean<Page<Building>> searchBuildingByName(Integer pageNum, Integer pageSize, String buildingName) {
+    public ResultBean<PageInfo<?>> searchBuildingByName(Integer pageNum, Integer pageSize, String buildingName) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Building> buildingList = buildingMapper.searchBuildingByName(buildingName);
-        return new ResultBean<>(buildingList);
+        PageInfo<?> page = new PageInfo<>(buildingList);
+        return new ResultBean<>(page);
 
     }
 

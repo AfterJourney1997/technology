@@ -64,7 +64,7 @@ public class AssetBuildingController {
 
     @RequestMapping(value = "/building/search", method = RequestMethod.GET)
     @ApiOperation(value = "根据名称搜索房产", notes = "参数包括：页数，每页数量，房产名称")
-    public ResultBean<Page<Building>> searchBuildingByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String buildingName){
+    public ResultBean<PageInfo<?>> searchBuildingByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String buildingName){
 
         return assetBuildingService.searchBuildingByName(pageNum, pageSize, buildingName);
 

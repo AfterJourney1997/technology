@@ -25,4 +25,6 @@ public interface LegalPersonMapper {
     List<LegalPerson> selectLegalPersonByJobTitleId(Integer jobTitleId);
 
     int insertReturnPrimaryKey(LegalPerson legalPerson);
+
+    Page<LegalPerson> searchLegalPersonByPage(@Param("legalPersonName") String legalPersonName, @Param("companyName") String companyName);
 }

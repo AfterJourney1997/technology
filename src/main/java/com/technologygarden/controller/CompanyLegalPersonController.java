@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Building;
 import com.technologygarden.entity.LegalPerson;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -28,17 +29,26 @@ public class CompanyLegalPersonController {
 
     @RequestMapping(value = "/legalPerson", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取企业法人列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<LegalPerson>> getLegalPersonByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getLegalPersonByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return companyLegalPersonService.getLegalPersonByPage(pageNum, pageSize);
 
     }
 
-    @RequestMapping(value = "/legalPerson", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/legalPerson", method = RequestMethod.POST)
     @ApiOperation(value = "新增企业法人", notes = "参数包括：法人对象")
     public ResultBean<?> insertLegalPersonByPage(@RequestBody LegalPerson legalPerson){
 
         return companyLegalPersonService.insertLegalPerson(legalPerson);
+
+    }*/
+
+
+    @RequestMapping(value = "/legalPerson/search", method = RequestMethod.GET)
+    @ApiOperation(value = "分页搜索企业法人列表", notes = "参数包括：页数，每页数量，法人名称，企业名称")
+    public ResultBean<PageInfo<?>> searchLegalPersonByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String legalPersonName, String companyName){
+
+        return companyLegalPersonService.searchLegalPersonByPage(pageNum, pageSize, legalPersonName, companyName);
 
     }
 }

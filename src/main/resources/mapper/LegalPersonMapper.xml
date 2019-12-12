@@ -67,4 +67,17 @@
       SELECT LAST_INSERT_ID();
     </selectKey>
   </insert>
+
+  <select id="searchLegalPersonByPage" resultMap="BaseResultMap">
+    select *
+    from technology.legal_person
+    <where>
+      <if test="legalPersonName != null and legalPersonName != ''">
+        and legal_person.lp_name like concat('%', #{legalPersonName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="companyName != null and companyName != ''">
+        and legal_person.lp_c_name like concat('%', #{companyName,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
 </mapper>
