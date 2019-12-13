@@ -10,6 +10,8 @@ import com.technologygarden.service.ServiceApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service("ServiceApplicationService")
 public class ServiceApplicationServiceImpl implements ServiceApplicationService {
     private final ServiceApplicationMapper serviceApplicationMapper;
@@ -32,6 +34,7 @@ public class ServiceApplicationServiceImpl implements ServiceApplicationService 
 
     @Override
     public ResultBean insertServiceApplication(ServiceApplication serviceApplication) {
+        serviceApplication.setDate(new Date());
         return new ResultBean(serviceApplicationMapper.insert(serviceApplication)) ;
     }
 
