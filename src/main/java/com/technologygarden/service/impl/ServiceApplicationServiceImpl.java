@@ -40,6 +40,7 @@ public class ServiceApplicationServiceImpl implements ServiceApplicationService 
 
     @Override
     public ResultBean updateServiceApplication(ServiceApplication serviceApplication) {
+        serviceApplication.setDate(new Date());
         return new ResultBean(serviceApplicationMapper.updateByPrimaryKey(serviceApplication));
     }
 

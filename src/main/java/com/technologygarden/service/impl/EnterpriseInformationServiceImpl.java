@@ -75,10 +75,12 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
             }
             enterpriseInformation.setFilePathName(fileNameList);
             enterpriseInformation.setFilePathList(filePathList);
-            LegalPerson legalPerson=legalPersonMapper.selectByPrimaryKey(enterpriseInformation.getCLegalperson());
-            legalPerson.setDegree(degreeMapper.selectByPrimaryKey(legalPerson.getLpDegreeId()));
-            legalPerson.setJobTitle(jobTitleMapper.selectByPrimaryKey(legalPerson.getLpJtId()));
-            enterpriseInformation.setLegalPerson(legalPerson);
+            if(enterpriseInformation.getCLegalperson()!=null) {
+                LegalPerson legalPerson = legalPersonMapper.selectByPrimaryKey(enterpriseInformation.getCLegalperson());
+                legalPerson.setDegree(degreeMapper.selectByPrimaryKey(legalPerson.getLpDegreeId()));
+                legalPerson.setJobTitle(jobTitleMapper.selectByPrimaryKey(legalPerson.getLpJtId()));
+                enterpriseInformation.setLegalPerson(legalPerson);
+            }
             return new ResultBean<>(enterpriseInformation);
     }
 
