@@ -45,11 +45,12 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
             i++;
         }
         LegalPerson legalPerson=enterpriseInformation.getLegalPerson();
+        legalPerson.setLpCName(enterpriseInformation.getCName());
         legalPersonMapper.insertReturnPrimaryKey(legalPerson);
         String fileName = ArrayUtil.join(fileNameList, "/");//保存文件
         Integer infoid = enterpriseInformation.getInfoid();;
         enterpriseInformation.setCId(infoid);
-        enterpriseInformation.setCLegalperson(legalPerson.getLpDegreeId());
+        enterpriseInformation.setCLegalperson(legalPerson.getLpId());//存放法人id
         enterpriseInformation.setFileName(fileName);//获取文件名
         enterpriseInformation.setCStatus(1);//提交企业信息，状态改为1
         return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
