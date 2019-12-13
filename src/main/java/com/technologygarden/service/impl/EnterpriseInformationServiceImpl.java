@@ -50,7 +50,7 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
         legalPersonMapper.insertReturnPrimaryKey(legalPerson);
         String fileName = ArrayUtil.join(fileNameList, "/");//保存文件
         Integer infoid = enterpriseInformation.getInfoid();
-        ;
+
         enterpriseInformation.setCId(infoid);
         enterpriseInformation.setCLegalperson(legalPerson.getLpId());//存放法人id
         enterpriseInformation.setFileName(fileName);//获取文件名
@@ -91,7 +91,7 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
             legalPerson.setJobTitle(jobTitleMapper.selectByPrimaryKey(legalPerson.getLpJtId()));
             enterpriseInformation.setLegalPerson(legalPerson);
         }
-        
+
         return new ResultBean<>(enterpriseInformation);
     }
 
