@@ -141,4 +141,16 @@
       </if>
     </where>
   </select>
+
+  <select id="selectWithInfoPageByRoomId" resultMap="AssetCountWithInfo">
+    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.remain as d_remain,
+    d.owner as d_owner, d.kind as d_kind, pd.id as pd_id, pd.kind as pd_kind, pd.category_id as pd_category_id, pd.name as pd_name, pd.property as pd_property
+    from technology.company_room_device crd, technology.device d, technology.room r, technology.building b, technology.property_device pd
+    where crd.crd_room_id = r.r_id
+    and r.r_building_id = b.id
+    and crd.crd_device_id = d.id
+    and d.category_id = pd.id
+    and pd.category_id = 0
+    and crd.crd_room_id = #{roomId,jdbcType=INTEGER}
+  </select>
 </mapper>

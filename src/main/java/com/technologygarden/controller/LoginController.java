@@ -18,14 +18,15 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResultBean<?> login(@NonNull String account, @NonNull String password){
         Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(account, password);
         try {
-            subject.login(new UsernamePasswordToken(account, password));
+            subject.login(token);
         } catch (AuthenticationException e) {
             e.printStackTrace();
             return new ResultBean<>(ResultStatus.PARAMETER_ERROR.getCode(), ResultStatus.PARAMETER_ERROR.getMessage());
         }
 
-        return new ResultBean<>();
+        return new ResultBean<>(subject.getSession().getId());
     }
 
     @RequestMapping(value = "/notLogin", method = RequestMethod.GET)
