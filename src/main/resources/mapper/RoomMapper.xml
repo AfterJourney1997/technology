@@ -180,4 +180,10 @@
     </where>
   </select>
 
+  <select id="selectRoomByCompanyId" resultMap="BaseResultMap">
+    select *
+    from technology.room
+    where room.r_company_id = #{companyId,jdbcType=INTEGER}
+  </select>
+
 </mapper>
