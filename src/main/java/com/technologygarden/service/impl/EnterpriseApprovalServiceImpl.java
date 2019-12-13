@@ -45,7 +45,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         for(EnterpriseInformation enterprise:list){
             Integer legalpersonId= enterprise.getCLegalperson();
             LegalPerson legalPerson =new LegalPerson();
-            legalPerson.setLpCName("无");
+            legalPerson.setLpName("无");
             if(legalpersonId!=null){
               legalPerson =legalPersonMapper.selectByPrimaryKey(legalpersonId);
             }

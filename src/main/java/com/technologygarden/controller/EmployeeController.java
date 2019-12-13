@@ -2,7 +2,9 @@ package com.technologygarden.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
+import com.technologygarden.entity.Degree;
 import com.technologygarden.entity.Employee;
+import com.technologygarden.entity.PoliticsStatus;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Role;
 import com.technologygarden.service.EmployeeService;
@@ -55,5 +57,15 @@ public class EmployeeController {
     @ApiOperation(value = "按名称分页获取员工列表", notes = "参数包括：页数，每页数量，当前登录对象的infoid，搜索内容，均必填")
     public ResultBean<Page<Employee>> selectByNamePage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid,@NonNull String employeeName) throws IOException {
         return employeeService.selectByNamePage(pageNum,pageSize,infoid,employeeName);
+    }
+    @RequestMapping(value = "/manage/politicsStatus", method = RequestMethod.GET)
+    @ApiOperation(value = "查询所有的政治面貌", notes = "参数包括：无")
+    public ResultBean<PoliticsStatus> selectAllByPoliticsStatus()  {
+        return employeeService.selectAllByPoliticsStatus();
+    }
+    @RequestMapping(value = "/manage/degree", method = RequestMethod.GET)
+    @ApiOperation(value = "查询所有的学位", notes = "参数包括：无")
+    public ResultBean<Degree> selectAllByDegree()  {
+        return employeeService.selectAllByDegree();
     }
 }

@@ -7,7 +7,9 @@ import com.technologygarden.dao.DegreeMapper;
 import com.technologygarden.dao.EmployeeMapper;
 import com.technologygarden.dao.PoliticsStatusMapper;
 import com.technologygarden.entity.DeclareAward;
+import com.technologygarden.entity.Degree;
 import com.technologygarden.entity.Employee;
+import com.technologygarden.entity.PoliticsStatus;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.EmployeeService;
 import com.technologygarden.util.FilUploadUtils;
@@ -36,6 +38,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByPage(cId);
         for(Employee employee:employeeList){
+            employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
+            employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
             String fileNameString= employee.getFileName();
             String fileNameArray []=fileNameString.split("/");
             List<String> fileNameList=new ArrayList<>();
@@ -48,6 +52,17 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setFilePathList(filePathList);
         }
         return new ResultBean<>(employeeList);
+    }
+
+    @Override
+    public ResultBean<PoliticsStatus> selectAllByPoliticsStatus() {
+        List<PoliticsStatus> politicsStatusList=politicsStatusMapper.selectAll();
+        return new ResultBean(politicsStatusList);
+    }
+
+    @Override
+    public ResultBean<Degree> selectAllByDegree() {
+        return new ResultBean(degreeMapper.selectAll());
     }
 
     @Override
@@ -97,6 +112,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByNamePage(cId,employeeName);
         for(Employee employee:employeeList){
+            employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
+            employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
             String fileNameString= employee.getFileName();
             String fileNameArray []=fileNameString.split("/");
             List<String> fileNameList=new ArrayList<>();
@@ -110,4 +127,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return new ResultBean<>(employeeList);
     }
+
 }
