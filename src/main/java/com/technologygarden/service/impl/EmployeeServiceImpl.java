@@ -91,8 +91,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             fileNameList[i]=UUName;
             i++;
         }
-        String fileName = ArrayUtil.join(fileNameList, "/");
-        employee.setFileName(fileName);
+        if(fileNameList.length>0){
+            String fileName = ArrayUtil.join(fileNameList, "/");
+            employee.setFileName(fileName);
+        }
         return new ResultBean(employeeMapper.updateByPrimaryKey(employee));
     }
 
