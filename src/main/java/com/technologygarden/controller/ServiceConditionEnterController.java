@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -65,7 +62,7 @@ public class ServiceConditionEnterController {
 
     @RequestMapping(value = "/conditionEnter", method = RequestMethod.PUT)
     @ApiOperation(value = "根据id修改入驻条件", notes = "参数包括：入驻条件对象，id必填，修改项选填")
-    public ResultBean<?> updateConditionEnterById(ConditionEnter conditionEnter){
+    public ResultBean<?> updateConditionEnterById(@RequestBody ConditionEnter conditionEnter){
 
         return serviceConditionEnterService.updateConditionEnterById(conditionEnter);
 

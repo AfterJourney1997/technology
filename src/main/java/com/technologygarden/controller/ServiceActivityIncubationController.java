@@ -14,10 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -69,7 +66,7 @@ public class ServiceActivityIncubationController {
 
     @RequestMapping(value = "/activityIncubation", method = RequestMethod.PUT)
     @ApiOperation(value = "根据主键修改孵化活动", notes = "参数包括：孵化活动对象，id必填，其他选填")
-    public ResultBean<?> updateActivityIncubationById(ActivityIncubation activityIncubation){
+    public ResultBean<?> updateActivityIncubationById(@RequestBody  ActivityIncubation activityIncubation){
 
         return serviceActivityIncubationService.updateActivityIncubationById(activityIncubation);
 

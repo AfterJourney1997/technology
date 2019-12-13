@@ -3,8 +3,10 @@ package com.technologygarden.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.EnterpriseInformationMapper;
+import com.technologygarden.dao.LegalPersonMapper;
 import com.technologygarden.dao.RoleMapper;
 import com.technologygarden.entity.EnterpriseInformation;
+import com.technologygarden.entity.LegalPerson;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Role;
 import com.technologygarden.service.EnterpriseApprovalService;
@@ -13,10 +15,12 @@ import org.springframework.stereotype.Service;
 @Service("EnterpriseApprovalService")
 public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService {
     private final RoleMapper roleMapper;
+    private final LegalPersonMapper legalPersonMapper;
     private final EnterpriseInformationMapper enterpriseInformationMapper;
 
-    public EnterpriseApprovalServiceImpl(RoleMapper roleMapper, EnterpriseInformationMapper enterpriseInformationMapper) {
+    public EnterpriseApprovalServiceImpl(RoleMapper roleMapper, LegalPersonMapper legalPersonMapper, EnterpriseInformationMapper enterpriseInformationMapper) {
         this.roleMapper = roleMapper;
+        this.legalPersonMapper = legalPersonMapper;
         this.enterpriseInformationMapper = enterpriseInformationMapper;
     }
 
@@ -39,7 +43,14 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         PageHelper.startPage(pageNum,pageSize);
         Page<EnterpriseInformation> list = enterpriseInformationMapper.selectAllByPage();
         for(EnterpriseInformation enterprise:list){
+            Integer legalpersonId= enterprise.getCLegalperson();
+            LegalPerson legalPerson =new LegalPerson();
+            legalPerson.setLpCName("无");
+            if(legalpersonId!=null){
+              legalPerson =legalPersonMapper.selectByPrimaryKey(legalpersonId);
+            }
             String account=roleMapper.selectBycId(enterprise.getCId()).getAccount();
+            enterprise.setLegalPerson(legalPerson);
             enterprise.setAccount(account);
         }
         return new ResultBean<>(list);

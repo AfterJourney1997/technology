@@ -59,7 +59,7 @@ public class ServicePolicyRelatedController {
 
     @RequestMapping(value = "/policyRelated", method = RequestMethod.PUT)
     @ApiOperation(value = "根据id修改相关政策", notes = "参数包括：相关政策对象，id必填，修改项选填")
-    public ResultBean<?> updatePolicyRelatedById(PolicyRelated policyRelated){
+    public ResultBean<?> updatePolicyRelatedById(@RequestBody PolicyRelated policyRelated){
 
         return servicePolicyRelatedService.updatePolicyRelatedById(policyRelated);
 
