@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.technologygarden.dao.AwardsMapper;
 import com.technologygarden.dao.DeclareAwardMapper;
+import com.technologygarden.dao.DegreeMapper;
 import com.technologygarden.entity.DeclareAward;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.DeclareAwardService;
@@ -73,5 +74,10 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
             FilUploadUtils.deleteFile(fileNameArray[i]);
         }
         return new ResultBean(declareAwardMapper.deleteByPrimaryKey(dId));
+    }
+
+    @Override
+    public ResultBean getDegreeAll() {
+        return new ResultBean(awardsMapper.selectAll());
     }
 }

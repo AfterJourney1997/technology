@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Awards;
 import com.technologygarden.entity.DeclareAward;
+import com.technologygarden.entity.Degree;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Role;
 import com.technologygarden.service.DeclareAwardService;
@@ -31,6 +32,11 @@ public class DeclareAwardController {
     @Autowired
     public DeclareAwardController(DeclareAwardService declareAwardService) {
         this.declareAwardService = declareAwardService;
+    }
+    @RequestMapping(value = "/degree", method = RequestMethod.GET)
+    @ApiOperation(value = "获取奖项", notes = "参数包括：无")
+    public ResultBean getDegreeAll() {
+        return declareAwardService.getDegreeAll();
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "获取分页奖项申报列表", notes = "参数包括：页数,每页数量,当前登录对象的infoid,均必填")

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ public class EnterpriseInformation {
     private Integer cLegalperson;
     private String cCode;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date cDate;
     private String taxpayerType;
     private Double cFund;

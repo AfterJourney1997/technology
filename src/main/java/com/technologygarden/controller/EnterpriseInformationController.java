@@ -53,7 +53,7 @@ public class EnterpriseInformationController {
 
     @RequestMapping(value = "/information", method = RequestMethod.GET)
     @ApiOperation(value = "获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
-    public ResultBean<EnterpriseInformation> getEnterpriseInformation(@RequestBody Integer infoid) throws IOException {
+    public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer infoid) throws IOException {
         return enterpriseInformationService.getEnterpriseInformation(infoid);
     }
 
