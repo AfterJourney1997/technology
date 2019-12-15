@@ -19,4 +19,5 @@ public interface RoomCompanyService {
 
     ResultBean<Page<Room>> searchRoomCompany(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName);
 
+    ResultBean<List<Room>> getRoomEntered();
 }

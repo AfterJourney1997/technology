@@ -186,4 +186,10 @@
     where room.r_company_id = #{companyId,jdbcType=INTEGER}
   </select>
 
+  <select id="selectRoomByStatus" resultMap="BaseResultMap">
+    select *
+    from technology.room
+    where room.r_status = #{status,jdbcType=INTEGER}
+  </select>
+
 </mapper>

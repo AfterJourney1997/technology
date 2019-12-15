@@ -28,6 +28,5 @@ public class ConditionEnter {
     private String ceFile;
     @NotBlank
     private String ceContent;
-    private MultipartFile file;
 
 }

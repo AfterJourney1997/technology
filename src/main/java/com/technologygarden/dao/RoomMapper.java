@@ -32,4 +32,6 @@ public interface RoomMapper {
     Page<Room> searchRoomCompanyByPage(@Param("buildingId") Integer buildingId, @Param("status") Integer status, @Param("roomName") String roomName);
 
     List<Room> selectRoomByCompanyId(@Param("companyId") Integer companyId);
+
+    List<Room> selectRoomByStatus(@Param("status") Integer status);
 }

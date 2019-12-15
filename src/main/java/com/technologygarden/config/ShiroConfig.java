@@ -67,12 +67,14 @@ public class ShiroConfig {
         adminMap.put("/system/propertyDevice/**", "perms[/system/propertyDevice]");
         adminMap.put("/politicsStatus/manage/**", "perms[/politicsStatus/manage]");
 
+        // 退出
+        adminMap.put("/logout", "logout");
+
         // 项目权限配置
         chain.addPathDefinitions(adminMap);
 
         //除了以上的请求外，其它请求都需要登录
         chain.addPathDefinition("/**", "authc");
-
 
         return chain;
     }

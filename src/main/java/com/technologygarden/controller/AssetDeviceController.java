@@ -5,13 +5,14 @@ import com.technologygarden.entity.Device;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.PropertyDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.Room;
 import com.technologygarden.service.AssetDeviceService;
 import com.technologygarden.service.EnterpriseInformationService;
+import com.technologygarden.service.RoomCompanyService;
 import com.technologygarden.service.SystemPropertyDeviceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,12 +28,14 @@ public class AssetDeviceController {
     private final AssetDeviceService assetDeviceService;
     private final SystemPropertyDeviceService systemPropertyDeviceService;
     private final EnterpriseInformationService enterpriseInformationService;
+    private final RoomCompanyService roomCompanyService;
 
     @Autowired
-    public AssetDeviceController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService, EnterpriseInformationService enterpriseInformationService) {
+    public AssetDeviceController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService, EnterpriseInformationService enterpriseInformationService, RoomCompanyService roomCompanyService) {
         this.assetDeviceService = assetDeviceService;
         this.systemPropertyDeviceService = systemPropertyDeviceService;
         this.enterpriseInformationService = enterpriseInformationService;
+        this.roomCompanyService = roomCompanyService;
     }
 
     @RequestMapping(value = "/device", method = RequestMethod.GET)
@@ -92,10 +95,10 @@ public class AssetDeviceController {
     }
 
     @RequestMapping(value = "/device/enterprise", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部企业信息列表", notes = "参数包括：无")
-    public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
+    @ApiOperation(value = "获取全部有企业入驻的房间列表", notes = "参数包括：无")
+    public ResultBean<List<Room>> getRoomEntered() {
 
-        return enterpriseInformationService.getEnterpriseInformationList();
+        return roomCompanyService.getRoomEntered();
 
     }
 

@@ -59,4 +59,13 @@ public class RoomCompanyServiceImpl implements RoomCompanyService {
 
     }
 
+    @Override
+    public ResultBean<List<Room>> getRoomEntered() {
+
+        // 状态2表示房间有企业入驻，1为空闲
+        int status = 2;
+        List<Room> roomList = roomMapper.selectRoomByStatus(status);
+        return new ResultBean<>(roomList);
+    }
+
 }

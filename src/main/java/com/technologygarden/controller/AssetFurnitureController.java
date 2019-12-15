@@ -2,16 +2,16 @@ package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Device;
-import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.PropertyDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.Room;
 import com.technologygarden.service.AssetDeviceService;
 import com.technologygarden.service.EnterpriseInformationService;
+import com.technologygarden.service.RoomCompanyService;
 import com.technologygarden.service.SystemPropertyDeviceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +26,13 @@ public class AssetFurnitureController {
 
     private final AssetDeviceService assetDeviceService;
     private final SystemPropertyDeviceService systemPropertyDeviceService;
-    private final EnterpriseInformationService enterpriseInformationService;
+    private final RoomCompanyService roomCompanyService;
 
     @Autowired
-    public AssetFurnitureController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService, EnterpriseInformationService enterpriseInformationService) {
+    public AssetFurnitureController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService, RoomCompanyService roomCompanyService) {
         this.assetDeviceService = assetDeviceService;
         this.systemPropertyDeviceService = systemPropertyDeviceService;
-        this.enterpriseInformationService = enterpriseInformationService;
+        this.roomCompanyService = roomCompanyService;
     }
 
     @RequestMapping(value = "/furniture", method = RequestMethod.GET)
@@ -92,15 +92,15 @@ public class AssetFurnitureController {
     }
 
     @RequestMapping(value = "/furniture/enterprise", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部企业信息列表", notes = "参数包括：无")
-    public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
+    @ApiOperation(value = "获取全部有企业入驻的房间列表", notes = "参数包括：无")
+    public ResultBean<List<Room>> getRoomEntered() {
 
-        return enterpriseInformationService.getEnterpriseInformationList();
+        return roomCompanyService.getRoomEntered();
 
     }
 
     @RequestMapping(value = "/furniture/distribution", method = RequestMethod.POST)
-    @ApiOperation(value = "分配设备到企业入驻的房间", notes = "参数包括：设备id、设备分配数量、企业id、房间id")
+    @ApiOperation(value = "分配家具到企业入驻的房间", notes = "参数包括：设备id、设备分配数量、企业id、房间id")
     public ResultBean<?> distributeDevice(@NonNull Integer deviceId, @NonNull Integer deviceNum, @NonNull Integer companyId, @NonNull Integer roomId) {
 
         return assetDeviceService.distributeDevice(deviceId, deviceNum, companyId, roomId);

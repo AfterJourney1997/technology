@@ -1,5 +1,6 @@
 package com.technologygarden.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.ConditionEnter;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -41,14 +43,10 @@ public class ServiceConditionEnterController {
 
     @RequestMapping(value = "/conditionEnter", method = RequestMethod.POST)
     @ApiOperation(value = "新增入驻条件", notes = "参数包括：入驻条件对象")
-    public ResultBean<?> insertConditionEnter(@Valid ConditionEnter conditionEnter, BindingResult errors){
+    public ResultBean<?> insertConditionEnter(MultipartFile file, String conditionEnter){
 
-        // 判断是否有参数缺失
-        if(errors.hasErrors()){
-            errors.getAllErrors().forEach(p-> System.out.println(p.getDefaultMessage()));
-            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
-        }
-        return serviceConditionEnterService.insertConditionEnter(conditionEnter);
+        ConditionEnter conditionEnterObject = JSONObject.parseObject(conditionEnter, ConditionEnter.class);
+        return serviceConditionEnterService.insertConditionEnter(conditionEnterObject);
 
     }
 
