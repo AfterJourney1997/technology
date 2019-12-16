@@ -10,6 +10,8 @@
     <result column="x_Id" jdbcType="INTEGER" property="xId" />
     <result column="file_name" jdbcType="VARCHAR" property="fileName" />
     <result column="c_Id" jdbcType="INTEGER" property="cId" />
+    <result column="idcard" jdbcType="VARCHAR" property="idCard" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from technology.employee
@@ -17,11 +19,12 @@
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Employee">
     insert into technology.employee (e_Id, e_name, e_sex,
-      z_Id, e_position, x_Id, 
-      file_name, c_Id)
+      z_Id, e_position, x_Id, file_name,
+       c_Id, idcard, phone)
     values (#{eId,jdbcType=INTEGER}, #{eName,jdbcType=VARCHAR}, #{eSex,jdbcType=VARCHAR}, 
       #{zId,jdbcType=INTEGER}, #{ePosition,jdbcType=VARCHAR}, #{xId,jdbcType=INTEGER},
-      #{fileName,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER})
+      #{fileName,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER}),#{idCard,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Employee">
     update technology.employee
@@ -31,35 +34,37 @@
       e_position = #{ePosition,jdbcType=VARCHAR},
       x_Id = #{xId,jdbcType=INTEGER},
       file_name = #{fileName,jdbcType=VARCHAR},
-      c_Id = #{cId,jdbcType=INTEGER}
+      c_Id = #{cId,jdbcType=INTEGER},
+      idcard = #{idCard,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
     where e_Id = #{eId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id, idcard, phone
     from technology.employee
     where e_Id = #{eId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id, idcard, phone
     from technology.employee
   </select>
   <select id="selectByPage" resultMap="BaseResultMap">
-    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id, idcard, phone
     from technology.employee
     where c_Id=#{cId jdbcType=INTEGER}
   </select>
   <select id="selectByNamePage" resultMap="BaseResultMap">
-    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id, idcard, phone
     from technology.employee
     where c_Id=#{cId,jdbcType=INTEGER} and e_name like concat('%', #{employeeName,jdbcType=VARCHAR}, '%')
   </select>
   <select id="selectByxId" resultMap="BaseResultMap">
-    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id, idcard, phone
     from technology.employee
     where x_Id=#{xId,jdbcType=INTEGER}
   </select>
   <select id="selectByzId" resultMap="BaseResultMap">
-    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id
+    select e_Id, e_name, e_sex, z_Id, e_position, x_Id, file_name, c_Id, idcard, phone
     from technology.employee
     where z_Id=#{zId,jdbcType=INTEGER}
   </select>

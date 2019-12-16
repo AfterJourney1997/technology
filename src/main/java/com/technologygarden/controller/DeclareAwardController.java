@@ -2,6 +2,7 @@ package com.technologygarden.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Awards;
 import com.technologygarden.entity.DeclareAward;
 import com.technologygarden.entity.Degree;
@@ -40,7 +41,7 @@ public class DeclareAwardController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "获取分页奖项申报列表", notes = "参数包括：页数,每页数量,当前登录对象的infoid,均必填")
-    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid) throws IOException {
+    public ResultBean<PageInfo<?>> getDeclareAwardByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull Integer infoid) throws IOException {
         return declareAwardService.getDeclareAwardByPage(pageNum,pageSize,infoid);
     }
 

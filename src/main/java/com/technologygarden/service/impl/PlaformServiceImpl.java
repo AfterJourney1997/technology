@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.dao.PlatformApplicationMapper;
 import com.technologygarden.entity.EnterpriseInformation;
@@ -24,7 +25,7 @@ public class PlaformServiceImpl implements PlaformService {
     }
 
     @Override
-    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(Integer pageNum, Integer pageSize, Integer cId) {
+    public ResultBean<PageInfo<?>> getPlatformApplicationByPage(Integer pageNum, Integer pageSize, Integer cId) {
         PageHelper.startPage(pageNum, pageSize);
         List<PlatformApplication> platformApplication=platformApplicationMapper.selectByPage(cId);
         if(platformApplication!=null){
@@ -33,7 +34,8 @@ public class PlaformServiceImpl implements PlaformService {
            }
         }
         Page<PlatformApplication> platformList= (Page<PlatformApplication>) platformApplication;
-        return new ResultBean<>(platformList);
+        PageInfo<?> pageInfo = new PageInfo<>(platformList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class PlaformServiceImpl implements PlaformService {
     }
 
     @Override
-    public ResultBean<Page<PlatformApplication>> selectAll(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> selectAll(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         Page<PlatformApplication> platformApplication=platformApplicationMapper.selectAll();
         if(platformApplication!=null){
@@ -62,7 +64,8 @@ public class PlaformServiceImpl implements PlaformService {
                 list.setCName(enterpriseInformationMapper.selectByPrimaryKey(list.getCId()).getCName());
             }
         }
-        return new ResultBean<>(platformApplication);
+        PageInfo<?> pageInfo = new PageInfo<>(platformApplication);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override

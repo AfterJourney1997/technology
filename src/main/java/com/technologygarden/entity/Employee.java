@@ -30,6 +30,10 @@ public class Employee implements Serializable {
 
     private Integer cId;
 
+    private String idCard;
+
+    private String phone;
+
     private String zName;//用来显示政治面貌，前端便于显示
 
     private String xName;//用来显示学历，前端便于显示
@@ -41,4 +45,12 @@ public class Employee implements Serializable {
     private List<String> fileNameList;//用来返回给前端文件的路径
 
 
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
 }

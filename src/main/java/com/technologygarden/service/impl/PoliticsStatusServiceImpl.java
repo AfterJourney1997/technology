@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.EmployeeMapper;
 import com.technologygarden.dao.PoliticsStatusMapper;
 import com.technologygarden.entity.Employee;
@@ -25,10 +26,11 @@ public class PoliticsStatusServiceImpl implements PoliticsStatusService {
     }
 
     @Override
-    public ResultBean<Page<PoliticsStatus>> getPoliticsStatusByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getPoliticsStatusByPage(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         Page<PoliticsStatus> politicsStatusList=politicsStatusMapper.selectByPage();
-        return new ResultBean<>(politicsStatusList);
+        PageInfo<?> pageInfo = new PageInfo<>(politicsStatusList);
+        return new ResultBean<>(pageInfo);
     }
     @Override
     public ResultBean insertPoliticsStatus(PoliticsStatus politicsStatus) {
@@ -50,9 +52,10 @@ public class PoliticsStatusServiceImpl implements PoliticsStatusService {
     }
 
     @Override
-    public ResultBean<Page<PoliticsStatus>> searchPoliticsStatusByName(Integer pageNum, Integer pageSize, String politicsStatusName) {
+    public ResultBean<PageInfo<?>> searchPoliticsStatusByName(Integer pageNum, Integer pageSize, String politicsStatusName) {
         PageHelper.startPage(pageNum, pageSize);
         Page<PoliticsStatus> politicsStatusList=politicsStatusMapper.searchPoliticsStatusByName(politicsStatusName);
-        return new ResultBean<>(politicsStatusList);
+        PageInfo<?> pageInfo = new PageInfo<>(politicsStatusList);
+        return new ResultBean<>(pageInfo);
     }
 }

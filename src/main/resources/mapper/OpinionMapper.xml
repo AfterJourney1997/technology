@@ -6,6 +6,7 @@
     <result column="opinion" jdbcType="VARCHAR" property="opinion" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="c_Id" jdbcType="INTEGER" property="cId" />
+    <result column="datetime" jdbcType="TIMESTAMP" property="datetime" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from technology.opinion
@@ -13,28 +14,29 @@
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Opinion">
     insert into technology.opinion (Id, opinion, status,
-      c_Id)
+      c_Id, datetime)
     values (#{id,jdbcType=INTEGER}, #{opinion,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{cId,jdbcType=INTEGER})
+      #{cId,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Opinion">
     update technology.opinion
     set opinion = #{opinion,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      c_Id = #{cId,jdbcType=INTEGER}
+      c_Id = #{cId,jdbcType=INTEGER},
+      datetime = #{datetime,jdbcType=TIMESTAMP}
     where Id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select Id, opinion, status, c_Id
+    select Id, opinion, status, c_Id, datetime
     from technology.opinion
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select Id, opinion, status, c_Id
+    select Id, opinion, status, c_Id, datetime
     from technology.opinion
   </select>
   <select id="getOpinionByPage" resultMap="BaseResultMap">
-    select Id, opinion, status,c_Id
+    select Id, opinion, status,c_Id, datetime
     from technology.opinion
     where c_Id=#{cId,jdbcType=INTEGER}
   </select>

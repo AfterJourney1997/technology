@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.MaintainMapper;
 import com.technologygarden.dao.ServiceApplicationMapper;
 import com.technologygarden.entity.Maintain;
@@ -24,10 +25,11 @@ public class MaintainServiceImpl implements MaintainService {
     }
 
     @Override
-    public ResultBean<Page<Maintain>> getMaintainByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getMaintainByPage(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         Page<Maintain> maintains=maintainMapper.getMaintainByPage();
-        return new ResultBean<>(maintains);
+        PageInfo<?> pageInfo = new PageInfo<>(maintains);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -54,9 +56,10 @@ public class MaintainServiceImpl implements MaintainService {
     }
 
     @Override
-    public ResultBean<Page<Maintain>> searchMaintainByName(Integer pageNum, Integer pageSize, String maintainName) {
+    public ResultBean<PageInfo<?>> searchMaintainByName(Integer pageNum, Integer pageSize, String maintainName) {
         PageHelper.startPage(pageNum,pageSize);
         Page<Maintain> maintains=maintainMapper.searchMaintainByName(maintainName);
-        return new ResultBean<>(maintains);
+        PageInfo<?> pageInfo = new PageInfo<>(maintains);
+        return new ResultBean<>(pageInfo);
     }
 }

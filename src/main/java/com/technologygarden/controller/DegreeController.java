@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Degree;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.DegreeService;
@@ -25,7 +26,7 @@ public class DegreeController {
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取学位列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<Degree>> getDegreeByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getDegreeByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
         return degreeService.getDegreeByPage(pageNum,pageSize);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)

@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Maintain;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Role;
@@ -30,7 +31,7 @@ public class ServiceApplicationController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "获取分页服务申请列表", notes = "参数包括：页数,每页数量,当前登录对象的infoid,均必填")
-    public ResultBean<Page<ServiceApplication>> getServiceApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer infoid){
+    public ResultBean<PageInfo<?>> getServiceApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer infoid){
         return serviceApplicationService.getServiceApplicationByPage(pageNum,pageSize,infoid);
     }
     @RequestMapping(value = "/maintain", method = RequestMethod.GET)

@@ -99,6 +99,7 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
     @Override
     public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
         List<EnterpriseInformation> enterpriseInformations = enterpriseInformationMapper.selectAll();
+
         return new ResultBean<>(enterpriseInformations);
     }
 }

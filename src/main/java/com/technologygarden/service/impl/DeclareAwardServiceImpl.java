@@ -3,6 +3,7 @@ package com.technologygarden.service.impl;
 import cn.hutool.core.util.ArrayUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.AwardsMapper;
 import com.technologygarden.dao.DeclareAwardMapper;
 import com.technologygarden.dao.DegreeMapper;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("DeclareAwardService")
@@ -30,23 +32,27 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
 
 
     @Override
-    public ResultBean<Page<DeclareAward>> getDeclareAwardByPage(Integer pageNum, Integer pageSize, Integer cId) throws IOException {
+    public ResultBean<PageInfo<?>> getDeclareAwardByPage(Integer pageNum, Integer pageSize, Integer cId) throws IOException {
         PageHelper.startPage(pageNum,pageSize);
         Page<DeclareAward> declareAwardList=declareAwardMapper.getDeclareAwardByPage(cId);
         for(DeclareAward declareAward:declareAwardList){
             declareAward.setAName(awardsMapper.selectByPrimaryKey(declareAward.getAId()).getAwardsName());
             String fileNameString= declareAward.getFilename();
-            String fileNameArray []=fileNameString.split("/");
-            List<String> fileNameList=new ArrayList<>();
-            List<String> filePathList=new ArrayList<>();
-            for(int i=0;i<fileNameArray.length;i++){
-                filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
-                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+            if(fileNameString.length()>0){
+                //如果文件存在就取文件
+                String fileNameArray []=fileNameString.split("/");
+                List<String> fileNameList=new ArrayList<>();
+                List<String> filePathList=new ArrayList<>();
+                for(int i=0;i<fileNameArray.length;i++){
+                    filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
+                    fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+                }
+                declareAward.setFileNameList(fileNameList);
+                declareAward.setFilePathList(filePathList);
             }
-            declareAward.setFileNameList(fileNameList);
-            declareAward.setFilePathList(filePathList);
         }
-        return new ResultBean<>(declareAwardList);
+        PageInfo<?> pageInfo = new PageInfo<>(declareAwardList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -54,6 +60,7 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
         String []fileNameList=new String[blFile.length];
         String UUName;
         int i=0;
+        declareAward.setDatetime(new Date());//添加申请时间
         declareAward.setCId(declareAward.getInfoid());
         for (MultipartFile file:blFile){
             UUName=FilUploadUtils.saveFile(file);

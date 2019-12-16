@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.PoliticsStatus;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.PoliticsStatusService;
@@ -27,7 +28,7 @@ public class PoliticsStatusController {
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取政治面貌列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<PoliticsStatus>> getPoliticsStatusByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getPoliticsStatusByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
         return politicsStatusService.getPoliticsStatusByPage(pageNum,pageSize);
 
     }
@@ -48,7 +49,7 @@ public class PoliticsStatusController {
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)
     @ApiOperation(value = "根据名称搜索政治面貌", notes = "参数包括：页数，每页数量，政治面貌名称")
-    public ResultBean<Page<PoliticsStatus>> searchPoliticsStatusByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String politicsStatusName){
+    public ResultBean<PageInfo<?>> searchPoliticsStatusByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String politicsStatusName){
 
         return politicsStatusService.searchPoliticsStatusByName(pageNum, pageSize, politicsStatusName);
 

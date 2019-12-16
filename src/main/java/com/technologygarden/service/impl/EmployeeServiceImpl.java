@@ -3,6 +3,7 @@ package com.technologygarden.service.impl;
 import cn.hutool.core.util.ArrayUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.DegreeMapper;
 import com.technologygarden.dao.EmployeeMapper;
 import com.technologygarden.dao.PoliticsStatusMapper;
@@ -34,24 +35,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public ResultBean<Page<Employee>> selectByPage(Integer pageNum, Integer pageSize,Integer cId) throws IOException {
+    public ResultBean<PageInfo<?>> selectByPage(Integer pageNum, Integer pageSize, Integer cId) throws IOException {
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByPage(cId);
         for(Employee employee:employeeList){
             employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
             employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
             String fileNameString= employee.getFileName();
-            String fileNameArray []=fileNameString.split("/");
-            List<String> fileNameList=new ArrayList<>();
-            List<String> filePathList=new ArrayList<>();
-            for(int i=0;i<fileNameArray.length;i++){
-                filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
-                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+            if(fileNameString.length()>0){
+                //判断文件是否存在
+                String fileNameArray []=fileNameString.split("/");
+                List<String> fileNameList=new ArrayList<>();
+                List<String> filePathList=new ArrayList<>();
+                for(int i=0;i<fileNameArray.length;i++){
+                    filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
+                    fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+                }
+                employee.setFileNameList(fileNameList);
+                employee.setFilePathList(filePathList);
             }
-            employee.setFileNameList(fileNameList);
-            employee.setFilePathList(filePathList);
+
         }
-        return new ResultBean<>(employeeList);
+        PageInfo<?> pageInfo = new PageInfo<>(employeeList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -109,7 +115,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new ResultBean(employeeMapper.deleteByPrimaryKey(eId));
     }
     @Override
-    public ResultBean<Page<Employee>> selectByNamePage(Integer pageNum, Integer pageSize,Integer cId,String employeeName) throws IOException {
+    public ResultBean<PageInfo<?>> selectByNamePage(Integer pageNum, Integer pageSize,Integer cId,String employeeName) throws IOException {
         System.out.println("pageNum:"+pageNum+"pageSize:"+pageSize+"cId:"+cId+"employeeName:"+employeeName);
         PageHelper.startPage(pageNum,pageSize);
         Page<Employee> employeeList=employeeMapper.selectByNamePage(cId,employeeName);
@@ -117,17 +123,21 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
             employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
             String fileNameString= employee.getFileName();
-            String fileNameArray []=fileNameString.split("/");
-            List<String> fileNameList=new ArrayList<>();
-            List<String> filePathList=new ArrayList<>();
-            for(int i=0;i<fileNameArray.length;i++){
-                filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
-                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+            if(fileNameString.length()>0){
+                //判断文件是否存在
+                String fileNameArray []=fileNameString.split("/");
+                List<String> fileNameList=new ArrayList<>();
+                List<String> filePathList=new ArrayList<>();
+                for(int i=0;i<fileNameArray.length;i++){
+                    filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
+                    fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+                }
+                employee.setFileNameList(fileNameList);
+                employee.setFilePathList(filePathList);
             }
-            employee.setFileNameList(fileNameList);
-            employee.setFilePathList(filePathList);
         }
-        return new ResultBean<>(employeeList);
+        PageInfo<?> pageInfo = new PageInfo<>(employeeList);
+        return new ResultBean<>(pageInfo);
     }
 
 }

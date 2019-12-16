@@ -7,7 +7,7 @@
     <result column="c_category" jdbcType="VARCHAR" property="cCategory" />
     <result column="c_legalPerson" jdbcType="INTEGER" property="cLegalperson" />
     <result column="c_code" jdbcType="CHAR" property="cCode" />
-    <result column="c_date" jdbcType="TIMESTAMP" property="cDate" />
+    <result column="c_date" jdbcType="DATE" property="cDate" />
     <result column="taxpayer_Type" jdbcType="VARCHAR" property="taxpayerType" />
     <result column="c_fund" jdbcType="DOUBLE" property="cFund" />
     <result column="c_product" jdbcType="VARCHAR" property="cProduct" />
@@ -27,7 +27,7 @@
       file_name, c_employee, c_information,
       c_status)
     values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR},
-      #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=TIMESTAMP},
+      #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=DATE},
       #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR},
       #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR},
       #{cStatus,jdbcType=INTEGER})
@@ -38,7 +38,7 @@
       c_category = #{cCategory,jdbcType=VARCHAR},
       c_legalPerson = #{cLegalperson,jdbcType=INTEGER},
       c_code = #{cCode,jdbcType=CHAR},
-      c_date = #{cDate,jdbcType=TIMESTAMP},
+      c_date = #{cDate,jdbcType=DATE},
       taxpayer_Type = #{taxpayerType,jdbcType=VARCHAR},
       c_fund = #{cFund,jdbcType=DOUBLE},
       c_product = #{cProduct,jdbcType=VARCHAR},
@@ -72,7 +72,7 @@
     file_name, c_employee, c_information,
     c_status)
     values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR},
-    #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=TIMESTAMP},
+    #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=DATE},
     #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR},
     #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR},
     #{cStatus,jdbcType=INTEGER})

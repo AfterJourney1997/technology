@@ -1,5 +1,6 @@
 package com.technologygarden.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +24,13 @@ public class DeclareAward {
     private int dStatus;
 
     private Integer cId;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    private Date datetime;
+
+    private String dGrade;
+
+    private String dRank;
 
     private Integer infoid;//用来接收当前用户的infoid
 

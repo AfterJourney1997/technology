@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.EnterpriseApprovalService;
@@ -37,7 +38,7 @@ public class EnterpriseApprovalController {
     @RequestMapping(value = "/account", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有的企业和企业账号", notes = "参数包括：页数,每页数量。" +
             "返回对象里的cStatus，0表示未申请，1表示已申请，2表示已同意，3表示已拒绝")
-    public ResultBean<Page<EnterpriseInformation>>  getEnterpriseAccount(@NonNull Integer pageNum, @NonNull Integer pageSize) {
+    public ResultBean<PageInfo<?>>  getEnterpriseAccount(@NonNull Integer pageNum, @NonNull Integer pageSize) {
         return enterpriseApprovalService.getEnterpriseAccount(pageNum,pageSize);
     }
     //企业审批操作

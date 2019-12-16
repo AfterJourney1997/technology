@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.PlatformApplication;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -16,7 +17,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/incubation")
-@Api(tags = "管理员端孵化平台接口", value = "IncubationPlatformController")
+@Api(tags = "孵化服务/孵化平台接口", value = "IncubationPlatformController")
 public class IncubationPlatformController {
     private final PlaformService plaformService;
 
@@ -34,7 +35,7 @@ public class IncubationPlatformController {
     @RequestMapping(value = "/plaform", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取所有平台申请列表", notes = "参数包括：页数，每页数量。" +
             "cName，所属企业名字，状态status:0表示未审批，1表示已审批")
-    public ResultBean<Page<PlatformApplication>> getAllPlatformApplication(@NonNull Integer pageNum, @NonNull Integer pageSize) {
+    public ResultBean<PageInfo<?>> getAllPlatformApplication(@NonNull Integer pageNum, @NonNull Integer pageSize) {
         return plaformService.selectAll(pageNum, pageSize);
     }
 

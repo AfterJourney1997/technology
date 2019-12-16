@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.CooperationMapper;
 import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.entity.Cooperation;
@@ -25,10 +26,11 @@ public class CooperationServiceImpl implements CooperationService {
 
     //企业端
     @Override
-    public ResultBean<Page<Cooperation>> getCooperationByPage(Integer pageNum, Integer pageSize, Integer cId) {
+    public ResultBean<PageInfo<?>> getCooperationByPage(Integer pageNum, Integer pageSize, Integer cId) {
         PageHelper.startPage(pageNum,pageSize);
         Page<Cooperation> cooperation=cooperationMapper.getCooperationByPage(cId);
-        return new ResultBean<>(cooperation);
+        PageInfo<?> pageInfo = new PageInfo<>(cooperation);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -52,13 +54,14 @@ public class CooperationServiceImpl implements CooperationService {
     * */
 
     @Override
-    public ResultBean<Page<Cooperation>> getCooperationByManage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getCooperationByManage(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         Page<Cooperation> cooperation=cooperationMapper.selectAllByManage();
         for (Cooperation coop:cooperation){
             coop.setCname(enterpriseInformationMapper.selectByPrimaryKey(coop.getCId()).getCName());
         }
-        return new ResultBean<>(cooperation);
+        PageInfo<?> pageInfo = new PageInfo<>(cooperation);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override

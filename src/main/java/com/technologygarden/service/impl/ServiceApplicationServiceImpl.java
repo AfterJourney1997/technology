@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.MaintainMapper;
 import com.technologygarden.dao.ServiceApplicationMapper;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -23,13 +24,14 @@ public class ServiceApplicationServiceImpl implements ServiceApplicationService 
     }
 
     @Override
-    public ResultBean<Page<ServiceApplication>> getServiceApplicationByPage(Integer pageNum, Integer pageSize, Integer cId) {
+    public ResultBean<PageInfo<?>> getServiceApplicationByPage(Integer pageNum, Integer pageSize, Integer cId) {
         PageHelper.startPage(pageNum,pageSize);
         Page<ServiceApplication> serviceApplications=serviceApplicationMapper.getServiceApplicationByPage(cId);
         for(ServiceApplication serviceApplication:serviceApplications){
             serviceApplication.setServicename(maintainMapper.selectByPrimaryKey(serviceApplication.getMaintainId()).getServicename());
         }
-        return new ResultBean<>(serviceApplications);
+        PageInfo<?> pageInfo = new PageInfo<>(serviceApplications);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override

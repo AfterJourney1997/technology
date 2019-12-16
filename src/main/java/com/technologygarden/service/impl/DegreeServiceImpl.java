@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.DegreeMapper;
 import com.technologygarden.dao.EmployeeMapper;
 import com.technologygarden.dao.LegalPersonMapper;
@@ -29,10 +30,11 @@ public class DegreeServiceImpl implements DegreeService {
     }
 
     @Override
-    public ResultBean<Page<Degree>> getDegreeByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getDegreeByPage(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         Page<Degree> degreeList=degreeMapper.selectByPage();
-        return new ResultBean<>(degreeList);
+        PageInfo<?> pageInfo = new PageInfo<>(degreeList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -57,10 +59,11 @@ public class DegreeServiceImpl implements DegreeService {
     }
 
     @Override
-    public ResultBean<Page<Degree>> searchDegreeByName(Integer pageNum, Integer pageSize, String degreeName) {
+    public ResultBean<PageInfo<?>> searchDegreeByName(Integer pageNum, Integer pageSize, String degreeName) {
         PageHelper.startPage(pageNum,pageSize);
         Page<Degree> degreeList=degreeMapper.searchDegreeName(degreeName);
-        return new ResultBean<>(degreeList);
+        PageInfo<?> pageInfo = new PageInfo<>(degreeList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override

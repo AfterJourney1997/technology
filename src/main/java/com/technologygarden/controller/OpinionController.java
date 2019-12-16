@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Opinion;
 import com.technologygarden.entity.PlatformApplication;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -26,7 +27,7 @@ public class OpinionController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取意见列表", notes = "参数包括：页数，每页数量，当前Role对象的infoid")
-    public ResultBean<Page<Opinion>> getOpinionByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid){
+    public ResultBean<PageInfo<?>> getOpinionByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull Integer infoid){
         return opinionService.getOpinionByPage(pageNum,pageSize,infoid);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)

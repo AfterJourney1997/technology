@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.technologygarden.entity.ServiceApplication">
     <id column="Id" jdbcType="INTEGER" property="id" />
     <result column="maintain_id" jdbcType="INTEGER" property="maintainId" />
-    <result column="date" jdbcType="DATE" property="date" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="c_Id" jdbcType="INTEGER" property="cId" />
   </resultMap>
@@ -15,13 +15,13 @@
   <insert id="insert" parameterType="com.technologygarden.entity.ServiceApplication">
     insert into technology.service_application (Id, maintain_id, date,
       status, c_Id)
-    values (#{id,jdbcType=INTEGER}, #{maintainId,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
+    values (#{id,jdbcType=INTEGER}, #{maintainId,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP},
       #{status,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ServiceApplication">
     update technology.service_application
     set maintain_id = #{maintainId,jdbcType=INTEGER},
-      date = #{date,jdbcType=DATE},
+      date = #{date,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       c_Id = #{cId,jdbcType=INTEGER}
     where Id = #{id,jdbcType=INTEGER}

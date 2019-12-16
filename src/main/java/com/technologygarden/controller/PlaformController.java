@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.PlatformApplication;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Role;
@@ -27,7 +28,7 @@ public class PlaformController {
 
     @RequestMapping(value = "/plaform", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取平台申请列表", notes = "参数包括：页数，每页数量,当前对象Role的infoid")
-    public ResultBean<Page<PlatformApplication>> getPlatformApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull Integer infoid) {
+    public ResultBean<PageInfo<?>> getPlatformApplicationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull Integer infoid) {
         return plaformService.getPlatformApplicationByPage(pageNum, pageSize, infoid);
     }
 

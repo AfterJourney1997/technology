@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Awards;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.AwardsService;
@@ -24,7 +25,7 @@ public class AwardsController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取奖项列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<Awards>> getAwardsByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getAwardsByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
         return awardsService.getAwardsByPage(pageNum,pageSize);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
@@ -46,7 +47,7 @@ public class AwardsController {
 
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)
     @ApiOperation(value = "按名称搜索奖项", notes = "参数包括：页数，每页数量，奖项名称")
-    public ResultBean<Page<Awards>> searchAwardsByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String awardsName){
+    public ResultBean<PageInfo<?>> searchAwardsByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String awardsName){
         return awardsService.searchAwardsName(pageNum,pageSize,awardsName);
     }
 }

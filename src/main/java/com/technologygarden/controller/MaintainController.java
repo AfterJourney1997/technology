@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Maintain;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.MaintainService;
@@ -24,7 +25,7 @@ public class MaintainController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取服务列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<Maintain>> getMaintainByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getMaintainByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
         return maintainService.getMaintainByPage(pageNum,pageSize);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)
@@ -44,7 +45,7 @@ public class MaintainController {
     }
     @RequestMapping(value = "/manage/search", method = RequestMethod.GET)
     @ApiOperation(value = "按搜索名分页获取服务列表", notes = "参数包括：页数，每页数量，搜索的内容，均必填")
-    public ResultBean<Page<Maintain>> searchMaintainByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String maintainName){
+    public ResultBean<PageInfo<?>> searchMaintainByName(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull String maintainName){
         return maintainService.searchMaintainByName(pageNum,pageSize,maintainName);
     }
 }

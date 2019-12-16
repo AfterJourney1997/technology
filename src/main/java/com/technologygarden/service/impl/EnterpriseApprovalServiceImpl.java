@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.dao.LegalPersonMapper;
 import com.technologygarden.dao.RoleMapper;
@@ -39,7 +40,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean<Page<EnterpriseInformation>> getEnterpriseAccount(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getEnterpriseAccount(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
         Page<EnterpriseInformation> list = enterpriseInformationMapper.selectAllByPage();
         for(EnterpriseInformation enterprise:list){
@@ -53,7 +54,8 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
             enterprise.setLegalPerson(legalPerson);
             enterprise.setAccount(account);
         }
-        return new ResultBean<>(list);
+        PageInfo<?> pageInfo = new PageInfo<>(list);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Cooperation;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -30,7 +31,7 @@ public class SchoolEnterpriseController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "获取分页管理员端合作列表", notes = "参数包括：页数,每页数量")
-    public ResultBean<Page<Cooperation>> getCooperationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getCooperationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
         return cooperationService.getCooperationByManage(pageNum,pageSize);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)

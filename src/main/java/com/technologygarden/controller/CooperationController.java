@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Cooperation;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Role;
@@ -26,7 +27,7 @@ public class CooperationController {
     }
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     @ApiOperation(value = "获取分页合作列表", notes = "参数包括：页数,每页数量,当前role对象的infoid,均必填")
-    public ResultBean<Page<Cooperation>> getCooperationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize,@NonNull Integer infoid){
+    public ResultBean<PageInfo<?>> getCooperationByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, @NonNull Integer infoid){
         return cooperationService.getCooperationByPage(pageNum,pageSize,infoid);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.POST)

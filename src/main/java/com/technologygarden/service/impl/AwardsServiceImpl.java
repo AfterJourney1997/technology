@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.AwardsMapper;
 import com.technologygarden.dao.DeclareAwardMapper;
 import com.technologygarden.entity.Awards;
@@ -25,10 +26,11 @@ public class AwardsServiceImpl implements AwardsService {
     }
 
     @Override
-    public ResultBean<Page<Awards>> getAwardsByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getAwardsByPage(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         Page<Awards> awardsList=awardsMapper.selectByPage();
-        return new ResultBean<>(awardsList);
+        PageInfo<?> pageInfo = new PageInfo<>(awardsList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -51,9 +53,10 @@ public class AwardsServiceImpl implements AwardsService {
     }
 
     @Override
-    public ResultBean<Page<Awards>> searchAwardsName(Integer pageNum, Integer pageSize,String awardsName) {
+    public ResultBean<PageInfo<?>> searchAwardsName(Integer pageNum, Integer pageSize,String awardsName) {
         PageHelper.startPage(pageNum, pageSize);
         Page<Awards> awardsList=awardsMapper.searchAwardsName(awardsName);
-        return new ResultBean<>(awardsList);
+        PageInfo<?> pageInfo = new PageInfo<>(awardsList);
+        return new ResultBean<>(pageInfo);
     }
 }
