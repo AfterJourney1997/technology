@@ -21,6 +21,7 @@ import java.io.IOException;
 public class TestController {
     @Autowired
     EnterpriseInformationMapper enterpriseInformationMapper;
+
     @RequestMapping({"/","/index"})
     public String toIndex(Model model){
         return "ttt";

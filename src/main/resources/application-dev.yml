@@ -33,6 +33,7 @@ pagehelper:
 logging:
   level:
     com.technologygarden.dao: debug
+  config: classpath:logback-spring.xml
 
 #shiro
 shiro:
@@ -42,5 +43,6 @@ shiro:
 
 
 file:
-  storagePath: D:/file
+  storagePath: D:/uploadFile/
+  url: http://localhost:8888/image/
 
