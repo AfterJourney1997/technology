@@ -58,7 +58,7 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
         return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
     }
 
-    //企业信息完善
+    //企业信息完善（未使用）
     @Override
     public ResultBean<?> updateEnterpriseInformation(EnterpriseInformation enterpriseInformation) throws IOException {
         enterpriseInformation.setCId(enterpriseInformation.getInfoid());

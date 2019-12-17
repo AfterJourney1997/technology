@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.ParkEnvironmentMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.ParkEnvironment">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="buildingId" jdbcType="INTEGER" property="buildingid" />
+    <result column="principal" jdbcType="VARCHAR" property="principal" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.park_environment
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.ParkEnvironment">
+    insert into technology.park_environment (Id, buildingId, principal,
+      phone)
+    values (#{id,jdbcType=INTEGER}, #{buildingid,jdbcType=INTEGER}, #{principal,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ParkEnvironment">
+    update technology.park_environment
+    set buildingId = #{buildingid,jdbcType=INTEGER},
+      principal = #{principal,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, buildingId, principal, phone
+    from technology.park_environment
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, buildingId, principal, phone
+    from technology.park_environment
+  </select>
+  <select id="getParkEnvironmentByPage" resultMap="BaseResultMap">
+    select Id, buildingId, principal, phone
+    from technology.park_environment
+  </select>
+</mapper>
