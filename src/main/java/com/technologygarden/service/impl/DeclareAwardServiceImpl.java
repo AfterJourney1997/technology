@@ -6,11 +6,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.AwardsMapper;
 import com.technologygarden.dao.DeclareAwardMapper;
-import com.technologygarden.dao.DegreeMapper;
+import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.entity.DeclareAward;
+import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.DeclareAwardService;
 import com.technologygarden.util.FilUploadUtils;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,10 +26,12 @@ import java.util.List;
 public class DeclareAwardServiceImpl implements DeclareAwardService {
     private final DeclareAwardMapper declareAwardMapper;
     private final AwardsMapper awardsMapper;
+    private final EnterpriseInformationMapper enterpriseInformationMapper;
     @Autowired
-    public DeclareAwardServiceImpl(DeclareAwardMapper declareAwardMapper, AwardsMapper awardsMapper) {
+    public DeclareAwardServiceImpl(DeclareAwardMapper declareAwardMapper, AwardsMapper awardsMapper, EnterpriseInformationMapper enterpriseInformationMapper) {
         this.declareAwardMapper = declareAwardMapper;
         this.awardsMapper = awardsMapper;
+        this.enterpriseInformationMapper = enterpriseInformationMapper;
     }
 
 
@@ -76,15 +80,56 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
     public ResultBean deleteDeclareAward(Integer dId) throws IOException {
         DeclareAward declareAward = declareAwardMapper.selectByPrimaryKey(dId);
         String fileNameString= declareAward.getFilename();
-        String fileNameArray []=fileNameString.split("/");
-        for(int i=0;i<fileNameArray.length;i++) {
-            FilUploadUtils.deleteFile(fileNameArray[i]);
+        if(fileNameString.length()>0){
+            String fileNameArray []=fileNameString.split("/");
+            for(int i=0;i<fileNameArray.length;i++) {
+                FilUploadUtils.deleteFile(fileNameArray[i]);
+            }
         }
+
         return new ResultBean(declareAwardMapper.deleteByPrimaryKey(dId));
     }
 
     @Override
     public ResultBean getDegreeAll() {
         return new ResultBean(awardsMapper.selectAll());
+    }
+
+    @Override
+    public ResultBean<List<EnterpriseInformation>> getAllEnterprise() {
+
+        return new ResultBean<>(enterpriseInformationMapper.selectAll());
+    }
+
+    @Override
+    public ResultBean<PageInfo<?>> getDeclareAwardAllByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        Page<DeclareAward> declareAwardList=declareAwardMapper.getDeclareAwardAllByPage();
+        for(DeclareAward declareAward:declareAwardList){
+            declareAward.setAName(awardsMapper.selectByPrimaryKey(declareAward.getAId()).getAwardsName());
+            declareAward.setCName(enterpriseInformationMapper.selectByPrimaryKey(declareAward.getCId()).getCName());
+            String fileNameString= declareAward.getFilename();
+            if(fileNameString.length()>0){
+               //图片显示
+            }
+        }
+        PageInfo<?> pageInfo = new PageInfo<>(declareAwardList);
+        return new ResultBean<>(pageInfo);
+    }
+
+    @Override
+    public ResultBean<PageInfo<?>> getEnterpriseDeclareAwardByPage(Integer pageNum, Integer pageSize, Integer cId) {
+        PageHelper.startPage(pageNum,pageSize);
+        Page<DeclareAward> declareAwardList=declareAwardMapper.getDeclareAwardByPage(cId);
+        for(DeclareAward declareAward:declareAwardList){
+            declareAward.setAName(awardsMapper.selectByPrimaryKey(declareAward.getAId()).getAwardsName());
+            declareAward.setCName(enterpriseInformationMapper.selectByPrimaryKey(declareAward.getCId()).getCName());
+            String fileNameString= declareAward.getFilename();
+            if(fileNameString.length()>0){
+                //图片显示
+            }
+        }
+        PageInfo<?> pageInfo = new PageInfo<>(declareAwardList);
+        return new ResultBean<>(pageInfo);
     }
 }

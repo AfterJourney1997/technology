@@ -33,7 +33,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         Role role=new Role();
         role.setAccount(account);
         role.setRole(2);
-        role.setPassword("123456");
+        role.setPassword("123456");//设置默认密码
         role.setInfoid(enterpriseInformation.getCId());
         roleMapper.insert(role);
         return new ResultBean();

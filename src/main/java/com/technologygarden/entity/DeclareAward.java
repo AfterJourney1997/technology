@@ -34,6 +34,8 @@ public class DeclareAward {
 
     private Integer infoid;//用来接收当前用户的infoid
 
+    private String cName;//用来存放cId对应的企业名称
+
     private String aName;//存放aId对应的名字，奖项名称
 
     private List<String> filePathList;//用来存放文件路径

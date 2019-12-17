@@ -46,6 +46,10 @@
     select d_Id, d_name, a_id, filename, d_status, c_Id, datetime, d_grade, d_rank
     from technology.declare_award
   </select>
+  <select id="getDeclareAwardAllByPage" resultMap="BaseResultMap">
+    select d_Id, d_name, a_id, filename, d_status, c_Id, datetime, d_grade, d_rank
+    from technology.declare_award
+  </select>
   <select id="getDeclareAwardByPage" resultMap="BaseResultMap">
     select d_Id, d_name, a_id, filename, d_status, c_Id, datetime, d_grade, d_rank
     from technology.declare_award

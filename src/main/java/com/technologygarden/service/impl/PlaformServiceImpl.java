@@ -74,5 +74,13 @@ public class PlaformServiceImpl implements PlaformService {
         return new ResultBean<>(enterpriseInformationMapper.selectAll());
     }
 
+    @Override
+    public ResultBean plaformOperation(PlatformApplication platformApplication, Integer status) {
+        if(status!=null){
+            platformApplication.setStatus(status);
+        }
+        return new ResultBean(platformApplicationMapper.updateByPrimaryKey(platformApplication));
+    }
+
 
 }

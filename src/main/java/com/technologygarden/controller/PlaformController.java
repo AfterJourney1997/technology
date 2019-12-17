@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/application")
-@Api(tags = "平台申请管理接口", value = "PlaformController")
+@Api(tags = "平台申请接口", value = "PlaformController")
 public class PlaformController {
     private final PlaformService plaformService;
 

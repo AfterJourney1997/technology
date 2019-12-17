@@ -16,4 +16,5 @@ public interface PlaformService {
     public ResultBean deletePlatformApplication(Integer pId);
     public ResultBean<PageInfo<?>> selectAll(Integer pageNum, Integer pageSize);
     public ResultBean<List<EnterpriseInformation>> getAllEnterprise();
+    public ResultBean plaformOperation(PlatformApplication platformApplication, Integer status);
 }
