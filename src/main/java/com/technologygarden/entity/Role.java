@@ -16,5 +16,6 @@ public class Role {
     private Integer role;
     private Integer infoid;
     private List<Rights> rightsList = null;
+    private EnterpriseInformation enterpriseInformation = null;
 
    }

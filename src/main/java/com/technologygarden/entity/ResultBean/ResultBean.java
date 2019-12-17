@@ -40,4 +40,9 @@ public class ResultBean<T> {
         this.data = data;
     }
 
+    public ResultBean(ResultStatus resultStatus){
+        this.code = resultStatus.getCode();
+        this.message = resultStatus.getMessage();
+    }
+
 }

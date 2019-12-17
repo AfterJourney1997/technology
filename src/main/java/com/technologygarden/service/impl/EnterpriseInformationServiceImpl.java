@@ -102,4 +102,11 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
 
         return new ResultBean<>(enterpriseInformations);
     }
+
+    @Override
+    public ResultBean<EnterpriseInformation> getEnterpriseInformationById(Integer cId) {
+
+        EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
+        return new ResultBean<>(enterpriseInformation);
+    }
 }

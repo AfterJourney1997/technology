@@ -66,6 +66,27 @@ public class ShiroConfig {
         adminMap.put("/system/jobTitle/**", "perms[/system/jobTitle]");
         adminMap.put("/system/propertyDevice/**", "perms[/system/propertyDevice]");
         adminMap.put("/politicsStatus/manage/**", "perms[/politicsStatus/manage]");
+        //
+
+        // 企业权限拦截
+        adminMap.put("/enterprise/company/**", "roles[companyNoAgreed]");
+        // 平台申请
+        adminMap.put("/application/plaform/**", "roles[companyAgreed]");
+        // 企业信息
+        adminMap.put("/enterprise/information/**", "roles[companyAgreed]");
+        // 房间信息
+        adminMap.put("/enterprise/roomInfo/**", "roles[companyAgreed]");
+        // 员工管理
+        adminMap.put("/emloyee/manage/**", "roles[companyAgreed]");
+        // 奖项申报
+        adminMap.put("/declareAward/manage/**", "roles[companyAgreed]");
+        // 意见反馈
+        adminMap.put("/opinion/manage/**", "roles[companyAgreed]");
+        // 服务申报
+        adminMap.put("/seviceApplicaiton/manage/**", "roles[companyAgreed]");
+        // 校企合作
+        adminMap.put("/coperation/manage/**", "roles[companyAgreed]");
+
 
         // 退出
         adminMap.put("/logout", "logout");
