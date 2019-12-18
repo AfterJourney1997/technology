@@ -31,4 +31,6 @@ public class ServiceApplication {
 
     private Integer infoid;//存放当前登录对象的infoid
 
+    private String cName;//存放cId对应的公司名
+
 }

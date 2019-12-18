@@ -17,6 +17,8 @@ public interface ServiceApplicationMapper {
 
     List<ServiceApplication> selectAll();
 
+    Page<ServiceApplication> getAllServiceApplication();
+
     List<ServiceApplication> selectBymaintainId(Integer maintainId);
 
     Page<ServiceApplication> getServiceApplicationByPage(Integer cId);

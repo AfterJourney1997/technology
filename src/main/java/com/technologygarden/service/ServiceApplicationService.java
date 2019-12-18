@@ -14,4 +14,6 @@ public interface ServiceApplicationService {
     public ResultBean updateServiceApplication(ServiceApplication serviceApplication);
     public ResultBean deleteServiceApplication(Integer id);
     public ResultBean<List<Room>> getRoomByInfoid(Integer infoid);
+    public ResultBean<PageInfo<?>> getParkServiceByPage( Integer pageNum, Integer pageSize);
+    public ResultBean operationParkService(ServiceApplication serviceApplication);
 }

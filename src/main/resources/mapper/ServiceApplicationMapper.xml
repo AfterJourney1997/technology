@@ -37,6 +37,10 @@
     select Id, maintain_id, date, status, c_Id, room_id
     from technology.service_application
   </select>
+  <select id="getAllServiceApplication" resultMap="BaseResultMap">
+    select Id, maintain_id, date, status, c_Id, room_id
+    from technology.service_application
+  </select>
   <select id="getServiceApplicationByPage" resultMap="BaseResultMap">
     select Id, maintain_id, date, status, c_Id, room_id
     from technology.service_application

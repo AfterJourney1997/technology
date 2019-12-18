@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.VehicleMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Vehicle">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="number_plate" jdbcType="VARCHAR" property="numberPlate" />
+    <result column="vehicle_model" jdbcType="VARCHAR" property="vehicleModel" />
+    <result column="owner" jdbcType="VARCHAR" property="owner" />
+    <result column="cId" jdbcType="INTEGER" property="cid" />
+    <result column="roomId" jdbcType="INTEGER" property="roomid" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.vehicle
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Vehicle">
+    insert into technology.vehicle (Id, number_plate, vehicle_model,
+      owner, cId, roomId, 
+      phone)
+    values (#{id,jdbcType=INTEGER}, #{numberPlate,jdbcType=VARCHAR}, #{vehicleModel,jdbcType=VARCHAR}, 
+      #{owner,jdbcType=VARCHAR}, #{cid,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Vehicle">
+    update technology.vehicle
+    set number_plate = #{numberPlate,jdbcType=VARCHAR},
+      vehicle_model = #{vehicleModel,jdbcType=VARCHAR},
+      owner = #{owner,jdbcType=VARCHAR},
+      cId = #{cid,jdbcType=INTEGER},
+      roomId = #{roomid,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, number_plate, vehicle_model, owner, cId, roomId, phone
+    from technology.vehicle
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, number_plate, vehicle_model, owner, cId, roomId, phone
+    from technology.vehicle
+  </select>
+  <select id="selectVehicleByPage" resultMap="BaseResultMap">
+    select Id, number_plate, vehicle_model, owner, cId, roomId, phone
+    from technology.vehicle
+  </select>
+  <select id="searchVehicleByNumberPlate" resultMap="BaseResultMap">
+    select Id, number_plate, vehicle_model, owner, cId, roomId, phone
+    from technology.vehicle
+    where number_plate like concat('%', #{search,jdbcType=VARCHAR}, '%')
+  </select>
+</mapper>
