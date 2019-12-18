@@ -21,9 +21,15 @@ public class Opinion {
 
     private Integer cId;
 
+    private Integer roomId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private Date datetime;
 
     private Integer infoid;//获取当前登录对象的infoid
+
+    private String cName;//存放cId对应的企业名
+
+    private String roomName;//存放roomId对应的房间名
 
 }

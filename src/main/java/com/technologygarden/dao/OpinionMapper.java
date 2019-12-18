@@ -18,6 +18,8 @@ public interface OpinionMapper {
 
     List<Opinion> selectAll();
 
+    Page<Opinion> getOpinionAllByPage();
+
     Page<Opinion> getOpinionByPage(Integer cId);
 
     int updateByPrimaryKey(Opinion record);
