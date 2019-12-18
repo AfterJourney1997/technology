@@ -71,7 +71,7 @@
   </update>
 
   <select id="selectWithInfoByPage" resultMap="AssetCountWithInfo">
-    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.remain as d_remain,
+    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.piece as d_piece, d.remain as d_remain,
     d.owner as d_owner, d.kind as d_kind, pd.id as pd_id, pd.kind as pd_kind, pd.category_id as pd_category_id, pd.name as pd_name, pd.property as pd_property
     from technology.company_room_device crd, technology.device d, technology.room r, technology.building b, technology.property_device pd
     where crd.crd_room_id = r.r_id
@@ -111,6 +111,7 @@
       <result column="d_name" jdbcType="VARCHAR" property="deviceName"/>
       <result column="d_total" jdbcType="INTEGER" property="total"/>
       <result column="d_remain" jdbcType="INTEGER" property="remain"/>
+      <result column="d_piece" jdbcType="FLOAT" property="piece"/>
       <result column="d_owner" jdbcType="INTEGER" property="owner"/>
       <result column="d_kind" jdbcType="INTEGER" property="kind"/>
       <collection property="propertyDeviceList" ofType="com.technologygarden.entity.PropertyDevice">
@@ -124,7 +125,7 @@
   </resultMap>
 
   <select id="searchAssetCountByPage" resultMap="AssetCountWithInfo">
-    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.remain as d_remain,
+    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.piece as d_piece, d.remain as d_remain,
     d.owner as d_owner, d.kind as d_kind, pd.id as pd_id, pd.kind as pd_kind, pd.category_id as pd_category_id, pd.name as pd_name, pd.property as pd_property
     from technology.company_room_device crd, technology.device d, technology.room r, technology.building b, technology.property_device pd
     <where>
@@ -143,7 +144,7 @@
   </select>
 
   <select id="selectWithInfoPageByRoomId" resultMap="AssetCountWithInfo">
-    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.remain as d_remain,
+    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.piece as d_piece, d.remain as d_remain,
     d.owner as d_owner, d.kind as d_kind, pd.id as pd_id, pd.kind as pd_kind, pd.category_id as pd_category_id, pd.name as pd_name, pd.property as pd_property
     from technology.company_room_device crd, technology.device d, technology.room r, technology.building b, technology.property_device pd
     where crd.crd_room_id = r.r_id

@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.ActivityIncubationMapper;
 import com.technologygarden.entity.ActivityIncubation;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -20,11 +21,12 @@ public class ServiceActivityIncubationServiceImpl implements ServiceActivityIncu
     }
 
     @Override
-    public ResultBean<Page<ActivityIncubation>> getActivityIncubationListByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getActivityIncubationListByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<ActivityIncubation> activityIncubationList = activityIncubationMapper.selectActivityIncubationListByPage();
-        return new ResultBean<>(activityIncubationList);
+        PageInfo<?> pageInfo = new PageInfo<>(activityIncubationList);
+        return new ResultBean<>(pageInfo);
 
     }
 
@@ -55,11 +57,12 @@ public class ServiceActivityIncubationServiceImpl implements ServiceActivityIncu
     }
 
     @Override
-    public ResultBean<Page<ActivityIncubation>> searchActivityIncubationListByPage(Integer pageNum, Integer pageSize, Integer activityCategoryId, String activityName) {
+    public ResultBean<PageInfo<?>> searchActivityIncubationListByPage(Integer pageNum, Integer pageSize, Integer activityCategoryId, String activityName) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<ActivityIncubation> activityIncubationList = activityIncubationMapper.searchActivityIncubationListByPage(activityCategoryId, activityName);
-        return new ResultBean<>(activityIncubationList);
+        PageInfo<?> pageInfo = new PageInfo<>(activityIncubationList);
+        return new ResultBean<>(pageInfo);
 
 
     }

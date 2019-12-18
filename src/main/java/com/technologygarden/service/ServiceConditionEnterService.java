@@ -1,12 +1,12 @@
 package com.technologygarden.service;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.ConditionEnter;
 import com.technologygarden.entity.ResultBean.ResultBean;
 
 public interface ServiceConditionEnterService {
 
-    ResultBean<Page<ConditionEnter>> getConditionEnterListByPage(Integer pageNum, Integer pageSize);
+    ResultBean<PageInfo<?>> getConditionEnterListByPage(Integer pageNum, Integer pageSize);
 
     ResultBean<?> insertConditionEnter(ConditionEnter conditionEnter);
 
@@ -14,5 +14,5 @@ public interface ServiceConditionEnterService {
 
     ResultBean<?> updateConditionEnterById(ConditionEnter conditionEnter);
 
-    ResultBean<Page<ConditionEnter>> searchConditionEnterListByPage(Integer pageNum, Integer pageSize, String title);
+    ResultBean<PageInfo<?>> searchConditionEnterListByPage(Integer pageNum, Integer pageSize, String title);
 }

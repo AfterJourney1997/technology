@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Device;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.PropertyDevice;
@@ -27,27 +28,25 @@ public class AssetDeviceController {
 
     private final AssetDeviceService assetDeviceService;
     private final SystemPropertyDeviceService systemPropertyDeviceService;
-    private final EnterpriseInformationService enterpriseInformationService;
     private final RoomCompanyService roomCompanyService;
 
     @Autowired
-    public AssetDeviceController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService, EnterpriseInformationService enterpriseInformationService, RoomCompanyService roomCompanyService) {
+    public AssetDeviceController(AssetDeviceService assetDeviceService, SystemPropertyDeviceService systemPropertyDeviceService, RoomCompanyService roomCompanyService) {
         this.assetDeviceService = assetDeviceService;
         this.systemPropertyDeviceService = systemPropertyDeviceService;
-        this.enterpriseInformationService = enterpriseInformationService;
         this.roomCompanyService = roomCompanyService;
     }
 
     @RequestMapping(value = "/device", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取设备列表", notes = "参数包括：页数，每页数量，均必填（owner为1表示学校建设，2表示企业自建，kind为1表示设备，2表示家具）")
-    public ResultBean<Page<Device>> getDeviceListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getDeviceListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return assetDeviceService.getDeviceListWithPropertyByPage(pageNum, pageSize);
 
     }
 
     @RequestMapping(value = "/device", method = RequestMethod.POST)
-    @ApiOperation(value = "新增设备及其属性", notes = "参数包括：设备对象，device中deviceId不填、remain与total相等、kind固定为1；propertyDeviceList里填写属性，较复杂使用找我口述")
+    @ApiOperation(value = "新增设备及其属性", notes = "参数包括：设备对象，device中deviceId不填、remain与total相等、kind固定为1，piece必填；propertyDeviceList里填写属性，较复杂使用找我口述")
     public ResultBean<?> insertDevice(@RequestBody Device device){
 
         return assetDeviceService.insertDeviceWithPropertyDynamic(device);
@@ -72,7 +71,7 @@ public class AssetDeviceController {
 
     @RequestMapping(value = "/device/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页搜索设备列表及其属性", notes = "参数包括：页数，每页数量，类别id，设备名称，所属单位")
-    public ResultBean<Page<Device>> searchDeviceListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String deviceName, Integer owner){
+    public ResultBean<PageInfo<?>> searchDeviceListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String deviceName, Integer owner){
 
         return assetDeviceService.searchDeviceListWithPropertyByPage(pageNum, pageSize, categoryId, deviceName, owner);
 

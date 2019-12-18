@@ -1,6 +1,7 @@
 package com.technologygarden.service;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Room;
 import com.technologygarden.entity.RoomGarden;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public interface RoomGardenService {
 
-    ResultBean<Page<Room>> getRoomGardenByPage(Integer pageNum, Integer pageSize);
+    ResultBean<PageInfo<?>> getRoomGardenByPage(Integer pageNum, Integer pageSize);
 
     ResultBean<?> deleteRoomGardenById(Integer gardenRoomId);
 
@@ -17,7 +18,7 @@ public interface RoomGardenService {
 
     ResultBean<?> insertRoomGarden(List<Room> roomGardenList);
 
-    ResultBean<Page<Room>> searchRoomGarden(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName);
+    ResultBean<PageInfo<?>> searchRoomGarden(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName);
 
 
 }

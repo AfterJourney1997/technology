@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.ConditionEnterMapper;
 import com.technologygarden.entity.ConditionEnter;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -21,11 +22,12 @@ public class ServiceConditionEnterServiceImpl implements ServiceConditionEnterSe
     }
 
     @Override
-    public ResultBean<Page<ConditionEnter>> getConditionEnterListByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getConditionEnterListByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<ConditionEnter> conditionEnterList = conditionEnterMapper.selectConditionEnterListByPage();
-        return new ResultBean<>(conditionEnterList);
+        PageInfo<?> pageInfo = new PageInfo<>(conditionEnterList);
+        return new ResultBean<>(pageInfo);
 
     }
 
@@ -59,11 +61,12 @@ public class ServiceConditionEnterServiceImpl implements ServiceConditionEnterSe
     }
 
     @Override
-    public ResultBean<Page<ConditionEnter>> searchConditionEnterListByPage(Integer pageNum, Integer pageSize, String title) {
+    public ResultBean<PageInfo<?>> searchConditionEnterListByPage(Integer pageNum, Integer pageSize, String title) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<ConditionEnter> conditionEnterList = conditionEnterMapper.searchConditionEnterListByPage(title);
-        return new ResultBean<>(conditionEnterList);
+        PageInfo<?> pageInfo = new PageInfo<>(conditionEnterList);
+        return new ResultBean<>(pageInfo);
 
     }
 }

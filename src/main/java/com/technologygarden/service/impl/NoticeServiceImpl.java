@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.NoticeMapper;
 import com.technologygarden.entity.Notice;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -20,44 +21,46 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public ResultBean<Page<Notice>> getNoticeListByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getNoticeListByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Notice> noticeList = noticeMapper.selectByPage();
-        return new ResultBean<>(noticeList);
+        PageInfo<?> pageInfo = new PageInfo<>(noticeList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
-    public ResultBean publishNotice(Notice notice) {
+    public ResultBean<?> publishNotice(Notice notice) {
 
         noticeMapper.updateStatusToZero();
         noticeMapper.insert(notice);
-        return new ResultBean();
+        return new ResultBean<>();
 
     }
 
     @Override
-    public ResultBean deleteNoticeById(Integer noticeId) {
+    public ResultBean<?> deleteNoticeById(Integer noticeId) {
 
         noticeMapper.deleteByPrimaryKey(noticeId);
-        return new ResultBean();
+        return new ResultBean<>();
 
     }
 
     @Override
-    public ResultBean updateNoticeById(Notice notice) {
+    public ResultBean<?> updateNoticeById(Notice notice) {
 
         noticeMapper.updateNoticeByIdDynamic(notice);
-        return new ResultBean();
+        return new ResultBean<>();
 
     }
 
     @Override
-    public ResultBean<Page<Notice>> searchNoticeByPage(Integer pageNum, Integer pageSize, String title, Integer status) {
+    public ResultBean<PageInfo<?>> searchNoticeByPage(Integer pageNum, Integer pageSize, String title, Integer status) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Notice> noticeList = noticeMapper.searchNoticeDynamic(title, status);
-        return new ResultBean<>(noticeList);
+        PageInfo<?> pageInfo = new PageInfo<>(noticeList);
+        return new ResultBean<>(pageInfo);
 
     }
 }

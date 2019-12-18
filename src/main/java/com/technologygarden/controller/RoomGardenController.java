@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Building;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -37,7 +38,7 @@ public class RoomGardenController {
 
     @RequestMapping(value = "/garden", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取园区房产信息列表", notes = "参数包括：页数，每页数量（rStatus为房产状态，1为空闲，2为入驻）")
-    public ResultBean<Page<Room>> getRoomGardenByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getRoomGardenByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return roomGardenService.getRoomGardenByPage(pageNum, pageSize);
 
@@ -69,7 +70,7 @@ public class RoomGardenController {
 
     @RequestMapping(value = "/garden/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索园区房产", notes = "参数包括：页数、每页数量、房区id、状态id、房间名称，不需要的填空即可")
-    public ResultBean<Page<Room>> searchRoomGarden(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer buildingId, Integer status, String roomName){
+    public ResultBean<PageInfo<?>> searchRoomGarden(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer buildingId, Integer status, String roomName){
 
         return roomGardenService.searchRoomGarden(pageNum, pageSize, buildingId, status, roomName);
 

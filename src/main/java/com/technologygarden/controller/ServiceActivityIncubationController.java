@@ -1,6 +1,6 @@
 package com.technologygarden.controller;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.ActivityCategory;
 import com.technologygarden.entity.ActivityIncubation;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +36,7 @@ public class ServiceActivityIncubationController {
 
     @RequestMapping(value = "/activityIncubation", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取孵化活动列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<ActivityIncubation>> getActivityIncubationListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getActivityIncubationListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return serviceActivityIncubationService.getActivityIncubationListByPage(pageNum, pageSize);
 
@@ -74,7 +73,7 @@ public class ServiceActivityIncubationController {
 
     @RequestMapping(value = "/activityIncubation/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页搜索孵化活动", notes = "参数包括：页数，每页数量，活动类型id, 活动名称")
-    public ResultBean<Page<ActivityIncubation>> searchActivityIncubationListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer activityCategoryId, String activityName){
+    public ResultBean<PageInfo<?>> searchActivityIncubationListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer activityCategoryId, String activityName){
 
         return serviceActivityIncubationService.searchActivityIncubationListByPage(pageNum, pageSize, activityCategoryId, activityName);
 

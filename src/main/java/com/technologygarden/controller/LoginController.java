@@ -92,9 +92,9 @@ public class LoginController {
 
 
     @RequestMapping(value = "/notLogin", method = RequestMethod.GET)
-    public String notLogin() {
+    public ResultBean<?> notLogin() {
 
-        return "login!";
+        return new ResultBean<>(ResultStatus.NOT_LOGIN_ERROR);
 
     }
 

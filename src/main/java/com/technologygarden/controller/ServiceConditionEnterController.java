@@ -1,23 +1,16 @@
 package com.technologygarden.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.ConditionEnter;
 import com.technologygarden.entity.ResultBean.ResultBean;
-import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.ServiceConditionEnterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 
 @CrossOrigin
 @RestController
@@ -35,7 +28,7 @@ public class ServiceConditionEnterController {
 
     @RequestMapping(value = "/conditionEnter", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取入驻条件列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<ConditionEnter>> getConditionEnterListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getConditionEnterListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return serviceConditionEnterService.getConditionEnterListByPage(pageNum, pageSize);
 
@@ -68,7 +61,7 @@ public class ServiceConditionEnterController {
 
     @RequestMapping(value = "/conditionEnter/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页搜索入驻条件列表", notes = "参数包括：页数，每页数量，入驻条件标题title")
-    public ResultBean<Page<ConditionEnter>> searchConditionEnterListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String title){
+    public ResultBean<PageInfo<?>> searchConditionEnterListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String title){
 
         return serviceConditionEnterService.searchConditionEnterListByPage(pageNum, pageSize, title);
 

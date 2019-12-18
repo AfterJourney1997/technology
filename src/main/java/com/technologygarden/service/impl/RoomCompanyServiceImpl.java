@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.RoomCompanyMapper;
 import com.technologygarden.dao.RoomMapper;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -24,11 +25,12 @@ public class RoomCompanyServiceImpl implements RoomCompanyService {
     }
 
     @Override
-    public ResultBean<Page<Room>> getRoomCompanyByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getRoomCompanyByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Room> roomGardensList = roomMapper.selectRoomCompanyWithBuildingByPage();
-        return new ResultBean<>(roomGardensList);
+        PageInfo<?> pageInfo = new PageInfo<>(roomGardensList);
+        return new ResultBean<>(pageInfo);
 
     }
 
@@ -51,11 +53,12 @@ public class RoomCompanyServiceImpl implements RoomCompanyService {
     }
 
     @Override
-    public ResultBean<Page<Room>> searchRoomCompany(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName) {
+    public ResultBean<PageInfo<?>> searchRoomCompany(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Room> roomCompanyList = roomMapper.searchRoomCompanyByPage(buildingId, status, roomName);
-        return new ResultBean<>(roomCompanyList);
+        PageInfo<?> pageInfo = new PageInfo<>(roomCompanyList);
+        return new ResultBean<>(pageInfo);
 
     }
 

@@ -7,6 +7,7 @@
         <result column="name" jdbcType="VARCHAR" property="deviceName"/>
         <result column="total" jdbcType="INTEGER" property="total"/>
         <result column="remain" jdbcType="INTEGER" property="remain"/>
+        <result column="piece" jdbcType="FLOAT" property="piece" />
         <result column="owner" jdbcType="INTEGER" property="owner"/>
         <result column="kind" jdbcType="INTEGER" property="kind"/>
     </resultMap>
@@ -17,11 +18,11 @@
 
     <insert id="insert" parameterType="com.technologygarden.entity.Device">
     insert into technology.device (category_id, name,
-      total, remain, owner, 
+      total, remain, piece, owner,
       kind)
     values (#{categoryId,jdbcType=INTEGER}, #{deviceName,jdbcType=VARCHAR},
-      #{total,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER}, #{owner,jdbcType=INTEGER}, 
-      #{kind,jdbcType=INTEGER})
+      #{total,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER}, #{piece,jdbcType=FLOAT},
+      #{owner,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER})
   </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Device">
@@ -30,17 +31,18 @@
       name = #{deviceName,jdbcType=VARCHAR},
       total = #{total,jdbcType=INTEGER},
       remain = #{remain,jdbcType=INTEGER},
+      piece = #{piece,jdbcType=FLOAT},
       owner = #{owner,jdbcType=INTEGER},
       kind = #{kind,jdbcType=INTEGER}
     where id = #{deviceId,jdbcType=INTEGER}
   </update>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, category_id, name, total, remain, owner, kind
+    select *
     from technology.device
     where id = #{id,jdbcType=INTEGER}
   </select>
     <select id="selectAll" resultMap="BaseResultMap">
-    select id, category_id, name, total, remain, owner, kind
+    select *
     from technology.device
   </select>
 
@@ -52,6 +54,7 @@
 	d.NAME AS d_name,
 	d.total AS d_total,
 	d.remain AS d_remain,
+	d.piece AS d_piece,
 	d.OWNER AS d_owner,
 	d.kind AS d_kind,
 	pd.id AS pd_id,
@@ -80,6 +83,7 @@
         <result column="d_name" jdbcType="VARCHAR" property="deviceName"/>
         <result column="d_total" jdbcType="INTEGER" property="total"/>
         <result column="d_remain" jdbcType="INTEGER" property="remain"/>
+        <result column="d_piece" jdbcType="FLOAT" property="piece" />
         <result column="d_owner" jdbcType="INTEGER" property="owner"/>
         <result column="d_kind" jdbcType="INTEGER" property="kind"/>
         <collection property="propertyDeviceList" ofType="com.technologygarden.entity.PropertyDevice">
@@ -110,6 +114,9 @@
             <if test="remain != null">
                 device.remain = #{remain,jdbcType=INTEGER},
             </if>
+            <if test="piece != null">
+                device.piece = #{piece,jdbcType=FLOAT},
+            </if>
             <if test="owner != null">
                 device.owner = #{owner,jdbcType=INTEGER}
             </if>
@@ -124,6 +131,7 @@
         d.NAME AS d_name,
         d.total AS d_total,
         d.remain AS d_remain,
+        d.piece AS d_piece,
         d.OWNER AS d_owner,
         d.kind AS d_kind,
         pd.id AS pd_id,
@@ -169,6 +177,7 @@
         d.NAME AS d_name,
         d.total AS d_total,
         d.remain AS d_remain,
+        d.piece AS d_piece,
         d.OWNER AS d_owner,
         d.kind AS d_kind,
         pd.id AS pd_id,
@@ -199,6 +208,7 @@
         d.NAME AS d_name,
         d.total AS d_total,
         d.remain AS d_remain,
+        d.piece AS d_piece,
         d.OWNER AS d_owner,
         d.kind AS d_kind,
         pd.id AS pd_id,
@@ -234,11 +244,11 @@
 
     <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.Device">
         insert into technology.device
-        (category_id, name, total, remain, owner, kind)
+        (category_id, name, total, remain, piece, owner, kind)
         values
         (#{categoryId,jdbcType=INTEGER}, #{deviceName,jdbcType=VARCHAR},
-        #{total,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER}, #{owner,jdbcType=INTEGER},
-        #{kind,jdbcType=INTEGER})
+        #{total,jdbcType=INTEGER}, #{remain,jdbcType=INTEGER}, #{piece,jdbcType=FLOAT},
+        #{owner,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER})
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="deviceId">
             SELECT LAST_INSERT_ID();
         </selectKey>

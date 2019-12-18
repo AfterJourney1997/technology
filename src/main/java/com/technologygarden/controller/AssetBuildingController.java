@@ -1,6 +1,5 @@
 package com.technologygarden.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Building;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -10,7 +9,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,7 +38,7 @@ public class AssetBuildingController {
 
     @RequestMapping(value = "/building", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除房产", notes = "参数包括：房产主键id")
-    public ResultBean deleteBuildingById(@NonNull Integer buildingId){
+    public ResultBean<?> deleteBuildingById(@NonNull Integer buildingId){
 
         return assetBuildingService.deleteBuildingById(buildingId);
 
@@ -48,7 +46,7 @@ public class AssetBuildingController {
 
     @RequestMapping(value = "/building", method = RequestMethod.POST)
     @ApiOperation(value = "新增房产", notes = "参数包括：房产对象list，一个房产也需放入list中")
-    public ResultBean insertBuildingForeach(@NonNull @RequestBody List<Building> buildingList){
+    public ResultBean<?> insertBuildingForeach(@NonNull @RequestBody List<Building> buildingList){
 
         return assetBuildingService.insertBuildingForeach(buildingList);
 
@@ -56,7 +54,7 @@ public class AssetBuildingController {
 
     @RequestMapping(value = "/building", method = RequestMethod.PUT)
     @ApiOperation(value = "修改房产信息", notes = "参数包括：房产对象")
-    public ResultBean updateBuildingById(@RequestBody Building building){
+    public ResultBean<?> updateBuildingById(@RequestBody Building building){
 
         return assetBuildingService.updateBuildingById(building);
 

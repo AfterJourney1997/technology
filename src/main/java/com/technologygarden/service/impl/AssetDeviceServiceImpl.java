@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.CompanyRoomDeviceMapper;
 import com.technologygarden.dao.DeviceMapper;
 import com.technologygarden.dao.DevicePropertyMapper;
@@ -13,12 +14,14 @@ import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.AssetDeviceService;
 import com.technologygarden.util.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service("assetDeviceService")
 public class AssetDeviceServiceImpl implements AssetDeviceService {
 
@@ -34,11 +37,12 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
     }
 
     @Override
-    public ResultBean<Page<Device>> getDeviceListWithPropertyByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getDeviceListWithPropertyByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Device> deviceList = deviceMapper.selectDeviceListWithPropertyByPage();
-        return new ResultBean<>(deviceList);
+        PageInfo<?> pageInfo = new PageInfo<>(deviceList);
+        return new ResultBean<>(pageInfo);
 
     }
 
@@ -47,8 +51,9 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
     public ResultBean<?> insertDeviceWithPropertyDynamic(Device device) {
 
         // 判断参数是否缺失
-        if(device.getCategoryId() == null || StringUtil.empty(device.getDeviceName()) || device.getOwner() == null){
-            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+        if(device.getCategoryId() == null || StringUtil.empty(device.getDeviceName()) || device.getOwner() == null || device.getPiece() == null){
+            log.warn("设备插入中缺失必须参数categoryId/deviceName/owner/piece：" + device);
+            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
         }
 
         List<PropertyDevice> propertyDeviceList = device.getPropertyDeviceList();
@@ -57,7 +62,8 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
             DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
             if (deviceProperty.getCategoryId() == null  || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
-                return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+                log.warn("设备插入中属性对象中缺失必须参数categoryId/propertyId/propertyValue：" + deviceProperty);
+                return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
             }
 
         }
@@ -83,7 +89,8 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         // 判断设备是否被使用
         Device device = deviceMapper.selectByPrimaryKey(deviceId);
         if(!device.getTotal().equals(device.getRemain())){
-            return new ResultBean<>(ResultStatus.DELETE_ERROR.getCode(), ResultStatus.DELETE_ERROR.getMessage());
+            log.warn("删除的设备仍被使用 ---> deviceId：" + deviceId);
+            return new ResultBean<>(ResultStatus.DELETE_ERROR);
         }
 
         devicePropertyMapper.deleteByDeviceByDeviceId(deviceId);
@@ -97,18 +104,21 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
         // 判断id是否缺失
         if (device.getDeviceId() == null){
-            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+            log.warn("修改设备中设备主键缺失 ---> " + device);
+            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
         }
 
         List<PropertyDevice> propertyDeviceList = device.getPropertyDeviceList();
+        if(propertyDeviceList.size() > 0){
+            for (PropertyDevice propertyDevice : propertyDeviceList) {
 
-        for (PropertyDevice propertyDevice : propertyDeviceList) {
+                DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
+                if (deviceProperty.getDevicePropertyId() == null) {
+                    log.warn("修改设备中设备属性主键缺失 ---> " + deviceProperty);
+                    return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
+                }
 
-            DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
-            if (deviceProperty.getDevicePropertyId() == null) {
-                return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
             }
-
         }
 
         deviceMapper.updateByIdDynamic(device);
@@ -117,11 +127,12 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
     }
 
     @Override
-    public ResultBean<Page<Device>> searchDeviceListWithPropertyByPage(Integer pageNum, Integer pageSize, Integer categoryId, String deviceName, Integer owner) {
+    public ResultBean<PageInfo<?>> searchDeviceListWithPropertyByPage(Integer pageNum, Integer pageSize, Integer categoryId, String deviceName, Integer owner) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Device> deviceList = deviceMapper.searchDeviceListWithPropertyByPage(categoryId, deviceName, owner);
-        return new ResultBean<>(deviceList);
+        PageInfo<?> pageInfo = new PageInfo<>(deviceList);
+        return new ResultBean<>(pageInfo);
 
     }
 
@@ -170,11 +181,12 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
 
     @Override
-    public ResultBean<Page<Device>> getFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Device> deviceList = deviceMapper.selectFurnitureListWithPropertyByPage();
-        return new ResultBean<>(deviceList);
+        PageInfo<?> pageInfo = new PageInfo<>(deviceList);
+        return new ResultBean<>(pageInfo);
 
     }
 
@@ -182,8 +194,9 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
     public ResultBean<?> insertFurnitureWithPropertyDynamic(Device furniture) {
 
         // 判断参数是否缺失
-        if(furniture.getCategoryId() == null || StringUtil.empty(furniture.getDeviceName()) || furniture.getOwner() == null){
-            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+        if(furniture.getCategoryId() == null || StringUtil.empty(furniture.getDeviceName()) || furniture.getOwner() == null || furniture.getPiece() == null){
+            log.warn("家具插入中缺失必须参数categoryId/deviceName/owner/piece：" + furniture);
+            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
         }
 
         List<PropertyDevice> propertyDeviceList = furniture.getPropertyDeviceList();
@@ -192,7 +205,8 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
             DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
             if (deviceProperty.getCategoryId() == null || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
-                return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+                log.warn("家具插入中属性对象中缺失必须参数categoryId/propertyId/propertyValue：" + deviceProperty);
+                return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
             }
 
         }
@@ -213,11 +227,12 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
     }
 
     @Override
-    public ResultBean<Page<Device>> searchFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize, Integer categoryId, String furnitureName, Integer owner) {
+    public ResultBean<PageInfo<?>> searchFurnitureListWithPropertyByPage(Integer pageNum, Integer pageSize, Integer categoryId, String furnitureName, Integer owner) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Device> deviceList = deviceMapper.searchFurnitureListWithPropertyByPage(categoryId, furnitureName, owner);
-        return new ResultBean<>(deviceList);
+        PageInfo<?> pageInfo = new PageInfo<>(deviceList);
+        return new ResultBean<>(pageInfo);
 
     }
 }

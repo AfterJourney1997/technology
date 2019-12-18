@@ -1,6 +1,7 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.AssetAssetCountService;
@@ -27,7 +28,7 @@ public class AssetAssetCountController {
 
     @RequestMapping(value = "/assetCount", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取资产统计列表", notes = "参数包括：页数，每页数量，均必填")
-    public ResultBean<Page<CompanyRoomDevice>> getAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return assetAssetCountService.getAssetCountByPage(pageNum, pageSize);
 
@@ -35,7 +36,7 @@ public class AssetAssetCountController {
 
     @RequestMapping(value = "/assetCount/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页搜索资产统计列表", notes = "参数包括：页数，每页数量，企业名称，房间名称")
-    public ResultBean<Page<CompanyRoomDevice>> searchAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String companyName, String roomName){
+    public ResultBean<PageInfo<?>> searchAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String companyName, String roomName){
 
         return assetAssetCountService.searchAssetCountByPage(pageNum, pageSize, companyName, roomName);
 

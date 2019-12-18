@@ -2,16 +2,19 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.CompanyRoomDeviceMapper;
 import com.technologygarden.dao.DeviceMapper;
 import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.Device;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.AssetAssetCountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service("assetAssetCountService")
 public class AssetAssetCountServiceImpl implements AssetAssetCountService {
 
@@ -24,20 +27,23 @@ public class AssetAssetCountServiceImpl implements AssetAssetCountService {
         this.deviceMapper = deviceMapper;
     }
 
+    // 分页获取设备分配信息
     @Override
-    public ResultBean<Page<CompanyRoomDevice>> getAssetCountByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getAssetCountByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.selectWithInfoByPage();
-        return new ResultBean<>(companyRoomDevices);
+        PageInfo<?> pageInfo = new PageInfo<>(companyRoomDevices);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
-    public ResultBean<Page<CompanyRoomDevice>> searchAssetCountByPage(Integer pageNum, Integer pageSize, String companyName, String roomName) {
+    public ResultBean<PageInfo<?>> searchAssetCountByPage(Integer pageNum, Integer pageSize, String companyName, String roomName) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.searchAssetCountByPage(companyName, roomName);
-        return new ResultBean<>(companyRoomDevices);
+        PageInfo<?> pageInfo = new PageInfo<>(companyRoomDevices);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override

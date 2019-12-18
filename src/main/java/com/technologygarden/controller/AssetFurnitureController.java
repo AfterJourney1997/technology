@@ -1,12 +1,11 @@
 package com.technologygarden.controller;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Device;
 import com.technologygarden.entity.PropertyDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Room;
 import com.technologygarden.service.AssetDeviceService;
-import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.RoomCompanyService;
 import com.technologygarden.service.SystemPropertyDeviceService;
 import io.swagger.annotations.Api;
@@ -37,7 +36,7 @@ public class AssetFurnitureController {
 
     @RequestMapping(value = "/furniture", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取家具列表", notes = "参数包括：页数，每页数量，均必填（owner为1表示学校建设，2表示企业自建，kind为1表示设备，2表示家具）")
-    public ResultBean<Page<Device>> getFurnitureListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
+    public ResultBean<PageInfo<?>> getFurnitureListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
         return assetDeviceService.getFurnitureListWithPropertyByPage(pageNum, pageSize);
 
@@ -69,7 +68,7 @@ public class AssetFurnitureController {
 
     @RequestMapping(value = "/furniture/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页搜索家具列表及其属性", notes = "参数包括：页数，每页数量，类别id，家具名称，所属单位")
-    public ResultBean<Page<Device>> searchFurnitureListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String furnitureName, Integer owner){
+    public ResultBean<PageInfo<?>> searchFurnitureListWithPropertyByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String furnitureName, Integer owner){
 
         return assetDeviceService.searchFurnitureListWithPropertyByPage(pageNum, pageSize, categoryId, furnitureName, owner);
 

@@ -1,12 +1,12 @@
 package com.technologygarden.service;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.PolicyRelated;
 import com.technologygarden.entity.ResultBean.ResultBean;
 
 public interface ServicePolicyRelatedService {
 
-    ResultBean<Page<PolicyRelated>> getPolicyRelatedListByPage(Integer pageNum, Integer pageSize);
+    ResultBean<PageInfo<?>> getPolicyRelatedListByPage(Integer pageNum, Integer pageSize);
 
     ResultBean<?> insertPolicyRelated(PolicyRelated policyRelated);
 
@@ -14,5 +14,5 @@ public interface ServicePolicyRelatedService {
 
     ResultBean<?> updatePolicyRelatedById(PolicyRelated policyRelated);
 
-    ResultBean<Page<PolicyRelated>> searchPolicyRelatedListByPage(Integer pageNum, Integer pageSize, Integer level, String title);
+    ResultBean<PageInfo<?>> searchPolicyRelatedListByPage(Integer pageNum, Integer pageSize, Integer level, String title);
 }

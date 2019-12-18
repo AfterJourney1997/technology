@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.PolicyRelatedMapper;
 import com.technologygarden.entity.PolicyRelated;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -22,11 +23,12 @@ public class ServicePolicyRelatedServiceImpl implements ServicePolicyRelatedServ
     }
 
     @Override
-    public ResultBean<Page<PolicyRelated>> getPolicyRelatedListByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getPolicyRelatedListByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<PolicyRelated> policyRelatedList = policyRelatedMapper.getPolicyRelatedListByPage();
-        return new ResultBean<>(policyRelatedList);
+        PageInfo<?> pageInfo = new PageInfo<>(policyRelatedList);
+        return new ResultBean<>(pageInfo);
 
     }
 
@@ -53,7 +55,7 @@ public class ServicePolicyRelatedServiceImpl implements ServicePolicyRelatedServ
 
         // 判断是否有参数缺失
         if(policyRelated.getPrId() == null){
-            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
+            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
         }
 
         policyRelatedMapper.updateByIdDynamic(policyRelated);
@@ -61,11 +63,12 @@ public class ServicePolicyRelatedServiceImpl implements ServicePolicyRelatedServ
     }
 
     @Override
-    public ResultBean<Page<PolicyRelated>> searchPolicyRelatedListByPage(Integer pageNum, Integer pageSize, Integer level, String title) {
+    public ResultBean<PageInfo<?>> searchPolicyRelatedListByPage(Integer pageNum, Integer pageSize, Integer level, String title) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<PolicyRelated> policyRelatedList = policyRelatedMapper.searchPolicyRelatedListByPage(level, title);
-        return new ResultBean<>(policyRelatedList);
+        PageInfo<?> pageInfo = new PageInfo<>(policyRelatedList);
+        return new ResultBean<>(pageInfo);
 
     }
 }
