@@ -28,6 +28,7 @@ public class CompanyInfoRoomInfoController {
         this.companyInfoRoomInfoService = companyInfoRoomInfoService;
     }
 
+
     @GetMapping("/roomInfo")
     @ApiOperation(value = "根据企业id获取企业房间列表", notes = "参数包括：企业id")
     public ResultBean<List<Room>> getCompanyRoomList(@NonNull Integer companyId){

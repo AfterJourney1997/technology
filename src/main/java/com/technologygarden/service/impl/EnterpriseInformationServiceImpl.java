@@ -78,8 +78,8 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
             List<String> filePathList = new ArrayList<>();
             for (int i = 0; i < fileNameArray.length; i++) {
 
-                filePathList.add(FilUploadUtils.getFilePath() + "\\" + fileNameArray[i]);
-                fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+                filePathList.add(FilUploadUtils.getImageShowPath() + fileNameArray[i]);
+                fileNameList.add(fileNameArray[i]);//存放带UUID的图片名
                 enterpriseInformation.setFilePathName(fileNameList);
                 enterpriseInformation.setFilePathList(filePathList);
             }
@@ -91,7 +91,6 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
             legalPerson.setJobTitle(jobTitleMapper.selectByPrimaryKey(legalPerson.getLpJtId()));
             enterpriseInformation.setLegalPerson(legalPerson);
         }
-
         return new ResultBean<>(enterpriseInformation);
     }
 

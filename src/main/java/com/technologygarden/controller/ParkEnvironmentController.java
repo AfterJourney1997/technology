@@ -17,8 +17,8 @@ import java.util.List;
 @Controller
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/park")
-@Api(tags = "园区环境接口", value = "ParkEnvironmentController")
+@RequestMapping(value = "/gardenManage/park")
+@Api(tags = "园区管理/园区环境接口", value = "ParkEnvironmentController")
 public class ParkEnvironmentController {
     private final ParkEnvironmentService parkEnvironmentService;
     @Autowired

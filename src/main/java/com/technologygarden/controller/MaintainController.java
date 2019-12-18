@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/maintain")
-@Api(tags = "服务管理接口", value = "MaintainController")
+@RequestMapping(value = "/gardenManage/maintain")
+@Api(tags = "园区管理/服务属性管理接口", value = "MaintainController")
 public class MaintainController {
     private final MaintainService maintainService;
     @Autowired

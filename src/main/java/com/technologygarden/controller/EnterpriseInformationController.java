@@ -44,16 +44,16 @@ public class EnterpriseInformationController {
         EnterpriseInformation enterprise= JSONArray.parseObject(enterpriseInformation,EnterpriseInformation.class);
         return enterpriseInformationService.updateByPrimaryKey(blFile,enterprise);
     }
-    //企业信息完善
-    @RequestMapping(value = "/information", method = RequestMethod.POST)
-    @ApiOperation(value = "录入企业信息", notes = "参数包括：EnterpriseInformation对象，包含当前登录对象的infoid，文件信息不改动")
-    public ResultBean<?> updateEnterpriseInformation(@RequestBody EnterpriseInformation enterpriseInformation) throws IOException {
-        return enterpriseInformationService.updateEnterpriseInformation(enterpriseInformation);
-    }
+//    //企业信息完善
+//    @RequestMapping(value = "/information", method = RequestMethod.POST)
+//    @ApiOperation(value = "录入企业信息", notes = "参数包括：EnterpriseInformation对象，包含当前登录对象的infoid，文件信息不改动")
+//    public ResultBean<?> updateEnterpriseInformation(@RequestBody EnterpriseInformation enterpriseInformation) throws IOException {
+//        return enterpriseInformationService.updateEnterpriseInformation(enterpriseInformation);
+//    }
 
-    @RequestMapping(value = "/information", method = RequestMethod.GET)
+    @RequestMapping(value = "/company/information", method = RequestMethod.GET)
     @ApiOperation(value = "获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
-    public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer infoid) throws IOException {
+    public ResultBean<EnterpriseInformation> showEnterpriseInformation(Integer infoid) throws IOException {
         return enterpriseInformationService.getEnterpriseInformation(infoid);
     }
 
@@ -70,5 +70,11 @@ public class EnterpriseInformationController {
 
         return systemJobTitleService.getAllSystemJobTitle();
 
+    }
+
+    @RequestMapping(value = "/information", method = RequestMethod.GET)
+    @ApiOperation(value = "获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
+    public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer infoid) throws IOException {
+        return enterpriseInformationService.getEnterpriseInformation(infoid);
     }
 }

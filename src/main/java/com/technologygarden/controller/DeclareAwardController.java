@@ -34,7 +34,7 @@ public class DeclareAwardController {
     public DeclareAwardController(DeclareAwardService declareAwardService) {
         this.declareAwardService = declareAwardService;
     }
-    @RequestMapping(value = "/degree", method = RequestMethod.GET)
+    @RequestMapping(value = "/manage/degree", method = RequestMethod.GET)
     @ApiOperation(value = "获取奖项", notes = "参数包括：无")
     public ResultBean getDegreeAll() {
         return declareAwardService.getDegreeAll();

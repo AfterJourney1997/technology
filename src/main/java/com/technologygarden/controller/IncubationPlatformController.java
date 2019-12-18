@@ -16,8 +16,8 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/incubation")
-@Api(tags = "孵化服务/孵化平台接口", value = "IncubationPlatformController")
+@RequestMapping(value = "/platformManage/incubation")
+@Api(tags = "平台管理/孵化平台接口", value = "IncubationPlatformController")
 public class IncubationPlatformController {
     private final PlaformService plaformService;
 
@@ -46,7 +46,7 @@ public class IncubationPlatformController {
         return plaformService.plaformOperation(platformApplication, status);
     }
 
-//    @RequestMapping(value = "/plaform", method = RequestMethod.POST)
+    //    @RequestMapping(value = "/plaform", method = RequestMethod.POST)
 //    @ApiOperation(value = "新增平台申请", notes = "参数包括：PlatformApplication对象，企业传cId")
 //    public ResultBean insertPlatformApplication(@RequestBody PlatformApplication platformApplication) {
 //

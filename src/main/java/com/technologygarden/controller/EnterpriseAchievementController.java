@@ -18,8 +18,8 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/achievement")
-@Api(tags = "企业成果接口", value = "EnterpriseAchievementController")
+@RequestMapping(value = "/outcomeManage/achievement")
+@Api(tags = "成果管理/企业成果接口", value = "EnterpriseAchievementController")
 public class EnterpriseAchievementController {
     private final DeclareAwardService declareAwardService;
     @Autowired

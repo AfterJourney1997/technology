@@ -16,6 +16,7 @@ import com.technologygarden.service.EmployeeService;
 import com.technologygarden.util.FilUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -42,14 +43,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setZName(politicsStatusMapper.selectByPrimaryKey(employee.getZId()).getZName());
             employee.setXName(degreeMapper.selectByPrimaryKey(employee.getXId()).getXName());
             String fileNameString= employee.getFileName();
-            if(fileNameString.length()>0){
+            if(!StringUtils.isEmpty(fileNameString)){
                 //判断文件是否存在
                 String fileNameArray []=fileNameString.split("/");
                 List<String> fileNameList=new ArrayList<>();
                 List<String> filePathList=new ArrayList<>();
                 for(int i=0;i<fileNameArray.length;i++){
-                    filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
-                    fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+                    filePathList.add(FilUploadUtils.getImageShowPath()+fileNameArray[i]);
+                    fileNameList.add(fileNameArray[i]);
                 }
                 employee.setFileNameList(fileNameList);
                 employee.setFilePathList(filePathList);
@@ -129,8 +130,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 List<String> fileNameList=new ArrayList<>();
                 List<String> filePathList=new ArrayList<>();
                 for(int i=0;i<fileNameArray.length;i++){
-                    filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
-                    fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+                    filePathList.add(FilUploadUtils.getImageShowPath()+fileNameArray[i]);
+                    fileNameList.add(fileNameArray[i]);
                 }
                 employee.setFileNameList(fileNameList);
                 employee.setFilePathList(filePathList);

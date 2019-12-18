@@ -11,7 +11,12 @@ import com.technologygarden.entity.LegalPerson;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Role;
 import com.technologygarden.service.EnterpriseApprovalService;
+import com.technologygarden.util.FilUploadUtils;
+import com.technologygarden.util.StringUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("EnterpriseApprovalService")
 public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService {
@@ -44,15 +49,31 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         PageHelper.startPage(pageNum,pageSize);
         Page<EnterpriseInformation> list = enterpriseInformationMapper.selectAllByPage();
         for(EnterpriseInformation enterprise:list){
+
+            String fileNameString = enterprise.getFileName();
+            if (!StringUtil.empty(fileNameString)) {
+                String fileNameArray[] = fileNameString.split("/");
+                List<String> fileNameList = new ArrayList<>();
+                List<String> filePathList = new ArrayList<>();
+                for (int i = 0; i < fileNameArray.length; i++) {
+
+                    filePathList.add(FilUploadUtils.getImageShowPath() + fileNameArray[i]);
+                    fileNameList.add(fileNameArray[i]);//存放带UUID的图片名
+                    enterprise.setFilePathName(fileNameList);
+                    enterprise.setFilePathList(filePathList);
+                }
+            }
+
             Integer legalpersonId= enterprise.getCLegalperson();
             LegalPerson legalPerson =new LegalPerson();
             legalPerson.setLpName("无");
             if(legalpersonId!=null){
-              legalPerson =legalPersonMapper.selectByPrimaryKey(legalpersonId);
+                legalPerson =legalPersonMapper.selectByPrimaryKey(legalpersonId);
             }
             String account=roleMapper.selectBycId(enterprise.getCId()).getAccount();
             enterprise.setLegalPerson(legalPerson);
             enterprise.setAccount(account);
+
         }
         PageInfo<?> pageInfo = new PageInfo<>(list);
         return new ResultBean<>(pageInfo);

@@ -39,7 +39,7 @@ public class TestController {
     public ResponseEntity<byte[]> srad(String fileName, HttpServletRequest request){
         System.out.println("@@@@@@@"+fileName);
         try {
-            ResponseEntity<byte[]> responseEntity = FilUploadUtils.downloadFile(fileName, request);
+            ResponseEntity<byte[]> responseEntity = FilUploadUtils.downloadFile(fileName);
             return responseEntity;
         } catch (IOException e) {
             e.printStackTrace();

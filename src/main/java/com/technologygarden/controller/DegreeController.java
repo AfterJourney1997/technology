@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/degree")
-@Api(tags = "学位管理接口", value = "DegreeController")
+@RequestMapping(value = "system/degree")
+@Api(tags = "系统配置/学位管理接口", value = "DegreeController")
 public class DegreeController {
     private final DegreeService degreeService;
     @Autowired

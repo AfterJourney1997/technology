@@ -48,8 +48,8 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
                 List<String> fileNameList=new ArrayList<>();
                 List<String> filePathList=new ArrayList<>();
                 for(int i=0;i<fileNameArray.length;i++){
-                    filePathList.add(FilUploadUtils.getFilePath()+"\\"+fileNameArray[i]);
-                    fileNameList.add(FilUploadUtils.getfileName(fileNameArray[i]));
+                    filePathList.add(FilUploadUtils.getImageShowPath()+fileNameArray[i]);
+                    fileNameList.add(fileNameArray[i]);
                 }
                 declareAward.setFileNameList(fileNameList);
                 declareAward.setFilePathList(filePathList);
@@ -110,7 +110,16 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
             declareAward.setCName(enterpriseInformationMapper.selectByPrimaryKey(declareAward.getCId()).getCName());
             String fileNameString= declareAward.getFilename();
             if(fileNameString.length()>0){
-               //图片显示
+                //如果文件存在就取文件
+                String fileNameArray []=fileNameString.split("/");
+                List<String> fileNameList=new ArrayList<>();
+                List<String> filePathList=new ArrayList<>();
+                for(int i=0;i<fileNameArray.length;i++){
+                    filePathList.add(FilUploadUtils.getImageShowPath()+fileNameArray[i]);
+                    fileNameList.add(fileNameArray[i]);
+                }
+                declareAward.setFileNameList(fileNameList);
+                declareAward.setFilePathList(filePathList);
             }
         }
         PageInfo<?> pageInfo = new PageInfo<>(declareAwardList);
@@ -127,6 +136,15 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
             String fileNameString= declareAward.getFilename();
             if(fileNameString.length()>0){
                 //图片显示
+                String fileNameArray []=fileNameString.split("/");
+                List<String> fileNameList=new ArrayList<>();
+                List<String> filePathList=new ArrayList<>();
+                for(int i=0;i<fileNameArray.length;i++){
+                    filePathList.add(FilUploadUtils.getImageShowPath()+fileNameArray[i]);
+                    fileNameList.add(fileNameArray[i]);
+                }
+                declareAward.setFileNameList(fileNameList);
+                declareAward.setFilePathList(filePathList);
             }
         }
         PageInfo<?> pageInfo = new PageInfo<>(declareAwardList);

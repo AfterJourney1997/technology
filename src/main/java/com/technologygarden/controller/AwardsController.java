@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/awards")
-@Api(tags = "奖项管理接口", value = "AwardsController")
+@RequestMapping(value = "/system/awards")
+@Api(tags = "系统配置/奖项管理接口", value = "AwardsController")
 public class AwardsController {
     private final AwardsService awardsService;
     @Autowired

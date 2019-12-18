@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,5 +52,12 @@ public class FileController {
         }
         return new ResponseEntity<>(imageContent, headers, HttpStatus.OK);
     }
-
+    @RequestMapping(value = "/downloadFile/{imageName}", method = RequestMethod.GET)
+    @ApiOperation(value = "下载文件", notes = "参数包括：文件名称")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable("imageName") String imageName) throws Exception {
+        if(!StringUtils.isEmpty(imageName)){
+            return FilUploadUtils.downloadFile(imageName);
+        }
+        return null;
+    }
 }

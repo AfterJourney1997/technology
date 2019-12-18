@@ -23,6 +23,10 @@ public class ServiceApplication {
 
     private Integer cId;
 
+    private Integer roomId;
+
+    private String roomName;//存放roomId对应的roomName
+
     private String servicename;//存放maintain对应的servicename服务名，便于显示
 
     private Integer infoid;//存放当前登录对象的infoid

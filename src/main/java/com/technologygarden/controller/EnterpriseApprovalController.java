@@ -19,8 +19,8 @@ import java.util.Map;
 @CrossOrigin
 @RestController
 //@RequiresPermissions("/Approval/account")
-@RequestMapping(value = "/Approval")
-@Api(tags = "企业审批管理接口", value = "EnterpriseApprovalController")
+@RequestMapping(value = "/service/Approval")
+@Api(tags = "孵化服务/企业审批管理接口", value = "EnterpriseApprovalController")
 public class EnterpriseApprovalController {
 
     private final EnterpriseApprovalService enterpriseApprovalService;

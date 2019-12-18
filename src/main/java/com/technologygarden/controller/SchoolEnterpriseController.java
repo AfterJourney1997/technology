@@ -16,8 +16,8 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/consociation")
-@Api(tags = "管理员端校企合作接口", value = "SchoolEnterpriseController")
+@RequestMapping(value = "/service/consociation")
+@Api(tags = "孵化服务/管理员端校企合作接口", value = "SchoolEnterpriseController")
 public class SchoolEnterpriseController {
     private final CooperationService cooperationService;
     @Autowired

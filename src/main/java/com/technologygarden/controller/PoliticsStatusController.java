@@ -17,8 +17,8 @@ import java.time.ZoneId;
 @Controller
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/politicsStatus")
-@Api(tags = "政治面貌管理接口", value = "PoliticsStatusController")
+@RequestMapping(value = "system/politicsStatus")
+@Api(tags = "系统配置/政治面貌管理接口", value = "PoliticsStatusController")
 public class PoliticsStatusController {
     private final PoliticsStatusService politicsStatusService;
     @Autowired
