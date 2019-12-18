@@ -1,6 +1,5 @@
 package com.technologygarden.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -8,7 +7,6 @@ import com.technologygarden.service.AssetAssetCountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

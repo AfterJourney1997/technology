@@ -154,4 +154,6 @@
     and pd.category_id = 0
     and crd.crd_room_id = #{roomId,jdbcType=INTEGER}
   </select>
+
+
 </mapper>

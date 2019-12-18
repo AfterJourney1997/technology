@@ -1,7 +1,6 @@
 package com.technologygarden.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.PolicyRelated;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -39,7 +38,7 @@ public class ServicePolicyRelatedController {
     public ResultBean<?> insertPolicyRelated(MultipartFile file, String policyRelated){
 
         PolicyRelated policyRelatedObject = JSONObject.parseObject(policyRelated, PolicyRelated.class);
-        return servicePolicyRelatedService.insertPolicyRelated(policyRelatedObject);
+        return servicePolicyRelatedService.insertPolicyRelated(file, policyRelatedObject);
 
     }
 
@@ -52,10 +51,11 @@ public class ServicePolicyRelatedController {
     }
 
     @RequestMapping(value = "/policyRelated", method = RequestMethod.PUT)
-    @ApiOperation(value = "根据id修改相关政策", notes = "参数包括：相关政策对象，id必填，修改项选填")
-    public ResultBean<?> updatePolicyRelatedById(@RequestBody PolicyRelated policyRelated){
+    @ApiOperation(value = "根据id修改相关政策", notes = "参数包括：文件，相关政策json")
+    public ResultBean<?> updatePolicyRelatedById(MultipartFile file, String policyRelated){
 
-        return servicePolicyRelatedService.updatePolicyRelatedById(policyRelated);
+        PolicyRelated policyRelatedObject = JSONObject.parseObject(policyRelated, PolicyRelated.class);
+        return servicePolicyRelatedService.updatePolicyRelatedById(file, policyRelatedObject);
 
     }
 

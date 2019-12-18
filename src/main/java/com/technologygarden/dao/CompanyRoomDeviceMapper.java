@@ -28,4 +28,5 @@ public interface CompanyRoomDeviceMapper {
     Page<CompanyRoomDevice> searchAssetCountByPage(@Param("companyName") String companyName, @Param("roomName") String roomName);
 
     Page<CompanyRoomDevice> selectWithInfoPageByRoomId(@Param("roomId") Integer roomId);
+
 }

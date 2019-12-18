@@ -137,5 +137,44 @@
     where property_device.category_id = #{categoryId,jdbcType=INTEGER} and property_device.category_id != 0
   </select>
 
+  <select id="selectPropertyDeviceWithDevice" resultMap="PropertyDeviceWithDevice">
+    SELECT
+      d.id AS d_id,
+      d.category_id AS d_category_id,
+      d.NAME AS d_name,
+      d.total AS d_total,
+      d.piece AS d_piece,
+      d.remain AS d_remain,
+      d.OWNER AS d_owner,
+      d.kind AS d_kind,
+      pd.id AS pd_id,
+      pd.kind AS pd_kind,
+      pd.category_id AS pd_category_id,
+      pd.NAME AS pd_name,
+      pd.property AS pd_property
+    FROM
+      `property_device` pd,
+      device d
+    WHERE
+      pd.category_id = 0
+      AND pd.id = d.category_id
+  </select>
+  <resultMap id="PropertyDeviceWithDevice" type="com.technologygarden.entity.PropertyDevice">
+    <id column="pd_id" jdbcType="INTEGER" property="propertyDeviceId" />
+    <result column="pd_kind" jdbcType="INTEGER" property="kind" />
+    <result column="pd_category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="pd_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="pd_property" jdbcType="VARCHAR" property="property" />
+    <collection property="deviceList" ofType="com.technologygarden.entity.Device">
+      <id column="d_id" jdbcType="INTEGER" property="deviceId"/>
+      <result column="d_category_id" jdbcType="INTEGER" property="categoryId"/>
+      <result column="d_name" jdbcType="VARCHAR" property="deviceName"/>
+      <result column="d_total" jdbcType="INTEGER" property="total"/>
+      <result column="d_remain" jdbcType="INTEGER" property="remain"/>
+      <result column="d_piece" jdbcType="FLOAT" property="piece"/>
+      <result column="d_owner" jdbcType="INTEGER" property="owner"/>
+      <result column="d_kind" jdbcType="INTEGER" property="kind"/>
+    </collection>
+  </resultMap>
 
 </mapper>

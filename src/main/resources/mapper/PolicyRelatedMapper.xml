@@ -6,6 +6,7 @@
     <result column="pr_title" jdbcType="VARCHAR" property="prTitle" />
     <result column="pr_level" jdbcType="INTEGER" property="prLevel" />
     <result column="pr_time" jdbcType="DATE" property="prTime" />
+    <result column="pr_serial_number" jdbcType="VARCHAR" property="prSerialNumber"/>
     <result column="pr_file" jdbcType="VARCHAR" property="prFile" />
     <result column="pr_content" jdbcType="LONGVARCHAR" property="prContent" />
   </resultMap>
@@ -13,30 +14,37 @@
     delete from technology.policy_related
     where pr_id = #{prId,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.technologygarden.entity.PolicyRelated">
     insert into technology.policy_related (pr_title, pr_level,
-      pr_time, pr_file, pr_content
+      pr_time, pr_serial_number, pr_file, pr_content
       )
-    values (#{prTitle,jdbcType=VARCHAR}, #{prLevel,jdbcType=INTEGER},
-      #{prTime,jdbcType=DATE}, #{prFile,jdbcType=VARCHAR}, #{prContent,jdbcType=LONGVARCHAR}
-      )
+    values
+    ( #{prTitle,jdbcType=VARCHAR}, #{prLevel,jdbcType=INTEGER},
+      #{prTime,jdbcType=DATE}, #{prSerialNumber,jdbcType=VARCHAR},
+      #{prFile,jdbcType=VARCHAR}, #{prContent,jdbcType=LONGVARCHAR}
+     )
   </insert>
+
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PolicyRelated">
     update technology.policy_related
     set pr_title = #{prTitle,jdbcType=VARCHAR},
       pr_level = #{prLevel,jdbcType=INTEGER},
       pr_time = #{prTime,jdbcType=DATE},
+      pr_serial_number = #{prSerialNumber,jdbcType=VARCHAR},
       pr_file = #{prFile,jdbcType=VARCHAR},
       pr_content = #{prContent,jdbcType=LONGVARCHAR}
     where pr_id = #{prId,jdbcType=INTEGER}
   </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select pr_id, pr_title, pr_level, pr_time, pr_file, pr_content
+    select *
     from technology.policy_related
     where pr_id = #{prId,jdbcType=INTEGER}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select pr_id, pr_title, pr_level, pr_time, pr_file, pr_content
+    select *
     from technology.policy_related
   </select>
 
@@ -45,9 +53,6 @@
     from technology.policy_related
   </select>
 
-  <insert id="insertPolicyRelatedDynamic" parameterType="com.technologygarden.entity.PolicyRelated">
-    insert into technology.policy_related
-  </insert>
 
   <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.PolicyRelated">
     update technology.policy_related
@@ -63,6 +68,12 @@
       </if>
       <if test="prContent != null and prContent != ''">
         policy_related.pr_content = #{prContent,jdbcType=VARCHAR},
+      </if>
+      <if test="prSerialNumber != null and prSerialNumber != ''">
+        policy_related.pr_serial_number = #{prSerialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="prFile != null and prFile != ''">
+        policy_related.pr_file = #{prFile,jdbcType=VARCHAR},
       </if>
     </set>
     where policy_related.pr_id = #{prId,jdbcType=INTEGER}

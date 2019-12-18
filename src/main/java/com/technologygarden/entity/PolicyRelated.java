@@ -19,17 +19,13 @@ import java.util.Date;
 public class PolicyRelated {
 
     private Integer prId;
-    @NotBlank
     private String prTitle;
-    @NotNull
     private Integer prLevel;
-    @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date prTime;
+    private String prSerialNumber;
     private String prFile;
-    @NotBlank
     private String prContent;
-    private MultipartFile file = null;
 
 }

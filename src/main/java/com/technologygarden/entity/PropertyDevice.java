@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 @NoArgsConstructor
@@ -17,5 +19,6 @@ public class PropertyDevice {
     private String categoryName;
     private String property;
     private DeviceProperty deviceProperty = null;
+    private List<Device> deviceList = null;
 
 }

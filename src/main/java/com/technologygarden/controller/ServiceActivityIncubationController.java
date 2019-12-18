@@ -1,21 +1,19 @@
 package com.technologygarden.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.ActivityCategory;
 import com.technologygarden.entity.ActivityIncubation;
 import com.technologygarden.entity.ResultBean.ResultBean;
-import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.ServiceActivityIncubationService;
 import com.technologygarden.service.SystemActivityCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin
@@ -43,15 +41,11 @@ public class ServiceActivityIncubationController {
     }
 
     @RequestMapping(value = "/activityIncubation", method = RequestMethod.POST)
-    @ApiOperation(value = "新增孵化活动", notes = "参数包括：孵化活动对象")
-    public ResultBean<?> insertActivityIncubation(@Valid ActivityIncubation activityIncubation, BindingResult errors){
+    @ApiOperation(value = "新增孵化活动", notes = "参数包括：上传文件（图片），孵化活动JSON")
+    public ResultBean<?> insertActivityIncubation(MultipartFile file, String activityIncubation){
 
-        // 判断是否有参数缺失
-        if(errors.hasErrors()){
-            errors.getAllErrors().forEach(p-> System.out.println(p.getDefaultMessage()));
-            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR.getCode(), ResultStatus.PARAMETER_MISSING_ERROR.getMessage());
-        }
-        return serviceActivityIncubationService.insertActivityIncubation(activityIncubation);
+        ActivityIncubation activityIncubationObject = JSONObject.parseObject(activityIncubation, ActivityIncubation.class);
+        return serviceActivityIncubationService.insertActivityIncubation(file, activityIncubationObject);
 
     }
 
@@ -64,10 +58,11 @@ public class ServiceActivityIncubationController {
     }
 
     @RequestMapping(value = "/activityIncubation", method = RequestMethod.PUT)
-    @ApiOperation(value = "根据主键修改孵化活动", notes = "参数包括：孵化活动对象，id必填，其他选填")
-    public ResultBean<?> updateActivityIncubationById(@RequestBody  ActivityIncubation activityIncubation){
+    @ApiOperation(value = "根据主键修改孵化活动", notes = "参数包括：文件（选填），孵化活动对象，id必填，其他选填")
+    public ResultBean<?> updateActivityIncubationById(MultipartFile file, String activityIncubation){
 
-        return serviceActivityIncubationService.updateActivityIncubationById(activityIncubation);
+        ActivityIncubation activityIncubationObject = JSONObject.parseObject(activityIncubation, ActivityIncubation.class);
+        return serviceActivityIncubationService.updateActivityIncubationById(file, activityIncubationObject);
 
     }
 

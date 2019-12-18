@@ -19,8 +19,6 @@ public interface PolicyRelatedMapper {
 
     Page<PolicyRelated> getPolicyRelatedListByPage();
 
-    int insertPolicyRelatedDynamic(PolicyRelated policyRelated);
-
     int updateByIdDynamic(PolicyRelated policyRelated);
 
     Page<PolicyRelated> searchPolicyRelatedListByPage(@Param("level") Integer level, @Param("title") String title);

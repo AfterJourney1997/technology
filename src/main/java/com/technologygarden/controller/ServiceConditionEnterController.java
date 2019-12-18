@@ -39,7 +39,7 @@ public class ServiceConditionEnterController {
     public ResultBean<?> insertConditionEnter(MultipartFile file, String conditionEnter){
 
         ConditionEnter conditionEnterObject = JSONObject.parseObject(conditionEnter, ConditionEnter.class);
-        return serviceConditionEnterService.insertConditionEnter(conditionEnterObject);
+        return serviceConditionEnterService.insertConditionEnter(file, conditionEnterObject);
 
     }
 
@@ -53,9 +53,10 @@ public class ServiceConditionEnterController {
 
     @RequestMapping(value = "/conditionEnter", method = RequestMethod.PUT)
     @ApiOperation(value = "根据id修改入驻条件", notes = "参数包括：入驻条件对象，id必填，修改项选填")
-    public ResultBean<?> updateConditionEnterById(@RequestBody ConditionEnter conditionEnter){
+    public ResultBean<?> updateConditionEnterById(MultipartFile file, String conditionEnter){
 
-        return serviceConditionEnterService.updateConditionEnterById(conditionEnter);
+        ConditionEnter conditionEnterObject = JSONObject.parseObject(conditionEnter, ConditionEnter.class);
+        return serviceConditionEnterService.updateConditionEnterById(file, conditionEnterObject);
 
     }
 

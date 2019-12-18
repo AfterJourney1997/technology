@@ -40,6 +40,7 @@
     select *
     from technology.condition_enter
   </select>
+
   <update id="updateConditionEnterByIdDynamic" parameterType="com.technologygarden.entity.ConditionEnter">
     update technology.condition_enter
     <set>
@@ -52,9 +53,13 @@
       <if test="ceContent != null and ceContent != ''">
         condition_enter.ce_content = #{ceContent,jdbcType=VARCHAR},
       </if>
+      <if test="ceFile != null and ceFile != ''">
+        condition_enter.ce_file = #{ceFile,jdbcType=VARCHAR},
+      </if>
     </set>
     where condition_enter.ce_id = #{ceId,jdbcType=INTEGER}
   </update>
+
   <select id="searchConditionEnterListByPage" resultMap="BaseResultMap">
     select *
     from technology.condition_enter
@@ -64,4 +69,5 @@
       </if>
     </where>
   </select>
+
 </mapper>
