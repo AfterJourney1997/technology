@@ -2,32 +2,40 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.technologygarden.dao.DevicePropertyMapper;
 import com.technologygarden.dao.PropertyDeviceMapper;
+import com.technologygarden.entity.DeviceProperty;
 import com.technologygarden.entity.PropertyDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.SystemPropertyDeviceService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service("systemPropertyDeviceService")
 public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceService {
 
     private final PropertyDeviceMapper propertyDeviceMapper;
+    private final DevicePropertyMapper devicePropertyMapper;
 
     @Autowired
-    public SystemPropertyDeviceServiceImpl(PropertyDeviceMapper propertyDeviceMapper) {
+    public SystemPropertyDeviceServiceImpl(PropertyDeviceMapper propertyDeviceMapper, DevicePropertyMapper devicePropertyMapper) {
         this.propertyDeviceMapper = propertyDeviceMapper;
+        this.devicePropertyMapper = devicePropertyMapper;
     }
 
     @Override
-    public ResultBean<Page<PropertyDevice>> getSystemPropertyDeviceListByPage(Integer pageNum, Integer pageSize, Integer categoryId) {
+    public ResultBean<PageInfo<?>> getSystemPropertyDeviceListByPage(Integer pageNum, Integer pageSize, Integer categoryId) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectSystemPropertyDeviceListByPage(categoryId);
-        return new ResultBean<>(propertyDeviceList);
+        PageInfo<?> pageInfo = new PageInfo<>(propertyDeviceList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -40,8 +48,11 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
     public ResultBean<?> deleteSystemPropertyDeviceById(Integer id) {
 
         // 判断删除项是否有被使用
-        if(1 != 1){
-            return new ResultBean<>(ResultStatus.DELETE_ERROR.getCode(), ResultStatus.DELETE_ERROR.getMessage());
+        List<DeviceProperty> devicePropertyList = devicePropertyMapper.selectDevicePropertyByPropertyId(id);
+        if(devicePropertyList.size() > 0){
+
+            log.warn("删除设备属性中删除的属性仍有设备在使用 ---> propertyDeviceId：" + id);
+            return new ResultBean<>(ResultStatus.DELETE_ERROR);
         }
 
         propertyDeviceMapper.deleteByPrimaryKey(id);
@@ -62,11 +73,12 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
     }
 
     @Override
-    public ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, Integer categoryId, String categoryName, String propertyName) {
+    public ResultBean<PageInfo<?>> searchSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, Integer categoryId, String categoryName, String propertyName) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.searchSystemPropertyDeviceByPage(categoryId, categoryName, propertyName);
-        return new ResultBean<>(propertyDeviceList);
+        PageInfo<?> pageInfo = new PageInfo<>(propertyDeviceList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override

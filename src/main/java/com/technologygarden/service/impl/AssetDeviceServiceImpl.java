@@ -62,6 +62,7 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
 
             DeviceProperty deviceProperty = propertyDevice.getDeviceProperty();
             if (deviceProperty.getCategoryId() == null  || deviceProperty.getPropertyId() == null || StringUtil.empty(deviceProperty.getPropertyValue())) {
+
                 log.warn("设备插入中属性对象中缺失必须参数categoryId/propertyId/propertyValue：" + deviceProperty);
                 return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
             }
@@ -89,6 +90,7 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         // 判断设备是否被使用
         Device device = deviceMapper.selectByPrimaryKey(deviceId);
         if(!device.getTotal().equals(device.getRemain())){
+
             log.warn("删除的设备仍被使用 ---> deviceId：" + deviceId);
             return new ResultBean<>(ResultStatus.DELETE_ERROR);
         }
@@ -143,7 +145,8 @@ public class AssetDeviceServiceImpl implements AssetDeviceService {
         // 判断是否有足够的数量可供分配
         Device device = deviceMapper.selectByPrimaryKey(deviceId);
         if(device.getRemain() <= 0 || device.getRemain() < deviceNum){
-            return new ResultBean<>(ResultStatus.PARAMETER_ERROR.getCode(), ResultStatus.PARAMETER_ERROR.getMessage());
+            log.warn("设备分配中无足够数量可供分配 ---> deviceId：" + deviceId);
+            return new ResultBean<>(ResultStatus.PARAMETER_ERROR);
         }
 
         // 判断是否已分配过，已分配需修改之前分配记录的数量

@@ -1,6 +1,6 @@
 package com.technologygarden.controller;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.JobTitle;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.ResultBean.ResultStatus;
@@ -8,9 +8,7 @@ import com.technologygarden.service.SystemJobTitleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +30,7 @@ public class SystemJobTitleController {
 
     @RequestMapping(value = "/jobTitle", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取职称列表", notes = "参数包括：页数、每页数量")
-    public ResultBean<Page<JobTitle>> getSystemJobTitleListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
+    public ResultBean<PageInfo<?>> getSystemJobTitleListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
         return systemJobTitleService.getSystemJobTitleListByPage(pageNum, pageSize);
 
@@ -69,7 +67,7 @@ public class SystemJobTitleController {
 
     @RequestMapping(value = "/jobTitle/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取职称列表", notes = "参数包括：页数、每页数量、职称")
-    public ResultBean<Page<JobTitle>> searchSystemJobTitleListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String jobTitle) {
+    public ResultBean<PageInfo<?>> searchSystemJobTitleListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String jobTitle) {
 
         return systemJobTitleService.searchSystemJobTitleListByPage(pageNum, pageSize, jobTitle);
 

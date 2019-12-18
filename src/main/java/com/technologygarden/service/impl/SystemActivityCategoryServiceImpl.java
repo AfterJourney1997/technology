@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.ActivityCategoryMapper;
 import com.technologygarden.entity.ActivityCategory;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -24,11 +25,12 @@ public class SystemActivityCategoryServiceImpl implements SystemActivityCategory
     }
 
     @Override
-    public ResultBean<Page<ActivityCategory>> getSystemActivityCategoryListByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getSystemActivityCategoryListByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
-        Page<ActivityCategory> ActivityCategoryList = activityCategoryMapper.selectSystemActivityCategoryListByPage();
-        return new ResultBean<>(ActivityCategoryList);
+        Page<ActivityCategory> activityCategoryList = activityCategoryMapper.selectSystemActivityCategoryListByPage();
+        PageInfo<?> pageInfo = new PageInfo<>(activityCategoryList);
+        return new ResultBean<>(pageInfo);
         
     }
 
@@ -61,11 +63,12 @@ public class SystemActivityCategoryServiceImpl implements SystemActivityCategory
     }
 
     @Override
-    public ResultBean<Page<ActivityCategory>> searchSystemActivityCategoryByPage(Integer pageNum, Integer pageSize, String category) {
+    public ResultBean<PageInfo<?>> searchSystemActivityCategoryByPage(Integer pageNum, Integer pageSize, String category) {
 
         PageHelper.startPage(pageNum, pageSize);
-        Page<ActivityCategory> ActivityCategoryList = activityCategoryMapper.searchSystemActivityCategoryByPage(category);
-        return new ResultBean<>(ActivityCategoryList);
+        Page<ActivityCategory> activityCategoryList = activityCategoryMapper.searchSystemActivityCategoryByPage(category);
+        PageInfo<?> pageInfo = new PageInfo<>(activityCategoryList);
+        return new ResultBean<>(pageInfo);
 
     }
 

@@ -1,15 +1,14 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.PropertyDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.SystemPropertyDeviceService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -28,7 +27,7 @@ public class SystemPropertyDeviceController {
 
     @RequestMapping(value = "/propertyDevice", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取设备属性列表", notes = "参数包括：页数、每页数量、categoryId，categoryId非必填，如获取设备列表categoryId设0")
-    public ResultBean<Page<PropertyDevice>> getSystemPropertyDeviceListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId) {
+    public ResultBean<PageInfo<?>> getSystemPropertyDeviceListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId) {
 
         return systemPropertyDeviceService.getSystemPropertyDeviceListByPage(pageNum, pageSize, categoryId);
 
@@ -60,7 +59,7 @@ public class SystemPropertyDeviceController {
 
     @RequestMapping(value = "/propertyDevice/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索设备属性", notes = "参数包括：页数、每页数量、类别id，类别名称、属性名（页数、每页数量必填，其他选填）")
-    public ResultBean<Page<PropertyDevice>> searchSystemPropertyDeviceByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String categoryName, String propertyName) {
+    public ResultBean<PageInfo<?>> searchSystemPropertyDeviceByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId, String categoryName, String propertyName) {
 
         return systemPropertyDeviceService.searchSystemPropertyDeviceByPage(pageNum, pageSize, categoryId, categoryName, propertyName);
 

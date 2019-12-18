@@ -2,6 +2,7 @@ package com.technologygarden.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.JobTitleMapper;
 import com.technologygarden.dao.LegalPersonMapper;
 import com.technologygarden.entity.JobTitle;
@@ -9,11 +10,13 @@ import com.technologygarden.entity.LegalPerson;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.SystemJobTitleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service("systemJobTitleService")
 public class SystemJobTitleServiceImpl implements SystemJobTitleService {
 
@@ -27,11 +30,12 @@ public class SystemJobTitleServiceImpl implements SystemJobTitleService {
     }
 
     @Override
-    public ResultBean<Page<JobTitle>> getSystemJobTitleListByPage(Integer pageNum, Integer pageSize) {
+    public ResultBean<PageInfo<?>> getSystemJobTitleListByPage(Integer pageNum, Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<JobTitle> jobTitleList = jobTitleMapper.selectSystemJobTitleListByPage();
-        return new ResultBean<>(jobTitleList);
+        PageInfo<?> pageInfo = new PageInfo<>(jobTitleList);
+        return new ResultBean<>(pageInfo);
     }
 
     @Override
@@ -47,7 +51,8 @@ public class SystemJobTitleServiceImpl implements SystemJobTitleService {
         // 判断是否有法人在使用删除的职称
         List<LegalPerson> legalPersonList = legalPersonMapper.selectLegalPersonByJobTitleId(jobTitleId);
         if(legalPersonList.size() > 0){
-            return new ResultBean<>(ResultStatus.DELETE_ERROR.getCode(), ResultStatus.DELETE_ERROR.getMessage());
+            log.warn("删除职称中所删除的职称仍有法人在使用 ---> jobTitleId：" + jobTitleId);
+            return new ResultBean<>(ResultStatus.DELETE_ERROR);
         }
 
         jobTitleMapper.deleteByPrimaryKey(jobTitleId);
@@ -62,11 +67,12 @@ public class SystemJobTitleServiceImpl implements SystemJobTitleService {
     }
 
     @Override
-    public ResultBean<Page<JobTitle>> searchSystemJobTitleListByPage(Integer pageNum, Integer pageSize, String jobTitle) {
+    public ResultBean<PageInfo<?>> searchSystemJobTitleListByPage(Integer pageNum, Integer pageSize, String jobTitle) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<JobTitle> jobTitleList = jobTitleMapper.searchSystemJobTitleListByPage(jobTitle);
-        return new ResultBean<>(jobTitleList);
+        PageInfo<?> pageInfo = new PageInfo<>(jobTitleList);
+        return new ResultBean<>(pageInfo);
 
     }
 

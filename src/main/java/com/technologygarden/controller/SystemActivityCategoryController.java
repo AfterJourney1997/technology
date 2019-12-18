@@ -1,15 +1,13 @@
 package com.technologygarden.controller;
 
-import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.ActivityCategory;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.SystemActivityCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -28,7 +26,7 @@ public class SystemActivityCategoryController {
 
     @RequestMapping(value = "/activityCategory", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取活动类别列表", notes = "参数包括：页数、每页数量")
-    public ResultBean<Page<ActivityCategory>> getSystemActivityCategoryListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
+    public ResultBean<PageInfo<?>> getSystemActivityCategoryListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
         return systemActivityCategoryService.getSystemActivityCategoryListByPage(pageNum, pageSize);
 
@@ -60,7 +58,7 @@ public class SystemActivityCategoryController {
 
     @RequestMapping(value = "/activityCategory/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索活动类别", notes = "参数包括：页数、每页数量、活动类别名")
-    public ResultBean<Page<ActivityCategory>> searchSystemActivityCategoryByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String category) {
+    public ResultBean<PageInfo<?>> searchSystemActivityCategoryByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String category) {
 
         return systemActivityCategoryService.searchSystemActivityCategoryByPage(pageNum, pageSize, category);
 
