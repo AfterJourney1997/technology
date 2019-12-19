@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.ChargeMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.Charge">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="start_time" jdbcType="DATE" property="startTime" />
+    <result column="end_time" jdbcType="DATE" property="endTime" />
+    <result column="cId" jdbcType="INTEGER" property="cid" />
+    <result column="roomId" jdbcType="INTEGER" property="roomid" />
+    <result column="cost_sort" jdbcType="VARCHAR" property="costSort" />
+    <result column="charge" jdbcType="DOUBLE" property="charge" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.charge
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.Charge">
+    insert into technology.charge (Id, start_time, end_time,
+      cId, roomId, cost_sort, 
+      charge, status, notes
+      )
+    values (#{id,jdbcType=INTEGER}, #{startTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}, 
+      #{cid,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{costSort,jdbcType=VARCHAR}, 
+      #{charge,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER}, #{notes,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Charge">
+    update technology.charge
+    set start_time = #{startTime,jdbcType=DATE},
+      end_time = #{endTime,jdbcType=DATE},
+      cId = #{cid,jdbcType=INTEGER},
+      roomId = #{roomid,jdbcType=INTEGER},
+      cost_sort = #{costSort,jdbcType=VARCHAR},
+      charge = #{charge,jdbcType=DOUBLE},
+      status = #{status,jdbcType=INTEGER},
+      notes = #{notes,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select Id, start_time, end_time, cId, roomId, cost_sort, charge, status, notes
+    from technology.charge
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select Id, start_time, end_time, cId, roomId, cost_sort, charge, status, notes
+    from technology.charge
+  </select>
+  <select id="selectChargeByPage" resultMap="BaseResultMap">
+    select Id, start_time, end_time, cId, roomId, cost_sort, charge, status, notes
+    from technology.charge
+  </select>
+</mapper>
