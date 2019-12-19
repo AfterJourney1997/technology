@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.ActivityCommunicationMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.ActivityCommunication">
+    <id column="acom_id" jdbcType="INTEGER" property="acomId" />
+    <result column="acom_name" jdbcType="VARCHAR" property="acomName" />
+    <result column="acom_time" jdbcType="DATE" property="acomTime" />
+    <result column="acom_category_id" jdbcType="INTEGER" property="acomCategoryId" />
+    <result column="acom_place" jdbcType="VARCHAR" property="acomPlace" />
+    <result column="acom_people" jdbcType="VARCHAR" property="acomPeople" />
+    <result column="acom_file" jdbcType="VARCHAR" property="acomFile" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.activity_communication
+    where acom_id = #{acomId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.ActivityCommunication">
+    insert into technology.activity_communication (acom_id, acom_name, acom_time, 
+      acom_category_id, acom_place, acom_people, 
+      acom_file)
+    values (#{acomId,jdbcType=INTEGER}, #{acomName,jdbcType=VARCHAR}, #{acomTime,jdbcType=DATE}, 
+      #{acomCategoryId,jdbcType=INTEGER}, #{acomPlace,jdbcType=VARCHAR}, #{acomPeople,jdbcType=VARCHAR}, 
+      #{acomFile,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ActivityCommunication">
+    update technology.activity_communication
+    set acom_name = #{acomName,jdbcType=VARCHAR},
+      acom_time = #{acomTime,jdbcType=DATE},
+      acom_category_id = #{acomCategoryId,jdbcType=INTEGER},
+      acom_place = #{acomPlace,jdbcType=VARCHAR},
+      acom_people = #{acomPeople,jdbcType=VARCHAR},
+      acom_file = #{acomFile,jdbcType=VARCHAR}
+    where acom_id = #{acomId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select acom_id, acom_name, acom_time, acom_category_id, acom_place, acom_people, 
+    acom_file
+    from technology.activity_communication
+    where acom_id = #{acomId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select acom_id, acom_name, acom_time, acom_category_id, acom_place, acom_people, 
+    acom_file
+    from technology.activity_communication
+  </select>
+
+  <select id="selectAllWithCategoryByPage" resultMap="ActivityCommunicationWithCategory">
+    select activity_communication.*, activity_category.*
+    from technology.activity_communication, technology.activity_category
+    where activity_communication.acom_category_id = activity_category.ac_id
+  </select>
+  <resultMap id="ActivityCommunicationWithCategory" type="com.technologygarden.entity.ActivityCommunication">
+    <id column="acom_id" jdbcType="INTEGER" property="acomId" />
+    <result column="acom_name" jdbcType="VARCHAR" property="acomName" />
+    <result column="acom_time" jdbcType="DATE" property="acomTime" />
+    <result column="acom_category_id" jdbcType="INTEGER" property="acomCategoryId" />
+    <result column="acom_place" jdbcType="VARCHAR" property="acomPlace" />
+    <result column="acom_people" jdbcType="VARCHAR" property="acomPeople" />
+    <result column="acom_file" jdbcType="VARCHAR" property="acomFile" />
+    <association property="activityCategory" javaType="com.technologygarden.entity.ActivityCategory">
+      <id column="ac_id" jdbcType="INTEGER" property="acId" />
+      <result column="ac_category" jdbcType="VARCHAR" property="acCategory" />
+    </association>
+  </resultMap>
+
+  <update id="updateDynamicById" parameterType="com.technologygarden.entity.ActivityCommunication">
+    update technology.activity_communication
+    <set>
+      <if test="acomName != null and acomName != ''">
+        acom_name = #{acomName,jdbcType=VARCHAR},
+      </if>
+      <if test="acomTime != null">
+        acom_time = #{acomTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acomCategoryId != null">
+        acom_category_id = #{acomCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="acomPlace != null and acomPlace != ''">
+        acom_place = #{acomPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="acomPeople != null and acomPeople != ''">
+        acom_people = #{acomPeople,jdbcType=VARCHAR},
+      </if>
+      <if test="acomFile != null and acomFile != ''">
+        acom_file = #{acomFile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where acom_id = #{acomId,jdbcType=INTEGER}
+  </update>
+
+  <select id="searchByPage" resultMap="ActivityCommunicationWithCategory">
+    select activity_communication.*, activity_category.*
+    from technology.activity_communication, technology.activity_category
+    <where>
+      and activity_communication.acom_category_id = activity_category.ac_id
+      <if test="activityCategoryId != null">
+        and activity_communication.acom_category_id = #{activityCategoryId,jdbcType=INTEGER}
+      </if>
+      <if test="activityName != null and activityName != ''">
+        and acom_name like concat('%', #{activityName,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+
+</mapper>

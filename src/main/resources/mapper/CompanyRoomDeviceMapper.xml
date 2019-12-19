@@ -71,14 +71,35 @@
   </update>
 
   <select id="selectWithInfoByPage" resultMap="AssetCountWithInfo">
-    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.piece as d_piece, d.remain as d_remain,
-    d.owner as d_owner, d.kind as d_kind, pd.id as pd_id, pd.kind as pd_kind, pd.category_id as pd_category_id, pd.name as pd_name, pd.property as pd_property
-    from technology.company_room_device crd, technology.device d, technology.room r, technology.building b, technology.property_device pd
-    where crd.crd_room_id = r.r_id
-    and r.r_building_id = b.id
-    and crd.crd_device_id = d.id
-    and d.category_id = pd.id
-    and pd.category_id = 0
+    SELECT
+      crd.*,
+      b.*,
+      r.*,
+      d.id AS d_id,
+      d.category_id AS d_category_id,
+      d.NAME AS d_name,
+      d.total AS d_total,
+      d.piece AS d_piece,
+      d.remain AS d_remain,
+      d.OWNER AS d_owner,
+      d.kind AS d_kind,
+      pd.id AS pd_id,
+      pd.kind AS pd_kind,
+      pd.category_id AS pd_category_id,
+      pd.NAME AS pd_name,
+      pd.property AS pd_property
+    FROM
+      technology.company_room_device crd,
+      technology.device d,
+      technology.room r,
+      technology.building b,
+      technology.property_device pd
+    WHERE
+      crd.crd_room_id = r.r_id
+      AND r.r_building_id = b.id
+      AND crd.crd_device_id = d.id
+      AND d.category_id = pd.id
+      AND pd.category_id = 0
   </select>
   <resultMap id="AssetCountWithInfo" type="com.technologygarden.entity.CompanyRoomDevice">
     <id column="crd_id" jdbcType="INTEGER" property="crdId" />
@@ -125,9 +146,29 @@
   </resultMap>
 
   <select id="searchAssetCountByPage" resultMap="AssetCountWithInfo">
-    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.piece as d_piece, d.remain as d_remain,
-    d.owner as d_owner, d.kind as d_kind, pd.id as pd_id, pd.kind as pd_kind, pd.category_id as pd_category_id, pd.name as pd_name, pd.property as pd_property
-    from technology.company_room_device crd, technology.device d, technology.room r, technology.building b, technology.property_device pd
+    SELECT
+      crd.*,
+      b.*,
+      r.*,
+      d.id AS d_id,
+      d.category_id AS d_category_id,
+      d.NAME AS d_name,
+      d.total AS d_total,
+      d.piece AS d_piece,
+      d.remain AS d_remain,
+      d.OWNER AS d_owner,
+      d.kind AS d_kind,
+      pd.id AS pd_id,
+      pd.kind AS pd_kind,
+      pd.category_id AS pd_category_id,
+      pd.NAME AS pd_name,
+      pd.property AS pd_property
+    FROM
+      technology.company_room_device crd,
+      technology.device d,
+      technology.room r,
+      technology.building b,
+      technology.property_device pd
     <where>
       and crd.crd_room_id = r.r_id
       and r.r_building_id = b.id
@@ -144,15 +185,36 @@
   </select>
 
   <select id="selectWithInfoPageByRoomId" resultMap="AssetCountWithInfo">
-    select crd.*, b.*, r.*, d.id as d_id, d.category_id as d_category_id, d.name as d_name, d.total as d_total, d.piece as d_piece, d.remain as d_remain,
-    d.owner as d_owner, d.kind as d_kind, pd.id as pd_id, pd.kind as pd_kind, pd.category_id as pd_category_id, pd.name as pd_name, pd.property as pd_property
-    from technology.company_room_device crd, technology.device d, technology.room r, technology.building b, technology.property_device pd
-    where crd.crd_room_id = r.r_id
-    and r.r_building_id = b.id
-    and crd.crd_device_id = d.id
-    and d.category_id = pd.id
-    and pd.category_id = 0
-    and crd.crd_room_id = #{roomId,jdbcType=INTEGER}
+    SELECT
+      crd.*,
+      b.*,
+      r.*,
+      d.id AS d_id,
+      d.category_id AS d_category_id,
+      d.NAME AS d_name,
+      d.total AS d_total,
+      d.piece AS d_piece,
+      d.remain AS d_remain,
+      d.OWNER AS d_owner,
+      d.kind AS d_kind,
+      pd.id AS pd_id,
+      pd.kind AS pd_kind,
+      pd.category_id AS pd_category_id,
+      pd.NAME AS pd_name,
+      pd.property AS pd_property
+    FROM
+      technology.company_room_device crd,
+      technology.device d,
+      technology.room r,
+      technology.building b,
+      technology.property_device pd
+    WHERE
+      crd.crd_room_id = r.r_id
+      AND r.r_building_id = b.id
+      AND crd.crd_device_id = d.id
+      AND d.category_id = pd.id
+      AND pd.category_id = 0
+      AND crd.crd_room_id = #{roomId,jdbcType=INTEGER}
   </select>
 
 

@@ -6,28 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivityIncubation {
+public class ActivityCommunication {
 
-    private Integer aiId;
-    private String aiName;
+    private Integer acomId;
+    private String acomName;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date aiTime;
-    private Integer aiCategoryId;
-    private Integer aiPeopleNumber;
-    private String aiPic;
-    private String aiFile;
-    private String aiContent;
+    private Date acomTime;
+    private Integer acomCategoryId;
+    private String acomPlace;
+    private String acomPeople;
+    private String acomFile;
     private ActivityCategory activityCategory = null;
 
 }

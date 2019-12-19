@@ -95,14 +95,15 @@
   </update>
 
   <select id="searchActivityIncubationListByPage" resultMap="BaseResultMap">
-    select *
-    from technology.activity_incubation
+    select ai.*, ac.*
+    from technology.activity_incubation ai, technology.activity_category ac
     <where>
+      and ai.ai_category_id = ac.ac_id
       <if test="activityCategoryId != null">
-        and activity_incubation.ai_category_id = #{activityCategoryId,jdbcType=INTEGER}
+        and ai.ai_category_id = #{activityCategoryId,jdbcType=INTEGER}
       </if>
       <if test="activityName != null and activityName != ''">
-        and activity_incubation.ai_name like concat('%', #{activityName,jdbcType=VARCHAR}, '%')
+        and ai.ai_name like concat('%', #{activityName,jdbcType=VARCHAR}, '%')
       </if>
     </where>
   </select>
