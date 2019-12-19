@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 //@RequiresPermissions("/enterprise/information")
-@RequestMapping(value = "/enterprise")
+@RequestMapping(value = "/company/information  ")
 @Api(tags = "企业信息管理接口", value = "EnterpriseInformationController")
 public class EnterpriseInformationController {
 
@@ -52,7 +52,7 @@ public class EnterpriseInformationController {
 //    }
 
     @RequestMapping(value = "/company/information", method = RequestMethod.GET)
-    @ApiOperation(value = "获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
+    @ApiOperation(value = "入住申请：获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
     public ResultBean<EnterpriseInformation> showEnterpriseInformation(Integer infoid) throws IOException {
         return enterpriseInformationService.getEnterpriseInformation(infoid);
     }
@@ -73,7 +73,7 @@ public class EnterpriseInformationController {
     }
 
     @RequestMapping(value = "/information", method = RequestMethod.GET)
-    @ApiOperation(value = "获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
+    @ApiOperation(value = "企业信息：获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
     public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer infoid) throws IOException {
         return enterpriseInformationService.getEnterpriseInformation(infoid);
     }
