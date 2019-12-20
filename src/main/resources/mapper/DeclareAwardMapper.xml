@@ -60,4 +60,9 @@
     from technology.declare_award
     where a_id=#{aId,jdbcType=INTEGER}
   </select>
+  <select id="searchDeclareAward" resultMap="BaseResultMap">
+    select d_Id, d_name, a_id, filename, d_status, c_Id, datetime, d_grade, d_rank
+    from technology.declare_award
+    where where c_Id=#{cId,jdbcType=INTEGER} d_name like concat('%', #{search,jdbcType=VARCHAR}, '%')
+  </select>
 </mapper>

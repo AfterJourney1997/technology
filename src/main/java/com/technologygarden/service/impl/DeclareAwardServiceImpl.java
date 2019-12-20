@@ -96,6 +96,31 @@ public class DeclareAwardServiceImpl implements DeclareAwardService {
     }
 
     @Override
+    public ResultBean searchDeclareAward(Integer pageNum, Integer pageSize,Integer cId, String search) {
+        PageHelper.startPage(pageNum,pageSize);
+        Page<DeclareAward> declareAwardList=declareAwardMapper.searchDeclareAward(cId,search);
+        for(DeclareAward declareAward:declareAwardList){
+            declareAward.setAName(awardsMapper.selectByPrimaryKey(declareAward.getAId()).getAwardsName());
+            declareAward.setCName(enterpriseInformationMapper.selectByPrimaryKey(declareAward.getCId()).getCName());
+            String fileNameString= declareAward.getFilename();
+            if(fileNameString.length()>0){
+                //如果文件存在就取文件
+                String fileNameArray []=fileNameString.split("/");
+                List<String> fileNameList=new ArrayList<>();
+                List<String> filePathList=new ArrayList<>();
+                for(int i=0;i<fileNameArray.length;i++){
+                    filePathList.add(FilUploadUtils.getImageShowPath()+fileNameArray[i]);
+                    fileNameList.add(fileNameArray[i]);
+                }
+                declareAward.setFileNameList(fileNameList);
+                declareAward.setFilePathList(filePathList);
+            }
+        }
+        PageInfo<?> pageInfo = new PageInfo<>(declareAwardList);
+        return new ResultBean<>(pageInfo);
+    }
+
+    @Override
     public ResultBean<List<EnterpriseInformation>> getAllEnterprise() {
 
         return new ResultBean<>(enterpriseInformationMapper.selectAll());

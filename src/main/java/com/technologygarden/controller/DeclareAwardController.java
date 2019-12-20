@@ -56,5 +56,10 @@ public class DeclareAwardController {
     public ResultBean deleteDeclareAward(Integer dId) throws IOException {
         return declareAwardService.deleteDeclareAward(dId);
     }
+    @RequestMapping(value = "/manage/search", method = RequestMethod.GET)
+    @ApiOperation(value = "按名称搜索申报奖项", notes = "参数：页数,每页数量,当前登陆用户的infoid，搜索内容")
+    public ResultBean searchDeclareAward(Integer pageNum, Integer pageSize,Integer cId,String search) throws IOException {
+        return declareAwardService.searchDeclareAward(pageNum,pageSize,cId,search);
+    }
 
 }

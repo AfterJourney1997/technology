@@ -17,6 +17,7 @@ public interface DeclareAwardService {
     public ResultBean insertDeclareAward(MultipartFile[] blFile, DeclareAward declareAward) throws IOException;
     public ResultBean deleteDeclareAward(Integer dId) throws IOException;
     public ResultBean getDegreeAll();
+    public ResultBean searchDeclareAward(Integer pageNum, Integer pageSize,Integer cId,String search);
 
     public ResultBean<List<EnterpriseInformation>> getAllEnterprise();
     public ResultBean<PageInfo<?>> getDeclareAwardAllByPage(Integer pageNum, Integer pageSize);

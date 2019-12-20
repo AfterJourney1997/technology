@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.technologygarden.entity.DeclareAward;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface DeclareAwardMapper {
     List<DeclareAward> selectAll();
 
     Page<DeclareAward> getDeclareAwardAllByPage();
+
+    Page<DeclareAward> searchDeclareAward(@Param("cId") Integer cId,@Param("search") String search);
 
     List<DeclareAward> selectByaId(Integer aId);
 
