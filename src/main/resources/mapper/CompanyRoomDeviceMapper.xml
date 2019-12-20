@@ -211,13 +211,16 @@
       technology.room r,
       technology.building b,
       technology.property_device pd
-    WHERE
-      crd.crd_room_id = r.r_id
-      AND r.r_building_id = b.id
-      AND crd.crd_device_id = d.id
-      AND d.category_id = pd.id
-      AND pd.category_id = 0
-      AND crd.crd_room_id = #{roomId,jdbcType=INTEGER}
+      <where>
+        AND crd.crd_room_id = r.r_id
+        AND r.r_building_id = b.id
+        AND crd.crd_device_id = d.id
+        AND d.category_id = pd.id
+        AND pd.category_id = 0
+        <if test="roomId != null">
+          AND crd.crd_room_id = #{roomId,jdbcType=INTEGER}
+        </if>
+      </where>
   </select>
 
 
