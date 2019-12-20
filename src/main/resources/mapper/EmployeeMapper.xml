@@ -23,8 +23,8 @@
        c_Id, idcard, phone)
     values (#{eId,jdbcType=INTEGER}, #{eName,jdbcType=VARCHAR}, #{eSex,jdbcType=VARCHAR}, 
       #{zId,jdbcType=INTEGER}, #{ePosition,jdbcType=VARCHAR}, #{xId,jdbcType=INTEGER},
-      #{fileName,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER}),#{idCard,jdbcType=VARCHAR},
-      #{phone,jdbcType=VARCHAR}
+      #{fileName,jdbcType=VARCHAR}, #{cId,jdbcType=INTEGER},#{idCard,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Employee">
     update technology.employee
