@@ -94,18 +94,26 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
         return new ResultBean<>(enterpriseInformation);
     }
 
-
-    @Override
-    public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
-        List<EnterpriseInformation> enterpriseInformations = enterpriseInformationMapper.selectAll();
-
-        return new ResultBean<>(enterpriseInformations);
-    }
-
     @Override
     public ResultBean<EnterpriseInformation> getEnterpriseInformationById(Integer cId) {
 
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
         return new ResultBean<>(enterpriseInformation);
+    }
+
+    // 获取不带管委会的企业列表
+    @Override
+    public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
+
+        List<EnterpriseInformation> enterpriseInformations = enterpriseInformationMapper.selectAllWithoutCommittee();
+        return new ResultBean<>(enterpriseInformations);
+    }
+
+    // 获取带管委会的企业列表
+    @Override
+    public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationListWithCommittee() {
+
+        List<EnterpriseInformation> enterpriseInformationList = enterpriseInformationMapper.selectAll();
+        return new ResultBean<>(enterpriseInformationList);
     }
 }

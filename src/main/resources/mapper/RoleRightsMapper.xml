@@ -31,4 +31,21 @@
     select rr_id, rr_role_id, rr_rights_id
     from technology.role_rights
   </select>
+
+  <delete id="deleteByRoleId">
+    delete from technology.role_rights
+    where rr_role_id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertForeach">
+    insert into technology.role_rights
+    (rr_role_id, rr_rights_id)
+    VALUES
+    <foreach collection="rightsList" item="item" index="index" separator=",">
+      (
+        #{id,jdbcType=INTEGER},
+        #{item,jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
 </mapper>

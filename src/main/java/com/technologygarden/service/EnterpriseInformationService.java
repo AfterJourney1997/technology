@@ -20,4 +20,6 @@ public interface EnterpriseInformationService {
 
     ResultBean<EnterpriseInformation> getEnterpriseInformationById(Integer cId);
 
+    ResultBean<List<EnterpriseInformation>> getEnterpriseInformationListWithCommittee();
+
 }

@@ -18,10 +18,11 @@ public interface EnterpriseInformationMapper {
 
     List<EnterpriseInformation> selectAll();
 
-    Page<EnterpriseInformation> selectAllByPage();
+    Page<EnterpriseInformation> selectAllByPageWithoutCommittee();
 
     int updateByPrimaryKey(EnterpriseInformation record);
 
     int insertReturnPrimaryKey(EnterpriseInformation enterpriseInformation);
 
+    List<EnterpriseInformation> selectAllWithoutCommittee();
 }

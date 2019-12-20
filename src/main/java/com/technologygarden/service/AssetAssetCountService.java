@@ -8,7 +8,7 @@ public interface AssetAssetCountService {
 
     ResultBean<PageInfo<?>> getAssetCountByPage(Integer pageNum, Integer pageSize);
 
-    ResultBean<PageInfo<?>> searchAssetCountByPage(Integer pageNum, Integer pageSize, String companyName, String roomName);
+    ResultBean<PageInfo<?>> searchAssetCountByPage(Integer pageNum, Integer pageSize, String companyName, String roomName, Integer categoryId);
 
     ResultBean<?> deleteAssetCount(CompanyRoomDevice companyRoomDevice);
 }

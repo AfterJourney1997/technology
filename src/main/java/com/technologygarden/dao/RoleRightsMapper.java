@@ -1,6 +1,8 @@
 package com.technologygarden.dao;
 
 import com.technologygarden.entity.RoleRights;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface RoleRightsMapper {
@@ -13,4 +15,8 @@ public interface RoleRightsMapper {
     List<RoleRights> selectAll();
 
     int updateByPrimaryKey(RoleRights record);
+
+    int deleteByRoleId(Integer id);
+
+    int insertForeach(@Param("id") Integer id, @Param("rightsList") List<Integer> rightsList);
 }

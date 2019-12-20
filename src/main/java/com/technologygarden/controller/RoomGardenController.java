@@ -77,10 +77,10 @@ public class RoomGardenController {
     }
 
     @RequestMapping(value = "/garden/enterprise", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部企业信息列表", notes = "参数包括：无")
+    @ApiOperation(value = "获取全部企业信息列表包括管委会", notes = "参数包括：无")
     public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
 
-        return enterpriseInformationService.getEnterpriseInformationList();
+        return enterpriseInformationService.getEnterpriseInformationListWithCommittee();
 
     }
 

@@ -6,6 +6,7 @@
     <result column="r_perms" jdbcType="VARCHAR" property="rPerms" />
     <result column="r_url" jdbcType="VARCHAR" property="rUrl" />
     <result column="r_description" jdbcType="VARCHAR" property="rDescription" />
+    <result column="r_menu_id" jdbcType="INTEGER" property="rMenuId" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from technology.rights
@@ -13,24 +14,25 @@
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Rights">
     insert into technology.rights (r_id, r_perms, r_url, 
-      r_description)
+      r_description, r_menu_id)
     values (#{rId,jdbcType=INTEGER}, #{rPerms,jdbcType=VARCHAR}, #{rUrl,jdbcType=VARCHAR}, 
-      #{rDescription,jdbcType=VARCHAR})
+      #{rDescription,jdbcType=VARCHAR}, #{rMenuId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Rights">
     update technology.rights
     set r_perms = #{rPerms,jdbcType=VARCHAR},
       r_url = #{rUrl,jdbcType=VARCHAR},
-      r_description = #{rDescription,jdbcType=VARCHAR}
+      r_description = #{rDescription,jdbcType=VARCHAR},
+      r_menu_id = #{rMenuId,jdbcType=INTEGER}
     where r_id = #{rId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select r_id, r_perms, r_url, r_description
+    select *
     from technology.rights
     where r_id = #{rId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select r_id, r_perms, r_url, r_description
+    select *
     from technology.rights
   </select>
 

@@ -38,10 +38,10 @@ public class AssetAssetCountServiceImpl implements AssetAssetCountService {
     }
 
     @Override
-    public ResultBean<PageInfo<?>> searchAssetCountByPage(Integer pageNum, Integer pageSize, String companyName, String roomName) {
+    public ResultBean<PageInfo<?>> searchAssetCountByPage(Integer pageNum, Integer pageSize, String companyName, String roomName, Integer categoryId) {
 
         PageHelper.startPage(pageNum, pageSize);
-        Page<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.searchAssetCountByPage(companyName, roomName);
+        Page<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.searchAssetCountByPage(companyName, roomName, categoryId);
         PageInfo<?> pageInfo = new PageInfo<>(companyRoomDevices);
         return new ResultBean<>(pageInfo);
     }

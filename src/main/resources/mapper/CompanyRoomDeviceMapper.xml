@@ -181,6 +181,9 @@
       <if test="companyName != null and companyName != ''">
         and r.r_company_name like concat('%', #{companyName,jdbcType=VARCHAR}, '%')
       </if>
+      <if test="categoryId != null">
+        and d.category_id = #{categoryId,jdbcType=INTEGER}
+      </if>
     </where>
   </select>
 

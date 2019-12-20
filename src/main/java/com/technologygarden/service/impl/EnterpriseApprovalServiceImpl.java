@@ -47,7 +47,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     @Override
     public ResultBean<PageInfo<?>> getEnterpriseAccount(Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
-        Page<EnterpriseInformation> list = enterpriseInformationMapper.selectAllByPage();
+        Page<EnterpriseInformation> list = enterpriseInformationMapper.selectAllByPageWithoutCommittee();
         for(EnterpriseInformation enterprise:list){
 
             String fileNameString = enterprise.getFileName();

@@ -59,10 +59,11 @@
     c_product, file_name, c_employee, c_information, c_status
     from technology.enterprise_information
   </select>
-  <select id="selectAllByPage" resultMap="BaseResultMap">
+  <select id="selectAllByPageWithoutCommittee" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
     c_product, file_name, c_employee, c_information, c_status
     from technology.enterprise_information
+    where c_Id > 0
   </select>
 
   <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
@@ -80,4 +81,10 @@
       SELECT LAST_INSERT_ID();
     </selectKey>
   </insert>
+
+  <select id="selectAllWithoutCommittee" resultMap="BaseResultMap">
+    select *
+    from technology.enterprise_information
+    where c_Id > 0
+  </select>
 </mapper>

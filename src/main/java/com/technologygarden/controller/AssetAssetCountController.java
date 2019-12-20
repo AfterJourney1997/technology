@@ -33,10 +33,10 @@ public class AssetAssetCountController {
     }
 
     @RequestMapping(value = "/assetCount/search", method = RequestMethod.GET)
-    @ApiOperation(value = "分页搜索资产统计列表", notes = "参数包括：页数，每页数量，企业名称，房间名称")
-    public ResultBean<PageInfo<?>> searchAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String companyName, String roomName){
+    @ApiOperation(value = "分页搜索资产统计列表", notes = "参数包括：页数，每页数量，企业名称，房间名称，类别id")
+    public ResultBean<PageInfo<?>> searchAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String companyName, String roomName, Integer categoryId){
 
-        return assetAssetCountService.searchAssetCountByPage(pageNum, pageSize, companyName, roomName);
+        return assetAssetCountService.searchAssetCountByPage(pageNum, pageSize, companyName, roomName, categoryId);
 
     }
 

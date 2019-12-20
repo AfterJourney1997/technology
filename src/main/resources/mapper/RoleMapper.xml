@@ -46,4 +46,29 @@
     from technology.role
     where role.account = #{account,jdbcType=VARCHAR}
   </select>
+
+  <update id="updateDynamic" parameterType="com.technologygarden.entity.Role">
+    update technology.role
+    <set>
+      <if test="account != null and account != ''">
+        role.account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null and password != ''">
+        role.password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role.role = #{role,jdbcType=INTEGER},
+      </if>
+      <if test="infoid != null">
+        role.infoid = #{infoid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where role.id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllAdminWithoutPassword" resultMap="BaseResultMap">
+    select r.id, r.account, r.role, r.infoid
+    from technology.role r
+    where r.role = 1
+  </select>
 </mapper>

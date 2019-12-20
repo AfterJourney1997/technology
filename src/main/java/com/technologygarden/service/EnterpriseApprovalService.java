@@ -7,6 +7,8 @@ import com.technologygarden.entity.ResultBean.ResultBean;
 
 public interface EnterpriseApprovalService {
     public ResultBean insertEnterpriseAccount(String account, String enterpriseName);
+
     public ResultBean<PageInfo<?>> getEnterpriseAccount(Integer pageNum, Integer pageSize);
-    public ResultBean  operationEnterpriseAccount(Integer cId,Integer state);
+
+    public ResultBean operationEnterpriseAccount(Integer cId, Integer state);
 }

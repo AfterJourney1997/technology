@@ -5,16 +5,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Rights {
+public class Menu {
 
-    private Integer rId;
-    private String rPerms;
-    private String rUrl;
-    private String rDescription;
-    private Integer rMenuId;
+    private Integer mId;
+    private String mTitle;
+    private List<Rights> rightsList = null;
 
 }

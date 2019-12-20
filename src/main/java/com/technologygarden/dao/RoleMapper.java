@@ -1,5 +1,6 @@
 package com.technologygarden.dao;
 
+import com.github.pagehelper.Page;
 import com.technologygarden.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -22,4 +23,8 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
     Role selectByAccount(String account);
+
+    int updateDynamic(Role role);
+
+    Page<Role> selectAllAdminWithoutPassword();
 }
