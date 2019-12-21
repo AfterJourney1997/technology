@@ -26,6 +26,14 @@ spring:
       #心跳检测
       connection-test-query: select 1
 
+  # 取消tomcat限制的请求文件大小，由前端做限制
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: -1
+      max-request-size: -1
+
+
 pagehelper:
   helper-dialect: mysql
 
