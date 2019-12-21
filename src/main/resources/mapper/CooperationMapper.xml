@@ -17,6 +17,10 @@
     delete from technology.cooperation
     where Id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteCooperationBycId" parameterType="java.lang.Integer">
+    delete from technology.cooperation
+    where c_Id = #{cId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Cooperation">
     insert into technology.cooperation (Id, name, partner,
       money, major, people, 

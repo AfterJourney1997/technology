@@ -20,6 +20,10 @@ public interface EnterpriseInformationMapper {
 
     Page<EnterpriseInformation> selectAllByPageWithoutCommittee();
 
+    Page<EnterpriseInformation> getEnterpriseStatistics();
+
+    Page<EnterpriseInformation> searchEnterpriseStatistics(String search);
+
     int updateByPrimaryKey(EnterpriseInformation record);
 
     int insertReturnPrimaryKey(EnterpriseInformation enterpriseInformation);

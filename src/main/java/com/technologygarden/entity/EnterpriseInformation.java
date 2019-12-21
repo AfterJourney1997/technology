@@ -39,5 +39,6 @@ public class EnterpriseInformation {
     private LegalPerson legalPerson = null;//存放法人信息
 
     private String account;//存放企业对应账号，企业审批使用
+    private String password;//存放企业对应密码，企业统计使用
 
 }

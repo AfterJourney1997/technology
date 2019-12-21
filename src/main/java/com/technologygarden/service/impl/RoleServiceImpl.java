@@ -23,4 +23,11 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleMapper.selectByAccount(account);
         return new ResultBean<>(role);
     }
+
+    @Override
+    public ResultBean updateEnterprisePassword(Integer infoid, String newPassword) {
+        Role role=roleMapper.selectBycId(infoid);
+        role.setPassword(newPassword);
+        return new ResultBean(roleMapper.updateDynamic(role));
+    }
 }

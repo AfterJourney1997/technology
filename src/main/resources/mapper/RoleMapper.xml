@@ -12,6 +12,10 @@
     delete from technology.role
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBycId" parameterType="java.lang.Integer">
+    delete from technology.role
+    where infoid = #{cId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Role">
     insert into technology.role (id, account, password,
       role, infoid)

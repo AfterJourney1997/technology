@@ -127,7 +127,7 @@ public class FilUploadUtils {
                 return true;
             }
         } else {
-            log.info("删除单个文件" + UUName + "失败！");
+            log.info("删除单个文件" + UUName + "失败！文件不存在");
             return false;
         }
 

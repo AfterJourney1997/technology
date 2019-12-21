@@ -13,6 +13,10 @@
     delete from technology.service_application
     where Id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBycId" parameterType="java.lang.Integer">
+    delete from technology.service_application
+    where c_Id = #{cId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ServiceApplication">
     insert into technology.service_application (Id, maintain_id, date,
       status, c_Id, room_id)

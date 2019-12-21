@@ -12,6 +12,8 @@ import java.util.List;
 public interface VehicleMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBycId(Integer cId);
+
     int insert(Vehicle record);
 
     Vehicle selectByPrimaryKey(Integer id);

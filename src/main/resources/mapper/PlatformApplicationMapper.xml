@@ -13,6 +13,10 @@
     delete from technology.platform_application
     where p_Id = #{pId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBycId" parameterType="java.lang.Integer">
+    delete from technology.platform_application
+    where c_Id = #{cId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.PlatformApplication">
     insert into technology.platform_application (p_Id, p_name, p_category,
       p_grade, c_Id, status

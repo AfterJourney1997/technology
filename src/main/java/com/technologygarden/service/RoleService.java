@@ -6,5 +6,6 @@ import com.technologygarden.entity.Role;
 public interface RoleService {
 
     ResultBean<Role> getRoleByAccount(String account);
+    ResultBean updateEnterprisePassword( Integer infoid, String newPassword);
 
 }

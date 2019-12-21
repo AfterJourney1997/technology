@@ -13,6 +13,10 @@
     delete from technology.opinion
     where Id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteBycId" parameterType="java.lang.Integer">
+    delete from technology.opinion
+    where c_Id = #{cId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Opinion">
     insert into technology.opinion (Id, opinion, status,
       c_Id, datetime, room_Id)

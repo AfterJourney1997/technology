@@ -7,6 +7,8 @@ import java.util.List;
 public interface ChargeMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteChargeBycId(Integer cId);
+
     int insert(Charge record);
 
     Charge selectByPrimaryKey(Integer id);

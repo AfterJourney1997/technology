@@ -11,6 +11,8 @@ import java.util.List;
 public interface ServiceApplicationMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBycId(Integer cId);
+
     int insert(ServiceApplication record);
 
     ServiceApplication selectByPrimaryKey(Integer id);

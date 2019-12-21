@@ -12,6 +12,8 @@ import java.util.List;
 public interface CooperationMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteCooperationBycId(Integer cId);
+
     int insert(Cooperation record);
 
     Cooperation selectByPrimaryKey(Integer id);

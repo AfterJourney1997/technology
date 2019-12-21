@@ -12,6 +12,8 @@ import java.util.List;
 public interface OpinionMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBycId(Integer cId);
+
     int insert(Opinion record);
 
     Opinion selectByPrimaryKey(Integer id);

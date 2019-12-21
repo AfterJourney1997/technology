@@ -16,6 +16,10 @@
     delete from technology.declare_award
     where d_Id = #{dId,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteDeclareAwardBycId" parameterType="java.lang.Integer">
+    delete from technology.declare_award
+    where c_Id = #{cId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.DeclareAward">
     insert into technology.declare_award (d_Id, d_name, a_id,
       filename, d_status, c_Id,datetime,d_grade,d_rank

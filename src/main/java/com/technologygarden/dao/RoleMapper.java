@@ -12,6 +12,8 @@ import java.util.List;
 public interface RoleMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBycId(Integer cId);
+
     int insert(Role record);
 
     Role selectByPrimaryKey(Integer id);

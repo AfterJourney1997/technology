@@ -16,6 +16,10 @@
     delete from technology.charge
     where Id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteChargeBycId" parameterType="java.lang.Integer">
+    delete from technology.charge
+    where cId = #{cId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Charge">
     insert into technology.charge (Id, start_time, end_time,
       cId, roomId, cost_sort, 

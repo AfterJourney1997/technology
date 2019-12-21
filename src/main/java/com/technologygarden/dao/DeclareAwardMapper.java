@@ -13,6 +13,8 @@ import java.util.List;
 public interface DeclareAwardMapper {
     int deleteByPrimaryKey(Integer dId);
 
+    int deleteDeclareAwardBycId(Integer cId);
+
     int insert(DeclareAward record);
 
     DeclareAward selectByPrimaryKey(Integer dId);

@@ -11,6 +11,8 @@ import java.util.List;
 public interface PlatformApplicationMapper {
     int deleteByPrimaryKey(Integer pId);
 
+    int deleteBycId(Integer cId);
+
     int insert(PlatformApplication record);
 
     PlatformApplication selectByPrimaryKey(Integer pId);
