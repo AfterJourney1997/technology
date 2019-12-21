@@ -1,6 +1,5 @@
 package com.technologygarden.controller;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.PlatformApplication;

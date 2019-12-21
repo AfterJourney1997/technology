@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.GardenInstitutionMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.GardenInstitution">
+    <id column="gi_id" jdbcType="INTEGER" property="giId" />
+    <result column="gi_title" jdbcType="VARCHAR" property="giTitle" />
+    <result column="gi_time" jdbcType="DATE" property="giTime" />
+    <result column="gi_kind" jdbcType="INTEGER" property="giKind" />
+    <result column="gi_file" jdbcType="VARCHAR" property="giFile" />
+    <result column="gi_content" jdbcType="LONGVARCHAR" property="giContent" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.garden_institution
+    where gi_id = #{giId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.GardenInstitution">
+    insert into technology.garden_institution (gi_title, gi_time,
+      gi_kind, gi_file, gi_content
+      )
+    values (#{giTitle,jdbcType=VARCHAR}, #{giTime,jdbcType=DATE},
+      #{giKind,jdbcType=INTEGER}, #{giFile,jdbcType=VARCHAR}, #{giContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.GardenInstitution">
+    update technology.garden_institution
+    set gi_title = #{giTitle,jdbcType=VARCHAR},
+      gi_time = #{giTime,jdbcType=DATE},
+      gi_kind = #{giKind,jdbcType=INTEGER},
+      gi_file = #{giFile,jdbcType=VARCHAR},
+      gi_content = #{giContent,jdbcType=LONGVARCHAR}
+    where gi_id = #{giId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select gi_id, gi_title, gi_time, gi_kind, gi_file, gi_content
+    from technology.garden_institution
+    where gi_id = #{giId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select gi_id, gi_title, gi_time, gi_kind, gi_file, gi_content
+    from technology.garden_institution
+  </select>
+  <select id="selectAllByPage" resultMap="BaseResultMap">
+    select *
+    from technology.garden_institution
+  </select>
+  
+  <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.GardenInstitution">
+    update technology.garden_institution
+    <set>
+      <if test="giTitle != null and giTitle != ''">
+        gi_title = #{giTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="giTime != null">
+        gi_time = #{giTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="giKind != null">
+        gi_kind = #{giKind,jdbcType=INTEGER},
+      </if>
+      <if test="giContent != null and giContent != ''">
+        gi_content = #{giContent,jdbcType=VARCHAR},
+      </if>
+      <if test="giFile != null and giFile != ''">
+        gi_file = #{giFile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gi_id = #{giId,jdbcType=INTEGER}
+  </update>
+  <select id="searchGardenInstitutionByPage" resultMap="BaseResultMap">
+    select *
+    from technology.garden_institution
+    <where>
+      <if test="institutionTitle != null and institutionTitle != ''">
+        and gi_title like concat('%', #{institutionTitle,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="kindId != null">
+        and gi_kind = #{kindId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+</mapper>
