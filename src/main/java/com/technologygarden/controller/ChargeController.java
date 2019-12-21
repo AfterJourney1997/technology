@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -56,7 +57,8 @@ public class ChargeController {
     }
     @RequestMapping(value = "/charge/pay", method = RequestMethod.PUT)
     @ApiOperation(value = "缴纳相关收费", notes = "参数包括：缴费对象的id")
-    public ResultBean payCharge(Integer id){
+    public ResultBean payCharge(@RequestBody Map<String,String> map){
+        Integer id=Integer.parseInt(map.get("id"));
         return chargeService.payCharge(id);
     }
 }

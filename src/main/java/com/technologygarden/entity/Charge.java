@@ -26,7 +26,7 @@ public class Charge {
 
     private Double charge;
 
-    private Integer status;
+    private int status;
 
     private String notes;
 
