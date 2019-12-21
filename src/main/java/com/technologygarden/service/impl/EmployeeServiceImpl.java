@@ -90,6 +90,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ResultBean updateEmployee(MultipartFile blFile[], Employee employee) throws IOException {
+        //删除原来的文件
+        String fileNameString= employee.getFileName();
+        if(!StringUtils.isEmpty(fileNameString)){
+            String fileNameArray []=fileNameString.split("/");
+            for(int i=0;i<fileNameArray.length;i++) {
+                FilUploadUtils.deleteFile(fileNameArray[i]);
+            }
+        }
+
+
         String []fileNameList=new String[blFile.length];
         String UUName;
         int i=0;
@@ -108,10 +118,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public ResultBean deleteEmployee(Integer eId) throws IOException {
         Employee employee=employeeMapper.selectByPrimaryKey(eId);
+        //删除文件
         String fileNameString= employee.getFileName();
-        String fileNameArray []=fileNameString.split("/");
-        for(int i=0;i<fileNameArray.length;i++) {
-            FilUploadUtils.deleteFile(fileNameArray[i]);
+        if(!StringUtils.isEmpty(fileNameString)){
+            String fileNameArray []=fileNameString.split("/");
+            for(int i=0;i<fileNameArray.length;i++) {
+                FilUploadUtils.deleteFile(fileNameArray[i]);
+            }
         }
         return new ResultBean(employeeMapper.deleteByPrimaryKey(eId));
     }

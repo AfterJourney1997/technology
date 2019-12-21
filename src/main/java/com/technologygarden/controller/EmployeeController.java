@@ -44,7 +44,7 @@ public class EmployeeController {
         return employeeService.insertEmployee(blFile,employee1);
     }
     @RequestMapping(value = "/manage", method = RequestMethod.PUT)
-    @ApiOperation(value = "员工信息修改", notes = "参数包括：员工对象employee,政治面貌和学位传对应的Id")
+    @ApiOperation(value = "员工信息修改", notes = "参数包括：修改后的文件,员工对象employee,政治面貌和学位传对应的Id")
     public ResultBean updateEmployee(MultipartFile[] blFile,String employee) throws IOException {
         Employee employee1 =JSONArray.parseObject(employee,Employee.class);
         return employeeService.updateEmployee(blFile,employee1);
