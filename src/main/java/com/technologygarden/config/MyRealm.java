@@ -41,26 +41,27 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthorizationException("鉴权的参数不能为空！");
         }
 
-        Role role = (Role)getAvailablePrincipal(principalCollection);
+        Role role = (Role) getAvailablePrincipal(principalCollection);
+        log.info("shiro realm 鉴权 ---> " + role);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         // role为1该账户为管理员，需将权限列表放入SimpleAuthorizationInfo中
-        if(role.getRole() == 1){
+        if (role.getRole() == 1) {
 
             Set<String> rightsSet = role.getRightsList().stream().map(Rights::getRPerms).collect(Collectors.toSet());
             info.setStringPermissions(rightsSet);
         }
 
         // role为2该账户为企业，需获取企业信息判断该企业是否审批通过
-        if(role.getRole() == 2){
+        if (role.getRole() == 2) {
 
             Set<String> roleSet = new LinkedHashSet<>();
             EnterpriseInformation companyInfo = role.getEnterpriseInformation();
 
             // 企业状态0为未申请，1为已申请，2为已审批，3为拒绝审批
-            if(companyInfo.getCStatus() == 2){
+            if (companyInfo.getCStatus() == 2) {
                 roleSet.add("companyAgreed");
-            }else {
+            } else {
                 roleSet.add("companyNoAgreed");
             }
             info.setRoles(roleSet);
@@ -73,7 +74,7 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
-        UsernamePasswordToken upToken = (UsernamePasswordToken)authenticationToken;
+        UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String username = upToken.getUsername();
 
         // 获取的用户名判空
@@ -86,21 +87,25 @@ public class MyRealm extends AuthorizingRealm {
         ResultBean<Role> roleResultBean = roleService.getRoleByAccount(username);
         Role role = roleResultBean.getData();
 
-        if(role == null){
+        if (role == null) {
             log.info(username + "：该账号不存在。");
             throw new UnknownAccountException(username + "：该账号不存在。");
         }
 
         // role为1该账户为管理员，需获取其权限列表
-        if(role.getRole() == 1){
+        if (role.getRole() == 1) {
             ResultBean<List<Rights>> rightsList = rightsService.getRightsByRoleId(role.getId());
             role.setRightsList(rightsList.getData());
+            log.info("[" + role.getAccount() + "] 管理员登录 ---> " + role);
+            log.info("[" + role.getAccount() + "] 管理员登录，获取对应权限 ---> " + rightsList.getData());
         }
 
         // role为2该账户为企业，需获取该企业信息
-        if(role.getRole() == 2){
+        if (role.getRole() == 2) {
             ResultBean<EnterpriseInformation> companyInfo = enterpriseInformationService.getEnterpriseInformationById(role.getInfoid());
             role.setEnterpriseInformation(companyInfo.getData());
+            log.info("[" + role.getAccount() + "] 企业登录 ---> " + role);
+            log.info("[" + role.getAccount() + "] 企业登录，获取对应信息 ---> " + companyInfo.getData());
         }
 
         return new SimpleAuthenticationInfo(role, role.getPassword(), getName());

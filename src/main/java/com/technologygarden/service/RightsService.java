@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RightsService {
 
-    public ResultBean<List<Rights>> getRightsByRoleId(Integer roleId);
+    ResultBean<List<Rights>> getRightsByRoleId(Integer roleId);
 
 }

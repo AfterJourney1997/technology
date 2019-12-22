@@ -26,12 +26,10 @@ import java.util.stream.Collectors;
 public class LoginServiceImpl implements LoginService {
 
     private final RoleMapper roleMapper;
-    private final EnterpriseInformationMapper enterpriseInformationMapper;
 
     @Autowired
-    public LoginServiceImpl(RoleMapper roleMapper, EnterpriseInformationMapper enterpriseInformationMapper) {
+    public LoginServiceImpl(RoleMapper roleMapper) {
         this.roleMapper = roleMapper;
-        this.enterpriseInformationMapper = enterpriseInformationMapper;
     }
 
     @Override
@@ -56,6 +54,9 @@ public class LoginServiceImpl implements LoginService {
             log.error("登录错误：" + e.getMessage());
             return new ResultBean<>(ResultStatus.PARAMETER_ERROR);
         }
+
+        // 登录成功后重新获取携带信息的subject
+        subject = SecurityUtils.getSubject();
 
         JSONObject jsonObject = packageRoleInfo(subject);
 
@@ -90,38 +91,44 @@ public class LoginServiceImpl implements LoginService {
     // 封装登录账户的role信息
     private JSONObject packageRoleInfo(Subject subject){
 
-        // role信息需返回前端，这里清除不必要数据
-        Role role = (Role) subject.getPrincipal();
-        role.setPassword(null);
-        role.setRightsList(null);
+        Role roleSubject = (Role) subject.getPrincipal();
+
+        // 直接使用subject中的role对象会影响到subject中的信息
+        Role role = Role.builder()
+                .id(roleSubject.getId())
+                .account(roleSubject.getAccount())
+                .role(roleSubject.getRole())
+                .infoid(roleSubject.getInfoid())
+                .build();
+
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("sessionId", subject.getSession().getId());
-        jsonObject.put("account", role);
 
         // role为1该账户为管理员，向前端传对应的权限列表
-        if(role.getRole() == 1){
+        if(roleSubject.getRole() == 1){
             jsonObject.put("role", "admin");
-            jsonObject.put("rights", role.getRightsList()
+            jsonObject.put("rights", roleSubject.getRightsList()
                     .stream()
                     .map(Rights::getRPerms)
                     .collect(Collectors.toSet()));
         }
 
         // role为2该账户为企业，向前端传对应角色信息和企业信息
-        if(role.getRole() == 2){
+        if(roleSubject.getRole() == 2){
 
-            EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(role.getInfoid());
-            jsonObject.put("company", enterpriseInformation);
+            jsonObject.put("company", roleSubject.getEnterpriseInformation());
 
             // status为2该企业通过审批，角色为companyAgreed，否则角色为companyNoAgreed
-            if(role.getEnterpriseInformation().getCStatus() == 2){
+            if(roleSubject.getEnterpriseInformation().getCStatus() == 2){
                 jsonObject.put("role", "companyAgreed");
             }else {
                 jsonObject.put("role", "companyNoAgreed");
             }
 
         }
+
+        jsonObject.put("sessionId", subject.getSession().getId());
+        jsonObject.put("account", role);
 
         return jsonObject;
     }

@@ -1,17 +1,30 @@
 package com.technologygarden.config;
 
+import com.technologygarden.dao.RightsMapper;
+import com.technologygarden.entity.Rights;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Configuration
 public class ShiroConfig {
+
+    private final RightsMapper rightsMapper;
+
+    @Autowired
+    public ShiroConfig(RightsMapper rightsMapper) {
+        this.rightsMapper = rightsMapper;
+    }
 
     // 注入自定义的realm，告诉shiro如何获取用户信息来做登录或权限控制
     @Bean
@@ -35,64 +48,52 @@ public class ShiroConfig {
 
     @Bean
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+
+        List<Rights> rightsList = rightsMapper.selectAll();
+
+        // 获取管理员的权限列表
+        Map<String, String> rights = rightsList.stream().collect(Collectors.toMap(Rights::getRUrl, (e) -> "perms[" + e.getRPerms() + "]"));
+        log.info("shiro配置初始化，获取管理员权限成功 ---> " + rights);
+
         DefaultShiroFilterChainDefinition chain = new DefaultShiroFilterChainDefinition();
+
         //哪些请求可以匿名访问
-        chain.addPathDefinition("/login", "anon");
-        chain.addPathDefinition("/page/401", "anon");
-        chain.addPathDefinition("/page/403", "anon");
+        rights.put("/login", "anon");
+        rights.put("/page/401", "anon");
+        rights.put("/page/403", "anon");
 
         // swagger权限
-        chain.addPathDefinition("/swagger-ui.html", "anon");
-        chain.addPathDefinition("/webjars/**", "anon");
-        chain.addPathDefinition("/v2/**", "anon");
-        chain.addPathDefinition("/swagger-resources/**", "anon");
-        chain.addPathDefinition("/v2/api-docs", "anon");
-        chain.addPathDefinition("/webjars/springfox-swagger-ui/**", "anon");
-
-        // 管理员权限拦截
-        Map<String, String> adminMap = new LinkedHashMap<>();
-        adminMap.put("/room/garden/**", "perms[/room/garden]");
-        adminMap.put("/room/company/**", "perms[/room/company]");
-        adminMap.put("/asset/building/**", "perms[/asset/building]");
-        adminMap.put("/asset/furniture/**", "perms[/asset/furniture]");
-        adminMap.put("/asset/assetCount/**", "perms[/asset/assetCount]");
-        adminMap.put("/service/policyRelated/**", "perms[/service/policyRelated]");
-        adminMap.put("/service/conditionEnter/**", "perms[/service/conditionEnter]");
-        adminMap.put("/Approval/**", "perms[/Approval]");
-        adminMap.put("/service/activityIncubation/**", "perms[/service/activityIncubation]");
-        adminMap.put("/consociation/**", "perms[/consociation]");
-        adminMap.put("/notice/**", "perms[/notice]");
-        adminMap.put("/system/activityCategory/**", "perms[/system/activityCategory]");
-        adminMap.put("/system/jobTitle/**", "perms[/system/jobTitle]");
-        adminMap.put("/system/propertyDevice/**", "perms[/system/propertyDevice]");
-        adminMap.put("/politicsStatus/manage/**", "perms[/politicsStatus/manage]");
-        //
+        rights.put("/swagger-ui.html", "anon");
+        rights.put("/webjars/**", "anon");
+        rights.put("/v2/**", "anon");
+        rights.put("/swagger-resources/**", "anon");
+        rights.put("/v2/api-docs", "anon");
+        rights.put("/webjars/springfox-swagger-ui/**", "anon");
 
         // 企业权限拦截
-        adminMap.put("/enterprise/company/**", "roles[companyNoAgreed]");
+        rights.put("/enterprise/company/**", "roles[companyNoAgreed]");
         // 平台申请
-        adminMap.put("/application/plaform/**", "roles[companyAgreed]");
+        rights.put("/application/plaform/**", "roles[companyAgreed]");
         // 企业信息
-        adminMap.put("/enterprise/information/**", "roles[companyAgreed]");
+        rights.put("/enterprise/information/**", "roles[companyAgreed]");
         // 房间信息
-        adminMap.put("/enterprise/roomInfo/**", "roles[companyAgreed]");
+        rights.put("/enterprise/roomInfo/**", "roles[companyAgreed]");
         // 员工管理
-        adminMap.put("/emloyee/manage/**", "roles[companyAgreed]");
+        rights.put("/emloyee/manage/**", "roles[companyAgreed]");
         // 奖项申报
-        adminMap.put("/declareAward/manage/**", "roles[companyAgreed]");
+        rights.put("/declareAward/manage/**", "roles[companyAgreed]");
         // 意见反馈
-        adminMap.put("/opinion/manage/**", "roles[companyAgreed]");
+        rights.put("/opinion/manage/**", "roles[companyAgreed]");
         // 服务申报
-        adminMap.put("/seviceApplicaiton/manage/**", "roles[companyAgreed]");
+        rights.put("/seviceApplicaiton/manage/**", "roles[companyAgreed]");
         // 校企合作
-        adminMap.put("/coperation/manage/**", "roles[companyAgreed]");
-
+        rights.put("/coperation/manage/**", "roles[companyAgreed]");
 
         // 退出
-        adminMap.put("/logout", "logout");
+        rights.put("/logout", "logout");
 
         // 项目权限配置
-        chain.addPathDefinitions(adminMap);
+        chain.addPathDefinitions(rights);
 
         //除了以上的请求外，其它请求都需要登录
         chain.addPathDefinition("/**", "authc");
