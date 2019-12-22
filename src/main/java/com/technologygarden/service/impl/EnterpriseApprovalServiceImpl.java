@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.*;
 import com.technologygarden.entity.*;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.service.AssetAssetCountService;
 import com.technologygarden.service.DeclareAwardService;
 import com.technologygarden.service.EmployeeService;
 import com.technologygarden.service.EnterpriseApprovalService;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Service("EnterpriseApprovalService")
 public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService {
+
     private final RoleMapper roleMapper;
     private final LegalPersonMapper legalPersonMapper;
     private final EnterpriseInformationMapper enterpriseInformationMapper;
@@ -34,6 +36,10 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     private final PlatformApplicationMapper platformApplicationMapper;
     private final ServiceApplicationMapper serviceApplicationMapper;
     private final VehicleMapper vehicleMapper;
+    private final RoomMapper roomMapper;
+    private final CompanyRoomDeviceMapper companyRoomDeviceMapper;
+    private final AssetAssetCountService assetAssetCountService;
+    private final PowerLoadMapper powerLoadMapper;
 
     @Autowired
     public EnterpriseApprovalServiceImpl(RoleMapper roleMapper, LegalPersonMapper legalPersonMapper,
@@ -42,7 +48,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
                                          DeclareAwardMapper declareAwardMapper, DeclareAwardService declareAwardService,
                                          EmployeeMapper employeeMapper, EmployeeService employeeService,
                                          OpinionMapper opinionMapper, PlatformApplicationMapper platformApplicationMapper,
-                                         ServiceApplicationMapper serviceApplicationMapper, VehicleMapper vehicleMapper) {
+                                         ServiceApplicationMapper serviceApplicationMapper, VehicleMapper vehicleMapper, RoomMapper roomMapper, CompanyRoomDeviceMapper companyRoomDeviceMapper, AssetAssetCountService assetAssetCountService, PowerLoadMapper powerLoadMapper) {
         this.roleMapper = roleMapper;
         this.legalPersonMapper = legalPersonMapper;
         this.enterpriseInformationMapper = enterpriseInformationMapper;
@@ -56,10 +62,14 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         this.platformApplicationMapper = platformApplicationMapper;
         this.serviceApplicationMapper = serviceApplicationMapper;
         this.vehicleMapper = vehicleMapper;
+        this.roomMapper = roomMapper;
+        this.companyRoomDeviceMapper = companyRoomDeviceMapper;
+        this.assetAssetCountService = assetAssetCountService;
+        this.powerLoadMapper = powerLoadMapper;
     }
 
     @Override
-    public ResultBean insertEnterpriseAccount(String account, String enterpriseName) {
+    public ResultBean<?> insertEnterpriseAccount(String account, String enterpriseName) {
         EnterpriseInformation enterpriseInformation = new EnterpriseInformation();
         enterpriseInformation.setCName(enterpriseName);
         enterpriseInformationMapper.insertReturnPrimaryKey(enterpriseInformation);
@@ -69,7 +79,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         role.setPassword("123456");//设置默认密码
         role.setInfoid(enterpriseInformation.getCId());
         roleMapper.insert(role);
-        return new ResultBean();
+        return new ResultBean<>();
     }
 
     @Override
@@ -83,10 +93,10 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
                 String fileNameArray[] = fileNameString.split("/");
                 List<String> fileNameList = new ArrayList<>();
                 List<String> filePathList = new ArrayList<>();
-                for (int i = 0; i < fileNameArray.length; i++) {
+                for (String s : fileNameArray) {
 
-                    filePathList.add(FilUploadUtils.getImageShowPath() + fileNameArray[i]);
-                    fileNameList.add(fileNameArray[i]);//存放带UUID的图片名
+                    filePathList.add(FilUploadUtils.getImageShowPath() + s);
+                    fileNameList.add(s);//存放带UUID的图片名
                     enterprise.setFilePathName(fileNameList);
                     enterprise.setFilePathList(filePathList);
                 }
@@ -108,11 +118,11 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean operationEnterpriseAccount(Integer cId, Integer state) {
+    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state) {
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
         enterpriseInformation.setCStatus(state);
         enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation);
-        return new ResultBean(enterpriseInformation);
+        return new ResultBean<>(enterpriseInformation);
     }
 
     @Override
@@ -123,13 +133,13 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
 
             String fileNameString = enterprise.getFileName();
             if (!StringUtil.empty(fileNameString)) {
-                String fileNameArray[] = fileNameString.split("/");
+                String[] fileNameArray = fileNameString.split("/");
                 List<String> fileNameList = new ArrayList<>();
                 List<String> filePathList = new ArrayList<>();
-                for (int i = 0; i < fileNameArray.length; i++) {
+                for (String s : fileNameArray) {
 
-                    filePathList.add(FilUploadUtils.getImageShowPath() + fileNameArray[i]);
-                    fileNameList.add(fileNameArray[i]);//存放带UUID的图片名
+                    filePathList.add(FilUploadUtils.getImageShowPath() + s);
+                    fileNameList.add(s);//存放带UUID的图片名
                     enterprise.setFilePathName(fileNameList);
                     enterprise.setFilePathList(filePathList);
                 }
@@ -160,7 +170,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
 
             String fileNameString = enterprise.getFileName();
             if (!StringUtil.empty(fileNameString)) {
-                String fileNameArray[] = fileNameString.split("/");
+                String[] fileNameArray = fileNameString.split("/");
                 List<String> fileNameList = new ArrayList<>();
                 List<String> filePathList = new ArrayList<>();
                 for (int i = 0; i < fileNameArray.length; i++) {
@@ -191,7 +201,10 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
 
     //删除企业
     @Override
-    public ResultBean deleteEnterprise(Integer cId) throws IOException {
+    public ResultBean<?> deleteEnterprise(Integer cId) throws IOException {
+
+        EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
+
         //删除相关收费表
         chargeMapper.deleteChargeBycId(cId);
         //删除校企合作表
@@ -215,23 +228,29 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         //删除车辆信息表
         vehicleMapper.deleteBycId(cId);
 
+        // 清空该企业的入驻房间信息，重置房间状态
+        roomMapper.emptyCompanyInfoByCId(cId);
 
+        // 回收分配到该企业资产
+        List<CompanyRoomDevice> companyRoomDeviceList = companyRoomDeviceMapper.selectByCompanyId(cId);
+        for (CompanyRoomDevice companyRoomDevice : companyRoomDeviceList) {
+            assetAssetCountService.deleteAssetCount(companyRoomDevice);
+        }
 
+        // 删除用电负荷表中相关信息
+        powerLoadMapper.deletePowerLoadByCompanyId(cId);
 
-
-
-
-
+        // 删除企业法人
+        legalPersonMapper.deleteByPrimaryKey(enterpriseInformation.getCLegalperson());
 
 
 
         //删除企业信息表
-        EnterpriseInformation enterpriseInformation=enterpriseInformationMapper.selectByPrimaryKey(cId);
-        String fileNameString= enterpriseInformation.getFileName();
-        if(!StringUtils.isEmpty(fileNameString)){
-            String fileNameArray []=fileNameString.split("/");
-            for(int i=0;i<fileNameArray.length;i++) {
-                FilUploadUtils.deleteFile(fileNameArray[i]);
+        String fileNameString = enterpriseInformation.getFileName();
+        if (!StringUtils.isEmpty(fileNameString)) {
+            String[] fileNameArray = fileNameString.split("/");
+            for (String s : fileNameArray) {
+                FilUploadUtils.deleteFile(s);
             }
         }
         enterpriseInformationMapper.deleteByPrimaryKey(cId);
@@ -239,6 +258,6 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         roleMapper.deleteBycId(cId);
 
 
-        return new ResultBean();
+        return new ResultBean<>();
     }
 }

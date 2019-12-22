@@ -1,6 +1,5 @@
 package com.technologygarden.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Building;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -12,11 +11,11 @@ public interface AssetBuildingService {
 
     ResultBean<PageInfo<?>> getBuildingByPage(Integer pageNum, Integer pageSize);
 
-    ResultBean insertBuildingForeach(List<Building> buildingList);
+    ResultBean<?> insertBuildingForeach(List<Building> buildingList);
 
-    ResultBean deleteBuildingById(Integer buildingId);
+    ResultBean<?> deleteBuildingById(Integer buildingId);
 
-    ResultBean updateBuildingById(Building building);
+    ResultBean<?> updateBuildingById(Building building);
 
     ResultBean<PageInfo<?>> searchBuildingByName(Integer pageNum, Integer pageSize, String buildingName);
 

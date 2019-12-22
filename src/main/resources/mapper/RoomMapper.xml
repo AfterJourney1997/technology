@@ -192,4 +192,15 @@
     where room.r_status = #{status,jdbcType=INTEGER}
   </select>
 
+  <update id="emptyCompanyInfoByCId">
+    update technology.room
+    set
+    room.r_status = null,
+    room.r_company_id = null,
+    room.r_company_name = null,
+    room.r_owner = null,
+    room.r_owning_time = null
+    where room.r_company_id = #{cId,jdbcType=INTEGER}
+  </update>
+
 </mapper>

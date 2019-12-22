@@ -29,4 +29,6 @@ public interface CompanyRoomDeviceMapper {
 
     Page<CompanyRoomDevice> selectWithInfoPageByRoomId(@Param("roomId") Integer roomId);
 
+    List<CompanyRoomDevice> selectByCompanyId(@Param("companyId") Integer companyId);
+
 }

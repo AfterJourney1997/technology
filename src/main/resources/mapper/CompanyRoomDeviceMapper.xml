@@ -223,5 +223,11 @@
       </where>
   </select>
 
+  <select id="selectByCompanyId" resultMap="BaseResultMap">
+    select *
+    from technology.company_room_device
+    where crd_company_id = #{companyId,jdbcType=INTEGER}
+  </select>
+
 
 </mapper>

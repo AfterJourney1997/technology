@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.technologygarden.dao.PowerLoadMapper">
+  <resultMap id="BaseResultMap" type="com.technologygarden.entity.PowerLoad">
+    <id column="pl_id" jdbcType="INTEGER" property="plId" />
+    <result column="pl_room_id" jdbcType="INTEGER" property="plRoomId" />
+    <result column="pl_company_id" jdbcType="INTEGER" property="plCompanyId" />
+    <result column="pl_power" jdbcType="REAL" property="plPower" />
+    <result column="pl_start_time" jdbcType="DATE" property="plStartTime" />
+    <result column="pl_end_time" jdbcType="DATE" property="plEndTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from technology.power_load
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.technologygarden.entity.PowerLoad">
+    insert into technology.power_load (pl_room_id, pl_company_id, pl_power,
+      pl_start_time, pl_end_time)
+    values (#{plRoomId,jdbcType=INTEGER}, #{plCompanyId,jdbcType=INTEGER}, #{plPower,jdbcType=REAL},
+      #{plStartTime,jdbcType=DATE}, #{plEndTime,jdbcType=DATE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PowerLoad">
+    update technology.power_load
+    set pl_room_id = #{plRoomId,jdbcType=INTEGER},
+      pl_company_id = #{plCompanyId,jdbcType=INTEGER},
+      pl_power = #{plPower,jdbcType=REAL},
+      pl_start_time = #{plStartTime,jdbcType=DATE},
+      pl_end_time = #{plEndTime,jdbcType=DATE}
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from technology.power_load
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from technology.power_load
+  </select>
+
+  <select id="selectAllWithRoomInfoByPage" resultMap="PowerLoadWithRoomInfo">
+    select pl.*, r.r_id, r.r_name, b.id, b.name
+    from technology.power_load pl, technology.room r, technology.building b
+    where pl.pl_room_id = r.r_id and r.r_building_id = b.id
+  </select>
+  <resultMap id="PowerLoadWithRoomInfo" type="com.technologygarden.entity.PowerLoad">
+    <id column="pl_id" jdbcType="INTEGER" property="plId" />
+    <result column="pl_room_id" jdbcType="INTEGER" property="plRoomId" />
+    <result column="pl_company_id" jdbcType="INTEGER" property="plCompanyId" />
+    <result column="pl_power" jdbcType="REAL" property="plPower" />
+    <result column="pl_start_time" jdbcType="DATE" property="plStartTime" />
+    <result column="pl_end_time" jdbcType="DATE" property="plEndTime" />
+    <association property="room" javaType="com.technologygarden.entity.Room">
+      <id column="r_id" jdbcType="INTEGER" property="rId" />
+      <result column="r_name" jdbcType="VARCHAR" property="rName" />
+      <association property="building" javaType="com.technologygarden.entity.Building">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="buildingName" />
+      </association>
+    </association>
+  </resultMap>
+
+  <update id="updateDynamicById" parameterType="com.technologygarden.entity.PowerLoad">
+    update technology.power_load
+    <set>
+      <if test="plRoomId != null">
+        pl_room_id = #{plRoomId,jdbcType=INTEGER},
+      </if>
+      <if test="plCompanyId != null">
+        pl_company_id = #{plCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="plPower != null">
+        pl_power = #{plPower,jdbcType=FLOAT},
+      </if>
+      <if test="plStartTime != null">
+        pl_start_time = #{plStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plEndTime != null">
+        pl_end_time = #{plEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pl_id = #{plId,jdbcType=INTEGER}
+  </update>
+
+  <select id="searchPowerLoadWithRoomInfoByPage" resultMap="PowerLoadWithRoomInfo">
+    select pl.*, r.r_id, r.r_name, b.id, b.name
+    from technology.power_load pl, technology.room r, technology.building b
+    <where>
+      and pl.pl_room_id = r.r_id
+      and r.r_building_id = b.id
+      <if test="roomId != null">
+        and pl.pl_room_id = #{roomId,jdbcType=INTEGER}
+      </if>
+      <if test="buildingId != null">
+        and r.r_building_id = #{buildingId,jdbcType=INTEGER}
+      </if>
+      <if test="companyName != null and companyName != ''">
+        and r.r_company_name like concat('%', #{companyName,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+
+  <delete id="deletePowerLoadByCompanyId">
+    delete from technology.power_load
+    where pl_company_id = #{companyId,jdbcType=INTEGER}
+  </delete>
+
+</mapper>

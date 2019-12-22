@@ -8,6 +8,7 @@ import com.technologygarden.dao.DeviceMapper;
 import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.Device;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.AssetAssetCountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,11 @@ public class AssetAssetCountServiceImpl implements AssetAssetCountService {
     @Override
     @Transactional
     public ResultBean<?> deleteAssetCount(CompanyRoomDevice companyRoomDevice) {
+
+        if (companyRoomDevice.getCrdId() == null || companyRoomDevice.getCrdDeviceId() == null || companyRoomDevice.getCrdNumber() == null) {
+            log.warn("资产统计 回收资产参数缺失 ---> " + companyRoomDevice);
+            return new ResultBean<>(ResultStatus.PARAMETER_MISSING_ERROR);
+        }
 
         // 首先删除资产分配表中数据
         companyRoomDeviceMapper.deleteByPrimaryKey(companyRoomDevice.getCrdId());
