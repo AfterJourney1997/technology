@@ -9,9 +9,13 @@ public interface SystemAccountService {
 
     ResultBean<?> getAllMenuWithRights();
 
-    ResultBean<?> getAllRole(@NonNull Integer pageNum, @NonNull Integer pageSize);
+    ResultBean<?> getAllAdmin(@NonNull Integer pageNum, @NonNull Integer pageSize);
 
     ResultBean<?> distributeRightsToAccount(Integer id, List<Integer> rightsList);
 
     ResultBean<?> updateAdminPassword(Integer id, String newPassword);
+
+    ResultBean<?> insertAdmin(String account);
+
+    ResultBean<?> deleteAdmin(Integer id);
 }

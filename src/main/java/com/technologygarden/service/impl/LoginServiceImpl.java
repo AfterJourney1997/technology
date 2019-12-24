@@ -19,6 +19,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -105,25 +107,33 @@ public class LoginServiceImpl implements LoginService {
         JSONObject jsonObject = new JSONObject();
 
         // role为1该账户为管理员，向前端传对应的权限列表
+        // role字段的值须为数组，前端根据此数组的length判别账号身份，length > 1即为管理员
+        // 为了保证不出问题，在数组中添加2个空string
         if(roleSubject.getRole() == 1){
-            jsonObject.put("role", "admin");
-            jsonObject.put("rights", roleSubject.getRightsList()
-                    .stream()
-                    .map(Rights::getRPerms)
-                    .collect(Collectors.toSet()));
+            List<String> rightsList = roleSubject.getRightsList()
+                                                    .stream()
+                                                    .map(Rights::getRPerms)
+                                                    .collect(Collectors.toList());
+
+            rightsList.add("");
+            rightsList.add("");
+            jsonObject.put("role", rightsList);
+
         }
 
         // role为2该账户为企业，向前端传对应角色信息和企业信息
         if(roleSubject.getRole() == 2){
 
+            String[] roleArray = new String[1];
             jsonObject.put("company", roleSubject.getEnterpriseInformation());
 
             // status为2该企业通过审批，角色为companyAgreed，否则角色为companyNoAgreed
             if(roleSubject.getEnterpriseInformation().getCStatus() == 2){
-                jsonObject.put("role", "companyAgreed");
+                roleArray[0] = "companyAgreed";
             }else {
-                jsonObject.put("role", "companyNoAgreed");
+                roleArray[0] = "companyNoAgreed";
             }
+            jsonObject.put("role", roleArray);
 
         }
 

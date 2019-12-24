@@ -4,16 +4,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.ResultBean.ResultStatus;
+import com.technologygarden.entity.Role;
 import com.technologygarden.service.SystemAccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,19 +29,35 @@ public class SystemAccountController {
         this.systemAccountService = systemAccountService;
     }
 
+    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    @ApiOperation(value = "分页获取全部管理员账号列表", notes = "参数包括：页数、每页数量")
+    public ResultBean<?> getAllAccount(@NonNull Integer pageNum, @NonNull Integer pageSize){
+
+        return systemAccountService.getAllAdmin(pageNum, pageSize);
+
+    }
+
+    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    @ApiOperation(value = "新增管理员账号，密码默认为123456", notes = "参数包括：管理员账号")
+    public ResultBean<?> insertAdmin(@NonNull String account){
+
+        return systemAccountService.insertAdmin(account);
+
+    }
+
+    @RequestMapping(value = "/account", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除管理员账号", notes = "参数包括：管理员账号主键id")
+    public ResultBean<?> deleteAdmin(@NonNull Integer id){
+
+        return systemAccountService.deleteAdmin(id);
+
+    }
+
     @RequestMapping(value = "/account/rights", method = RequestMethod.GET)
     @ApiOperation(value = "获取全部权限列表", notes = "参数包括：无")
     public ResultBean<?> getAllMenuWithRights(){
 
         return systemAccountService.getAllMenuWithRights();
-
-    }
-
-    @RequestMapping(value = "/account", method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取全部管理员账号列表", notes = "参数包括：页数、每页数量")
-    public ResultBean<?> getAllAccount(@NonNull Integer pageNum, @NonNull Integer pageSize){
-
-        return systemAccountService.getAllRole(pageNum, pageSize);
 
     }
 

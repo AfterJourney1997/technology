@@ -38,7 +38,7 @@ public class SystemAccountServiceImpl implements SystemAccountService {
     }
 
     @Override
-    public ResultBean<?> getAllRole(@NonNull Integer pageNum, @NonNull Integer pageSize) {
+    public ResultBean<?> getAllAdmin(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
         PageHelper.startPage(pageNum, pageSize);
         Page<Role> roleList =  roleMapper.selectAllAdminWithoutPassword();
@@ -63,6 +63,30 @@ public class SystemAccountServiceImpl implements SystemAccountService {
 
         Role role = Role.builder().id(id).password(newPassword).build();
         roleMapper.updateDynamic(role);
+        return new ResultBean<>();
+    }
+
+    @Override
+    public ResultBean<?> insertAdmin(String account) {
+
+        roleMapper.insert(Role.builder()
+                                .account(account)
+                                .password("123456")
+                                .role(1)
+                                .build());
+
+        return new ResultBean<>();
+    }
+
+    @Override
+    public ResultBean<?> deleteAdmin(Integer id) {
+
+        // 首先删除管理员拥有的权限
+        roleRightsMapper.deleteByRoleId(id);
+
+        // 再删除管理员账号
+        roleMapper.deleteByPrimaryKey(id);
+
         return new ResultBean<>();
     }
 }
