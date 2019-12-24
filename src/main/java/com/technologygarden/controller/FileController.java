@@ -17,13 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin
 @Controller
+@CrossOrigin
 @Api(tags = "文件接口", value = "FileController")
 public class FileController {
 
@@ -66,9 +65,9 @@ public class FileController {
         return null;
     }
 
-    @RequestMapping("/downZip")
+    @RequestMapping(value = "/downZip", method = RequestMethod.POST)
     @ApiOperation(value = "打包下载文件", notes = "参数包括：文件名称集合")
-    public ResponseEntity<byte[]> downZip(List<String> fileNameList) throws FileNotFoundException {
+    public ResponseEntity<byte[]> downZip(@RequestBody List<String> fileNameList) throws FileNotFoundException {
         List<File> fileList = new ArrayList<>();
         for (String fileName : fileNameList) {
             File file = new File(FilUploadUtils.getFileStoragePath() + fileName);
