@@ -14,11 +14,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Slf4j
 @Component
@@ -26,6 +27,7 @@ public class FilUploadUtils {
 
     private static String FILE_STORAGE_PATH;
     private static String FILE_URL_HEAD;
+    private static final int BUFFER_SIZE = 2*1024*1024;//定义2M缓冲区
 
     @Autowired
     public FilUploadUtils(@Value("${file.storagePath}") String FILE_STORAGE_PATH, @Value("${file.url}") String FILE_URL_HEAD) {
@@ -54,10 +56,16 @@ public class FilUploadUtils {
     }
 
     /*
-    获取图片显示路经
+    获取文件存放路经
     */
     public static String getImageShowPath() {
         return FILE_URL_HEAD;
+    }
+    /*
+    获取图片显示路经
+    */
+    public static String getFileStoragePath() {
+        return FILE_STORAGE_PATH;
     }
 
     /*
@@ -148,6 +156,38 @@ public class FilUploadUtils {
         }
 
         return bytes;
+    }
+    //压缩文件
+    public static void toZip(List<File> srcFiles, OutputStream out) throws RuntimeException {
+        long start = System.currentTimeMillis();
+        ZipOutputStream zos = null;
+
+        try {
+            zos = new ZipOutputStream(out);
+            for (File srcFile : srcFiles) {
+                byte[] buf = new byte[BUFFER_SIZE];//定义2M缓冲区
+                zos.putNextEntry(new ZipEntry(srcFile.getName()));
+                int len;
+                FileInputStream in = new FileInputStream(srcFile);
+                while ((len = in.read(buf)) != -1) {
+                    zos.write(buf, 0, len);
+                }
+                zos.closeEntry();
+                in.close();
+            }
+            long end = System.currentTimeMillis();
+            System.out.println("压缩完成，耗时：" + (end - start) + " ms");
+        } catch (Exception e) {
+            throw new RuntimeException("zip error from ZipUtils", e);
+        } finally {
+            if (zos != null) {
+                try {
+                    zos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 /*    // 根据单个imageName获取访问url

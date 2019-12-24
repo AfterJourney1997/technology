@@ -42,15 +42,6 @@ public class Employee implements Serializable {
 
     private List<String> filePathList;//用来返回给前端文件的路径
 
-    private List<String> fileNameList;//用来返回给前端文件的路径
+    private List<String> fileNameList;//用来返回给前端文件的名字
 
-
-
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
 }
