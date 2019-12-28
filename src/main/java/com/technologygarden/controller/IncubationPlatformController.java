@@ -41,8 +41,8 @@ public class IncubationPlatformController {
     @RequestMapping(value = "/plaform", method = RequestMethod.PUT)
     @ApiOperation(value = "平台操作", notes = "参数包括：当前审批的平台对象，" +
             "状态status:1表示审批，2表示拒绝")
-    public ResultBean plaformOperation(PlatformApplication platformApplication, Integer status) {
-        return plaformService.plaformOperation(platformApplication, status);
+    public ResultBean plaformOperation(@RequestBody PlatformApplication platformApplication) {
+        return plaformService.plaformOperation(platformApplication);
     }
 
     //    @RequestMapping(value = "/plaform", method = RequestMethod.POST)

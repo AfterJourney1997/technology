@@ -75,10 +75,7 @@ public class PlaformServiceImpl implements PlaformService {
     }
 
     @Override
-    public ResultBean plaformOperation(PlatformApplication platformApplication, Integer status) {
-        if(status!=null){
-            platformApplication.setStatus(status);
-        }
+    public ResultBean plaformOperation(PlatformApplication platformApplication) {
         return new ResultBean(platformApplicationMapper.updateByPrimaryKey(platformApplication));
     }
 
