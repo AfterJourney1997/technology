@@ -40,21 +40,42 @@
     from technology.legal_person
   </select>
 
-  <select id="selectLegalPersonByPage" resultMap="BaseResultMap">
-    select *
-    from technology.legal_person
+  <select id="selectLegalPersonByPage" resultMap="LegalPersonWithInfo">
+    select legal_person.*, job_title.*, degree.*
+    from technology.legal_person, job_title, degree
+    where legal_person.lp_degree_id = degree.x_Id and legal_person.lp_jt_id = job_title.jt_id
   </select>
+  <resultMap id="LegalPersonWithInfo" type="com.technologygarden.entity.LegalPerson">
+    <id column="lp_id" jdbcType="INTEGER" property="lpId" />
+    <result column="lp_name" jdbcType="VARCHAR" property="lpName" />
+    <result column="lp_sex" jdbcType="INTEGER" property="lpSex" />
+    <result column="lp_degree_id" jdbcType="INTEGER" property="lpDegreeId" />
+    <result column="lp_jt_id" jdbcType="INTEGER" property="lpJtId" />
+    <result column="lp_c_name" jdbcType="VARCHAR" property="lpCName" />
+    <association property="degree" javaType="com.technologygarden.entity.Degree">
+      <id column="x_Id" jdbcType="INTEGER" property="xId" />
+      <result column="x_name" jdbcType="VARCHAR" property="xName" />
+    </association>
+    <association property="jobTitle" javaType="com.technologygarden.entity.JobTitle">
+      <id column="jt_id" jdbcType="INTEGER" property="jtId" />
+      <result column="jt_title" jdbcType="VARCHAR" property="jtTitle" />
+    </association>
+  </resultMap>
 
-  <select id="selectLegalPersonByDegreeId" resultMap="BaseResultMap">
-    select *
-    from technology.legal_person
+  <select id="selectLegalPersonByDegreeId" resultMap="LegalPersonWithInfo">
+    select legal_person.*, job_title.*, degree.*
+    from technology.legal_person, job_title, degree
     where legal_person.lp_degree_id = #{degreeId,jdbcType=INTEGER}
+    and legal_person.lp_degree_id = degree.x_Id
+    and legal_person.lp_jt_id = job_title.jt_id
   </select>
 
-  <select id="selectLegalPersonByJobTitleId" resultMap="BaseResultMap">
-    select *
-    from technology.legal_person
+  <select id="selectLegalPersonByJobTitleId" resultMap="LegalPersonWithInfo">
+    select legal_person.*, job_title.*, degree.*
+    from technology.legal_person, job_title, degree
     where legal_person.lp_jt_id = #{jobTitleId,jdbcType=INTEGER}
+    and legal_person.lp_degree_id = degree.x_Id
+    and legal_person.lp_jt_id = job_title.jt_id
   </select>
 
   <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.LegalPerson">
@@ -68,10 +89,12 @@
     </selectKey>
   </insert>
 
-  <select id="searchLegalPersonByPage" resultMap="BaseResultMap">
-    select *
-    from technology.legal_person
+  <select id="searchLegalPersonByPage" resultMap="LegalPersonWithInfo">
+    select legal_person.*, job_title.*, degree.*
+    from technology.legal_person, job_title, degree
     <where>
+      and legal_person.lp_degree_id = degree.x_Id
+      and legal_person.lp_jt_id = job_title.jt_id
       <if test="legalPersonName != null and legalPersonName != ''">
         and legal_person.lp_name like concat('%', #{legalPersonName,jdbcType=VARCHAR}, '%')
       </if>
