@@ -73,18 +73,18 @@ public class GardenManagePowerLoadController {
     }
 
     @RequestMapping(value = "/powerLoad/room", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部入驻状态房间", notes = "参数包括：")
-    public ResultBean<?> getRoomEntered() {
+    @ApiOperation(value = "根据企业id和房区id获取状态房间", notes = "参数包括：企业id，房区id（不填即为查询全部，如填写需按顺序，不填的填null）")
+    public ResultBean<?> getRoomEntered(Integer companyId, Integer buildingId) {
 
-        return roomCompanyService.getRoomEntered();
+        return roomCompanyService.getRoomDynamic(companyId, buildingId);
 
     }
 
     @RequestMapping(value = "/powerLoad/building", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部房区", notes = "参数包括：")
-    public ResultBean<?> getAllBuilding() {
+    @ApiOperation(value = "根据房区id获取房区", notes = "参数包括：房区id（不填即为查询全部）")
+    public ResultBean<?> getBuildingById(Integer buildingId) {
 
-        return assetBuildingService.getAllBuilding();
+        return assetBuildingService.getBuildingById(buildingId);
 
     }
 

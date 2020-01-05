@@ -3,6 +3,7 @@ package com.technologygarden.dao;
 import com.github.pagehelper.Page;
 import com.technologygarden.entity.Building;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,4 +27,6 @@ public interface BuildingMapper {
     int updateBuildingById(Building building);
 
     Page<Building> searchBuildingByName(String buildingName);
+
+    List<Building> getBuildingById(@Param("buildingId") Integer buildingId);
 }

@@ -79,4 +79,14 @@
     from technology.building
     where building.name like concat('%', #{buildingName,jdbcType=VARCHAR}, '%')
   </select>
+
+  <select id="getBuildingById" resultMap="BaseResultMap">
+    select *
+    from technology.building
+    <where>
+      <if test="buildingId != null">
+        and building.id = #{buildingId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
 </mapper>
