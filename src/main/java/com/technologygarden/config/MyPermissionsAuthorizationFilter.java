@@ -35,8 +35,6 @@ public class MyPermissionsAuthorizationFilter extends PermissionsAuthorizationFi
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
 
-        System.out.println("MyPermissionsAuthorizationFilter ---> onAccessDenied");
-
         /*Subject subject = getSubject(request, response);
         if (subject.getPrincipal() != null) {
             return true;

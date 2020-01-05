@@ -41,8 +41,6 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 
-        System.out.println("MyFormAuthenticationFilter ---> onAccessDenied");
-
         if (isLoginRequest(request, response)) {
             if (isLoginSubmission(request, response)) {
                 return executeLogin(request, response);

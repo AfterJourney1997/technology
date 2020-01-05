@@ -62,6 +62,7 @@ public class ShiroConfig {
         Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
         filters.put("authc", new MyFormAuthenticationFilter());
         filters.put("perms", new MyPermissionsAuthorizationFilter());
+        filters.put("roles", new MyRolesAuthorizationFilter());
 
         shiroFilterFactoryBean.setLoginUrl("/login");
 
@@ -106,10 +107,6 @@ public class ShiroConfig {
 
         //除了以上的请求外，其它请求都需要登录
         right.put("/**", "authc");
-
-        for(Map.Entry<String, String> entry : right.entrySet()){
-            System.out.println(entry.getKey() + " " + entry.getValue());
-        }
 
         // 退出
 //        filterChainDefinitionMap.put("/logout", "logout");
