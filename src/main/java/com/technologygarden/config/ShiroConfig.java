@@ -85,6 +85,9 @@ public class ShiroConfig {
             right.put(entry.getKey(), entry.getValue());
         }
 
+        // 管理员首页拦截
+        right.put("/adminHome/**", "authc,roles[admin]");
+
         // 企业权限拦截
         // 企业申请
         right.put("/company/information/company/**", "authc,roles[companyNoAgreed]");
