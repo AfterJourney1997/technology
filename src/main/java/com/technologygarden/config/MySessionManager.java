@@ -1,5 +1,6 @@
 package com.technologygarden.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/12/11.
  * 自定义sessionId获取
  */
+@Slf4j
 @Component
 public class MySessionManager extends DefaultWebSessionManager {
 
@@ -31,12 +33,14 @@ public class MySessionManager extends DefaultWebSessionManager {
         String id = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
         //如果请求头中有 Authorization 则其值为sessionId
         if (!StringUtils.isEmpty(id)) {
+            log.info("MySessionManager 从请求头获取sessionId");
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, REFERENCED_SESSION_ID_SOURCE);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, id);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
             return id;
         } else {
             //否则按默认规则从cookie取sessionId
+            log.info("MySessionManager 从cookie获取sessionId");
             return super.getSessionId(request, response);
         }
     }

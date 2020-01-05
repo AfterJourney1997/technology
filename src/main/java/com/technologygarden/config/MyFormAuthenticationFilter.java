@@ -1,6 +1,7 @@
 package com.technologygarden.config;
 
 import com.alibaba.fastjson.JSONObject;
+import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.ResultBean.ResultStatus;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -40,6 +41,8 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 
+        System.out.println("MyFormAuthenticationFilter ---> onAccessDenied");
+
         if (isLoginRequest(request, response)) {
             if (isLoginSubmission(request, response)) {
                 return executeLogin(request, response);
@@ -50,7 +53,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         } else {
             // 返回固定的JSON串
             WebUtils.toHttp(response).setContentType("application/json; charset=utf-8");
-            WebUtils.toHttp(response).getWriter().print(JSONObject.toJSONString(ResultStatus.NOT_LOGIN_ERROR.getMessage()));
+            WebUtils.toHttp(response).getWriter().print(JSONObject.toJSONString(new ResultBean<>(ResultStatus.NOT_LOGIN_ERROR)));
             return false;
         }
     }
