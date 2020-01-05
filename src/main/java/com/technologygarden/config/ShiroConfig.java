@@ -4,13 +4,14 @@ import com.technologygarden.dao.RightsMapper;
 import com.technologygarden.entity.Rights;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.mgt.SessionManager;
-import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
-import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -46,59 +47,75 @@ public class ShiroConfig {
     }
 
 
-    @Bean
-    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+    @Bean(name = "shiroFilter")
+    public ShiroFilterFactoryBean shiroFilter() {
 
-        List<Rights> rightsList = rightsMapper.selectAll();
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager());
 
         // 获取管理员的权限列表
-        Map<String, String> rights = rightsList.stream().collect(Collectors.toMap(Rights::getRUrl, (e) -> "perms[" + e.getRPerms() + "]"));
+        List<Rights> rightsList = rightsMapper.selectAll();
+        Map<String, String> rights = rightsList.stream().collect(Collectors.toMap(Rights::getRUrl, (e) -> "authc,perms[" + e.getRPerms() + "]"));
         log.info("shiro配置初始化，获取管理员权限成功 ---> " + rights);
 
-        DefaultShiroFilterChainDefinition chain = new DefaultShiroFilterChainDefinition();
+        Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
+        filters.put("authc", new MyFormAuthenticationFilter());
+        filters.put("perms", new MyPermissionsAuthorizationFilter());
+
+        shiroFilterFactoryBean.setLoginUrl("/login");
+
+        Map<String, String> right = new LinkedHashMap<>();
 
         //哪些请求可以匿名访问
-        rights.put("/login", "anon");
-        rights.put("/page/401", "anon");
-        rights.put("/page/403", "anon");
+        right.put("/login", "anon");
+        right.put("/page/401", "anon");
+        right.put("/page/403", "anon");
 
         // swagger权限
-        rights.put("/swagger-ui.html", "anon");
-        rights.put("/webjars/**", "anon");
-        rights.put("/v2/**", "anon");
-        rights.put("/swagger-resources/**", "anon");
-        rights.put("/v2/api-docs", "anon");
-        rights.put("/webjars/springfox-swagger-ui/**", "anon");
+        right.put("/swagger-ui.html", "anon");
+        right.put("/webjars/**", "anon");
+        right.put("/v2/**", "anon");
+        right.put("/swagger-resources/**", "anon");
+        right.put("/v2/api-docs", "anon");
+        right.put("/webjars/springfox-swagger-ui/**", "anon");
+
+        for(Map.Entry<String, String> entry : rights.entrySet()){
+            right.put(entry.getKey(), entry.getValue());
+        }
 
         // 企业权限拦截
-        rights.put("/enterprise/company/**", "roles[companyNoAgreed]");
+        // 企业申请
+        right.put("/company/information/company/**", "authc,roles[companyNoAgreed]");
         // 平台申请
-        rights.put("/application/plaform/**", "roles[companyAgreed]");
+        right.put("/application/plaform/**", "authc,roles[companyAgreed]");
         // 企业信息
-        rights.put("/enterprise/information/**", "roles[companyAgreed]");
+        right.put("/company/information/information/**", "authc,roles[companyAgreed]");
         // 房间信息
-        rights.put("/enterprise/roomInfo/**", "roles[companyAgreed]");
+        right.put("/enterprise/roomInfo/**", "authc,roles[companyAgreed]");
         // 员工管理
-        rights.put("/emloyee/manage/**", "roles[companyAgreed]");
+        right.put("/employee/manage/**", "authc,roles[companyAgreed]");
         // 奖项申报
-        rights.put("/declareAward/manage/**", "roles[companyAgreed]");
+        right.put("/declareAward/manage/**", "authc,roles[companyAgreed]");
         // 意见反馈
-        rights.put("/opinion/manage/**", "roles[companyAgreed]");
+        right.put("/opinion/manage/**", "authc,roles[companyAgreed]");
         // 服务申报
-        rights.put("/seviceApplicaiton/manage/**", "roles[companyAgreed]");
+        right.put("/serviceApplication/manage/**", "authc,roles[companyAgreed]");
         // 校企合作
-        rights.put("/coperation/manage/**", "roles[companyAgreed]");
-
-        // 退出
-        rights.put("/logout", "logout");
-
-        // 项目权限配置
-        chain.addPathDefinitions(rights);
+        right.put("/cooperation/manage/**", "authc,roles[companyAgreed]");
 
         //除了以上的请求外，其它请求都需要登录
-        chain.addPathDefinition("/**", "authc");
+        right.put("/**", "authc");
 
-        return chain;
+        for(Map.Entry<String, String> entry : right.entrySet()){
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+
+        // 退出
+//        filterChainDefinitionMap.put("/logout", "logout");
+
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(right);
+
+        return shiroFilterFactoryBean;
     }
 
 }

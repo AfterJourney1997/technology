@@ -48,14 +48,15 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
     public ResultBean<?> deleteSystemPropertyDeviceById(Integer id) {
 
         // 判断删除项是否有被使用
-        List<DeviceProperty> devicePropertyList = devicePropertyMapper.selectDevicePropertyByPropertyId(id);
+        List<DeviceProperty> devicePropertyList = devicePropertyMapper.selectDevicePropertyByPropertyIdCategoryId(id);
         if(devicePropertyList.size() > 0){
 
-            log.warn("删除设备属性中删除的属性仍有设备在使用 ---> propertyDeviceId：" + id);
+            log.warn("删除设备属性中删除的属性仍有设备在使用 ---> propertyDeviceId：[{}]", id);
             return new ResultBean<>(ResultStatus.DELETE_ERROR);
         }
 
         propertyDeviceMapper.deleteByPrimaryKey(id);
+        // 如果删除的是设备，其id会是其属性的category_id，根据这个即可删除对应属性
         propertyDeviceMapper.deleteSystemPropertyDeviceByCategoryId(id);
         return new ResultBean<>();
     }

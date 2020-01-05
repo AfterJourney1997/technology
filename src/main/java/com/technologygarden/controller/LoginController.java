@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,6 +53,8 @@ public class LoginController {
     @RequestMapping(value = "/notLogin", method = RequestMethod.GET)
     public ResultBean<?> notLogin() {
 
+        Subject currentUser = SecurityUtils.getSubject();
+        currentUser.logout();
         return new ResultBean<>(ResultStatus.NOT_LOGIN_ERROR);
 
     }

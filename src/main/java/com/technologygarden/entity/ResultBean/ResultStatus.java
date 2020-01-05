@@ -14,7 +14,9 @@ public enum ResultStatus {
 
     NOT_LOGIN_ERROR(-20, "未登录！"),
     UNKNOWN_ACCOUNT_ERROR(-21, "该账号不存在！"),
-    PASSWORD_ERROR(-22, "密码错误！");
+    PASSWORD_ERROR(-22, "密码错误！"),
+
+    AUTH_EMPTY_ERROR(-100, "权限错误！");
 
 
     private int code;

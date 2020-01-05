@@ -43,12 +43,6 @@ logging:
     com.technologygarden.dao: debug
   config: classpath:logback-spring.xml
 
-#shiro
-shiro:
-  loginUrl: /notLogin
-  web:
-    enabled: off
-
 
 file:
   storagePath: D:/uploadFile/

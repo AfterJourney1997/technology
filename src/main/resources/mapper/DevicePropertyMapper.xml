@@ -34,10 +34,11 @@
         </foreach>
     </update>
 
-    <select id="selectDevicePropertyByPropertyId" resultType="com.technologygarden.entity.DeviceProperty">
+    <select id="selectDevicePropertyByPropertyIdCategoryId" resultType="com.technologygarden.entity.DeviceProperty">
         select *
         from technology.device_property
         where device_property.property_id = #{propertyId,jdbcType=INTEGER}
+        and device_property.category_id = #{propertyId,jdbcType=INTEGER}
     </select>
 
 </mapper>

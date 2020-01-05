@@ -21,7 +21,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 //@RequiresPermissions("/enterprise/information")
-@RequestMapping(value = "/company/information  ")
+@RequestMapping(value = "/company/information")
 @Api(tags = "企业信息管理接口", value = "EnterpriseInformationController")
 public class EnterpriseInformationController {
 
