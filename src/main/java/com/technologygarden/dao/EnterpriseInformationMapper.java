@@ -29,4 +29,6 @@ public interface EnterpriseInformationMapper {
     int insertReturnPrimaryKey(EnterpriseInformation enterpriseInformation);
 
     List<EnterpriseInformation> selectAllWithoutCommittee();
+
+    Integer getNoApprovalCompanyNum();
 }

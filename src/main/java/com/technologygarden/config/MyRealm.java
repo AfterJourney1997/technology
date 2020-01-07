@@ -16,6 +16,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,18 +46,22 @@ public class MyRealm extends AuthorizingRealm {
         log.info("shiro realm 鉴权 ---> " + role);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
+        Set<String> roleSet = new LinkedHashSet<>();
+
         // role为1该账户为管理员，需将权限列表放入SimpleAuthorizationInfo中
         if (role.getRole() == 1) {
 
             Set<String> rightsSet = role.getRightsList().stream().map(Rights::getRPerms).collect(Collectors.toSet());
+            roleSet.add("admin");
+            info.setRoles(roleSet);
             info.setStringPermissions(rightsSet);
         }
 
         // role为2该账户为企业，需获取企业信息判断该企业是否审批通过
         if (role.getRole() == 2) {
 
-            Set<String> roleSet = new LinkedHashSet<>();
             EnterpriseInformation companyInfo = role.getEnterpriseInformation();
+            log.info("企业鉴权 ---> {}", companyInfo);
 
             // 企业状态0为未申请，1为已申请，2为已审批，3为拒绝审批
             if (companyInfo.getCStatus() == 2) {
@@ -65,6 +70,8 @@ public class MyRealm extends AuthorizingRealm {
                 roleSet.add("companyNoAgreed");
             }
             info.setRoles(roleSet);
+            Set<String> rightsSet = new HashSet<>();
+            info.setStringPermissions(rightsSet);
         }
 
         return info;

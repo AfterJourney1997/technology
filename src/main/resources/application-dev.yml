@@ -4,7 +4,7 @@ server:
 # 数据库连接
 spring:
   datasource:
-    url: jdbc:mysql://kingsword.top:3306/technology?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    url: jdbc:mysql://120.79.31.239:3306/technology?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: root
     password: wangxiao
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -42,12 +42,6 @@ logging:
   level:
     com.technologygarden.dao: debug
   config: classpath:logback-spring.xml
-
-#shiro
-shiro:
-  loginUrl: /notLogin
-  web:
-    enabled: off
 
 
 file:

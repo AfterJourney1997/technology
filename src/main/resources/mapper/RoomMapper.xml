@@ -189,7 +189,11 @@
   <select id="selectRoomByStatus" resultMap="BaseResultMap">
     select *
     from technology.room
-    where room.r_status = #{status,jdbcType=INTEGER}
+    <where>
+      <if test="status != null">
+        and room.r_status = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
   </select>
 
   <update id="emptyCompanyInfoByCId">
@@ -202,5 +206,21 @@
     room.r_owning_time = null
     where room.r_company_id = #{cId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectRoomDynamic" resultMap="BaseResultMap">
+    select *
+    from technology.room
+    <where>
+      <if test="status != null">
+        and room.r_status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="buildingId != null">
+        and room.r_building_id = #{buildingId,jdbcType=INTEGER}
+      </if>
+      <if test="companyId != null">
+        and room.r_company_id = #{companyId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
 
 </mapper>

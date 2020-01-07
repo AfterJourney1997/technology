@@ -1,5 +1,6 @@
 package com.technologygarden.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
@@ -15,6 +16,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017/12/11.
  * 自定义sessionId获取
  */
+@Slf4j
 @Component
 public class MySessionManager extends DefaultWebSessionManager {
 

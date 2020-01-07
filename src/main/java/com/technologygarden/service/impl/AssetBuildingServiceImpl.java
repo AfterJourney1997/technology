@@ -65,4 +65,10 @@ public class AssetBuildingServiceImpl implements AssetBuildingService {
         List<Building> buildingList = buildingMapper.selectAll();
         return new ResultBean<>(buildingList);
     }
+
+    @Override
+    public ResultBean<List<Building>> getBuildingById(Integer buildingId) {
+        List<Building> buildingList = buildingMapper.getBuildingById(buildingId);
+        return new ResultBean<>(buildingList);
+    }
 }

@@ -260,4 +260,9 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
 
         return new ResultBean<>();
     }
+
+    @Override
+    public ResultBean<?> getNoApprovalCompanyNum() {
+        return new ResultBean<>(Integer.toString(enterpriseInformationMapper.getNoApprovalCompanyNum()));
+    }
 }

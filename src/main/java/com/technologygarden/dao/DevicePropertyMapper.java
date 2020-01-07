@@ -14,5 +14,5 @@ public interface DevicePropertyMapper {
 
     int updateByDeviceIdDynamic(List<PropertyDevice> propertyDeviceList);
 
-    List<DeviceProperty> selectDevicePropertyByPropertyId(@Param("propertyId") Integer propertyId);
+    List<DeviceProperty> selectDevicePropertyByPropertyIdCategoryId(@Param("propertyId") Integer propertyId);
 }

@@ -99,4 +99,14 @@
     from technology.enterprise_information
     where c_Id > 0
   </select>
+
+  <select id="getNoApprovalCompanyNum" resultType="integer">
+    SELECT
+	count( * )
+    FROM
+	enterprise_information
+    WHERE
+	c_status = 1
+  </select>
+
 </mapper>

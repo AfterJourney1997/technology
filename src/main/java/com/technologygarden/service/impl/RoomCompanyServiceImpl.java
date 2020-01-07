@@ -71,4 +71,13 @@ public class RoomCompanyServiceImpl implements RoomCompanyService {
         return new ResultBean<>(roomList);
     }
 
+    @Override
+    public ResultBean<?> getRoomDynamic(Integer companyId, Integer buildingId) {
+
+        // 状态2表示房间有企业入驻，1为空闲
+        int status = 2;
+        List<Room> roomList = roomMapper.selectRoomDynamic(status, companyId, buildingId);
+        return new ResultBean<>(roomList);
+    }
+
 }

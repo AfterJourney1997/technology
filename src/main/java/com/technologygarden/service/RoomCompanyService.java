@@ -21,4 +21,6 @@ public interface RoomCompanyService {
     ResultBean<PageInfo<?>> searchRoomCompany(Integer pageNum, Integer pageSize, Integer buildingId, Integer status, String roomName);
 
     ResultBean<List<Room>> getRoomEntered();
+
+    ResultBean<?> getRoomDynamic(Integer companyId, Integer buildingId);
 }
