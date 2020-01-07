@@ -51,6 +51,9 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
         } else {
             // 返回固定的JSON串
             WebUtils.toHttp(response).setContentType("application/json; charset=utf-8");
+            WebUtils.toHttp(response).setStatus(403);
+            WebUtils.toHttp(response).setHeader("Access-Control-Allow-Origin", "*");
+            WebUtils.toHttp(response).setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
             WebUtils.toHttp(response).getWriter().print(JSONObject.toJSONString(new ResultBean<>(ResultStatus.NOT_LOGIN_ERROR)));
             return false;
         }

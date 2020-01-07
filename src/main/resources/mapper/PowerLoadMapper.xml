@@ -39,7 +39,7 @@
   </select>
 
   <select id="selectAllWithRoomInfoByPage" resultMap="PowerLoadWithRoomInfo">
-    select pl.*, r.r_id, r.r_name, b.id, b.name
+    select pl.*, r.r_id, r.r_name, r.r_company_id, r_company_name, b.id, b.name
     from technology.power_load pl, technology.room r, technology.building b
     where pl.pl_room_id = r.r_id and r.r_building_id = b.id
   </select>
@@ -53,6 +53,8 @@
     <association property="room" javaType="com.technologygarden.entity.Room">
       <id column="r_id" jdbcType="INTEGER" property="rId" />
       <result column="r_name" jdbcType="VARCHAR" property="rName" />
+      <result column="r_company_id" jdbcType="INTEGER" property="rCompanyId" />
+      <result column="r_company_name" jdbcType="VARCHAR" property="rCompanyName" />
       <association property="building" javaType="com.technologygarden.entity.Building">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="name" jdbcType="VARCHAR" property="buildingName" />

@@ -64,7 +64,7 @@ public class ShiroConfig {
         filters.put("perms", new MyPermissionsAuthorizationFilter());
         filters.put("roles", new MyRolesAuthorizationFilter());
 
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        //shiroFilterFactoryBean.setLoginUrl("/login");
 
         Map<String, String> right = new LinkedHashMap<>();
 
@@ -72,6 +72,9 @@ public class ShiroConfig {
         right.put("/login", "anon");
         right.put("/page/401", "anon");
         right.put("/page/403", "anon");
+        right.put("/image/**", "anon");
+        right.put("/downloadFile/**", "anon");
+        right.put("/downZip/**", "anon");
 
         // swagger权限
         right.put("/swagger-ui.html", "anon");
