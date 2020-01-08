@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/system")
+@RequestMapping(value = "/system/account")
 @Api(tags = "系统配置 / 账号管理接口", value = "SystemRightsController")
 public class SystemAccountController {
 
@@ -29,7 +29,7 @@ public class SystemAccountController {
         this.systemAccountService = systemAccountService;
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取全部管理员账号列表", notes = "参数包括：页数、每页数量")
     public ResultBean<?> getAllAccount(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
@@ -37,7 +37,7 @@ public class SystemAccountController {
 
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ApiOperation(value = "新增管理员账号，密码默认为123456", notes = "参数包括：管理员账号")
     public ResultBean<?> insertAdmin(@NonNull String account){
 
@@ -45,7 +45,7 @@ public class SystemAccountController {
 
     }
 
-    @RequestMapping(value = "/account", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除管理员账号", notes = "参数包括：管理员账号主键id")
     public ResultBean<?> deleteAdmin(@NonNull Integer id){
 
@@ -53,15 +53,15 @@ public class SystemAccountController {
 
     }
 
-    @RequestMapping(value = "/account/rights", method = RequestMethod.GET)
-    @ApiOperation(value = "获取全部权限列表", notes = "参数包括：无")
-    public ResultBean<?> getAllMenuWithRights(){
+    @RequestMapping(value = "/rights", method = RequestMethod.GET)
+    @ApiOperation(value = "获取管理员拥有的权限列表", notes = "参数包括：账号id（不填则默认查询全部权限）")
+    public ResultBean<?> getAllMenuWithRights(Integer roleId){
 
-        return systemAccountService.getAllMenuWithRights();
+        return systemAccountService.getAllMenuWithRightsByRoleId(roleId);
 
     }
 
-    @RequestMapping(value = "/account/rights", method = RequestMethod.POST)
+    @RequestMapping(value = "/rights", method = RequestMethod.POST)
     @ApiOperation(value = "分配权限到指定账号", notes = "参数包括：账号主键 id，权限idList rightsList，以JSON传过来即可")
     public ResultBean<?> distributeRightsToAccount(String JSONString){
 
@@ -80,11 +80,13 @@ public class SystemAccountController {
 
     }
 
-    @RequestMapping(value = "/account/password", method = RequestMethod.POST)
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
     @ApiOperation(value = "修改管理员账号的密码", notes = "参数包括：账号主键 id、新密码")
     public ResultBean<?> updatePassword(@NonNull Integer id, @NonNull String newPassword){
 
         return systemAccountService.updateAdminPassword(id, newPassword);
 
     }
+
+
 }

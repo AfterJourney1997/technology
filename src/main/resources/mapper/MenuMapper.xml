@@ -3,10 +3,19 @@
 <mapper namespace="com.technologygarden.dao.MenuMapper">
 
 
-    <select id="selectAllMenuWithRights" resultMap="MenuWithRights">
+    <select id="selectAllMenuWithRightsByRoleId" resultMap="MenuWithRights">
         select m.*, r.*
         from technology.menu m, technology.rights r
-        where m.m_id = r.r_menu_id
+        <if test="roleId != null">
+            , technology.role_rights rr
+        </if>
+        <where>
+            and m.m_id = r.r_menu_id
+            <if test="roleId != null">
+                and rr.rr_role_id = #{roleId,jdbcType=INTEGER}
+                and rr.rr_rights_id = r.r_id
+            </if>
+        </where>
     </select>
     <resultMap id="MenuWithRights" type="com.technologygarden.entity.Menu">
         <id column="m_id" jdbcType="INTEGER" property="mId" />

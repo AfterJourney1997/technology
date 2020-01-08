@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SystemAccountService {
 
-    ResultBean<?> getAllMenuWithRights();
+    ResultBean<?> getAllMenuWithRightsByRoleId(Integer roleId);
 
     ResultBean<?> getAllAdmin(@NonNull Integer pageNum, @NonNull Integer pageSize);
 

@@ -31,9 +31,9 @@ public class SystemAccountServiceImpl implements SystemAccountService {
     }
 
     @Override
-    public ResultBean<?> getAllMenuWithRights() {
+    public ResultBean<?> getAllMenuWithRightsByRoleId(Integer roleId) {
 
-        List<Menu> menuList = menuMapper.selectAllMenuWithRights();
+        List<Menu> menuList = menuMapper.selectAllMenuWithRightsByRoleId(roleId);
         return new ResultBean<>(menuList);
     }
 
