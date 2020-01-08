@@ -24,7 +24,7 @@ public class SystemPropertyDeviceController {
         this.systemPropertyDeviceService = systemPropertyDeviceService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取设备属性列表", notes = "参数包括：页数、每页数量、categoryId，categoryId非必填，如获取设备列表categoryId设0")
     public ResultBean<PageInfo<?>> getSystemPropertyDeviceListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId) {
 
@@ -32,7 +32,7 @@ public class SystemPropertyDeviceController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增设备或属性", notes = "参数包括：设备属性对象（如添加设备，category_id为0，name为设备名；如添加属性，category_id为属性所属的设备id，其他正常填写）")
     public ResultBean<?> insertSystemPropertyDevice(@RequestBody PropertyDevice propertyDevice) {
 
@@ -40,7 +40,7 @@ public class SystemPropertyDeviceController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除设备或属性", notes = "参数包括：设备或属性id")
     public ResultBean<?> deleteSystemPropertyDeviceById(@NonNull Integer id) {
 
@@ -48,7 +48,7 @@ public class SystemPropertyDeviceController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改设备", notes = "参数包括：设备属性对象")
     public ResultBean<?> updateSystemPropertyDeviceById(@RequestBody PropertyDevice propertyDevice) {
 
