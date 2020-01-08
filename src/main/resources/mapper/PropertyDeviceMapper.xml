@@ -177,4 +177,15 @@
     </collection>
   </resultMap>
 
+  <select id="selectDeviceCategoryById" resultMap="BaseResultMap">
+    select *
+    from technology.property_device
+    <where>
+      and property_device.category_id = 0
+      <if test="propertyDeviceId != null">
+        and property_device.id = #{propertyDeviceId,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
 </mapper>

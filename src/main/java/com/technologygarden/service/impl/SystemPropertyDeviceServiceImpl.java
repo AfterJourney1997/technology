@@ -102,4 +102,11 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
         List<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectCateGoryByKind(1);
         return new ResultBean<>(propertyDeviceList);
     }
+
+    @Override
+    public ResultBean<List<PropertyDevice>> getDeviceCategoryById(Integer propertyDeviceId) {
+
+        List<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectDeviceCategoryById(propertyDeviceId);
+        return new ResultBean<>(propertyDeviceList);
+    }
 }

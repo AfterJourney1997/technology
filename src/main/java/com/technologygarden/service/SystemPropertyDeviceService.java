@@ -23,4 +23,6 @@ public interface SystemPropertyDeviceService {
     ResultBean<List<PropertyDevice>> getPropertyByCategoryId(Integer categoryId);
 
     ResultBean<List<PropertyDevice>> getDevicePropertyDevice();
+
+    ResultBean<List<PropertyDevice>> getDeviceCategoryById(Integer propertyDeviceId);
 }

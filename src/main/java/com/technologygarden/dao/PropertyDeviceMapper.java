@@ -38,4 +38,6 @@ public interface PropertyDeviceMapper {
     List<PropertyDevice> selectPropertyByCategoryId(@Param("categoryId") Integer categoryId);
 
     List<PropertyDevice> selectPropertyDeviceWithDevice();
+
+    List<PropertyDevice> selectDeviceCategoryById(@Param("propertyDeviceId") Integer propertyDeviceId);
 }
