@@ -1,6 +1,7 @@
 package com.technologygarden.service;
 
 import com.github.pagehelper.PageInfo;
+import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Room;
 
@@ -10,6 +11,6 @@ public interface CompanyInfoRoomInfoService {
 
     ResultBean<List<Room>> getCompanyRoomListByCompanyId(Integer companyId);
 
-    ResultBean<PageInfo<?>> getCompanyRoomDeviceByRoomId(Integer pageNum, Integer pageSize, Integer roomId);
+    ResultBean<List<CompanyRoomDevice>> getCompanyRoomDeviceByRoomIdCompanyId(Integer roomId, Integer companyId);
 
 }

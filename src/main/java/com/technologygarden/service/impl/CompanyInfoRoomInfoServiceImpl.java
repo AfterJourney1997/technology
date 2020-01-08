@@ -32,11 +32,9 @@ public class CompanyInfoRoomInfoServiceImpl implements CompanyInfoRoomInfoServic
     }
 
     @Override
-    public ResultBean<PageInfo<?>> getCompanyRoomDeviceByRoomId(Integer pageNum, Integer pageSize, Integer roomId) {
+    public ResultBean<List<CompanyRoomDevice>> getCompanyRoomDeviceByRoomIdCompanyId(Integer roomId, Integer companyId) {
 
-        PageHelper.startPage(pageNum, pageSize);
-        Page<CompanyRoomDevice> companyRoomDeviceList = companyRoomDeviceMapper.selectWithInfoPageByRoomId(roomId);
-        PageInfo<?> pageInfo = new PageInfo<>(companyRoomDeviceList);
-        return new ResultBean<>(pageInfo);
+        List<CompanyRoomDevice> companyRoomDeviceList = companyRoomDeviceMapper.selectWithInfoPageByRoomIdCompanyId(roomId, companyId);
+        return new ResultBean<>(companyRoomDeviceList);
     }
 }

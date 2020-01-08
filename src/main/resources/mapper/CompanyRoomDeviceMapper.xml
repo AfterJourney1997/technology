@@ -187,7 +187,7 @@
     </where>
   </select>
 
-  <select id="selectWithInfoPageByRoomId" resultMap="AssetCountWithInfo">
+  <select id="selectWithInfoPageByRoomIdCompanyId" resultMap="CompanyInfoRoomInfo">
     SELECT
       crd.*,
       b.*,
@@ -204,24 +204,83 @@
       pd.kind AS pd_kind,
       pd.category_id AS pd_category_id,
       pd.NAME AS pd_name,
-      pd.property AS pd_property
+      pd.property AS pd_property,
+      dp.id AS dp_id,
+      dp.device_id AS dp_device_id,
+      dp.property_id AS dp_property_id,
+      dp.category_id AS dp_category_id,
+      dp.value AS dp_value
     FROM
       technology.company_room_device crd,
       technology.device d,
       technology.room r,
       technology.building b,
-      technology.property_device pd
+      technology.property_device pd,
+      technology.device_property dp
       <where>
+        AND b.id = r.r_building_id
+        AND r.r_company_id = #{companyId,jdbcType=INTEGER}
         AND crd.crd_room_id = r.r_id
-        AND r.r_building_id = b.id
         AND crd.crd_device_id = d.id
-        AND d.category_id = pd.id
-        AND pd.category_id = 0
+        AND d.category_id = pd.category_id
+        AND pd.id = dp.property_id
+        AND dp.device_id = d.id
+        AND pd.category_id != 0
         <if test="roomId != null">
           AND crd.crd_room_id = #{roomId,jdbcType=INTEGER}
         </if>
       </where>
   </select>
+  <resultMap id="CompanyInfoRoomInfo" type="com.technologygarden.entity.CompanyRoomDevice">
+    <id column="crd_id" jdbcType="INTEGER" property="crdId" />
+    <result column="crd_company_id" jdbcType="INTEGER" property="crdCompanyId" />
+    <result column="crd_room_id" jdbcType="INTEGER" property="crdRoomId" />
+    <result column="crd_device_id" jdbcType="INTEGER" property="crdDeviceId" />
+    <result column="crd_number" jdbcType="INTEGER" property="crdNumber" />
+    <association property="room" javaType="com.technologygarden.entity.Room">
+      <id column="r_id" jdbcType="INTEGER" property="rId" />
+      <result column="r_name" jdbcType="VARCHAR" property="rName" />
+      <result column="r_area" jdbcType="REAL" property="rArea" />
+      <result column="r_status" jdbcType="INTEGER" property="rStatus" />
+      <result column="r_company_id" jdbcType="INTEGER" property="rCompanyId" />
+      <result column="r_company_name" jdbcType="VARCHAR" property="rCompanyName" />
+      <result column="r_owner" jdbcType="VARCHAR" property="rOwner" />
+      <result column="r_owning_time" jdbcType="INTEGER" property="rOwningTime" />
+      <result column="r_building_id" jdbcType="INTEGER" property="rBuildingId" />
+      <result column="r_room_kind" jdbcType="INTEGER" property="rRoomKind" />
+      <association property="building" javaType="com.technologygarden.entity.Building">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="buildingName" />
+        <result column="area" jdbcType="REAL" property="area" />
+        <result column="createtime" jdbcType="DATE" property="createtime" />
+        <result column="money" jdbcType="REAL" property="money" />
+      </association>
+    </association>
+    <association property="device" javaType="com.technologygarden.entity.Device">
+      <id column="d_id" jdbcType="INTEGER" property="deviceId"/>
+      <result column="d_category_id" jdbcType="INTEGER" property="categoryId"/>
+      <result column="d_name" jdbcType="VARCHAR" property="deviceName"/>
+      <result column="d_total" jdbcType="INTEGER" property="total"/>
+      <result column="d_remain" jdbcType="INTEGER" property="remain"/>
+      <result column="d_piece" jdbcType="FLOAT" property="piece"/>
+      <result column="d_owner" jdbcType="INTEGER" property="owner"/>
+      <result column="d_kind" jdbcType="INTEGER" property="kind"/>
+      <collection property="propertyDeviceList" ofType="com.technologygarden.entity.PropertyDevice">
+        <id column="pd_id" jdbcType="INTEGER" property="propertyDeviceId"/>
+        <result column="pd_kind" jdbcType="INTEGER" property="kind"/>
+        <result column="pd_category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="pd_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="pd_property" jdbcType="VARCHAR" property="property"/>
+        <association property="deviceProperty" javaType="com.technologygarden.entity.DeviceProperty">
+          <id column="dp_id" jdbcType="INTEGER" property="devicePropertyId"/>
+          <result column="dp_device_id" jdbcType="INTEGER" property="deviceId"/>
+          <result column="dp_category_id" jdbcType="INTEGER" property="categoryId"/>
+          <result column="dp_property_id" jdbcType="VARCHAR" property="propertyId"/>
+          <result column="dp_value" jdbcType="VARCHAR" property="propertyValue"/>
+        </association>
+      </collection>
+    </association>
+  </resultMap>
 
   <select id="selectByCompanyId" resultMap="BaseResultMap">
     select *

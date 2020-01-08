@@ -1,12 +1,16 @@
 package com.technologygarden.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.technologygarden.entity.CompanyRoomDevice;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.Role;
 import com.technologygarden.entity.Room;
 import com.technologygarden.service.CompanyInfoRoomInfoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,10 +39,12 @@ public class CompanyInfoRoomInfoController {
     }
 
     @RequestMapping(value = "/roomInfo/device", method = RequestMethod.GET)
-    @ApiOperation(value = "根据房间id获取企业房间设备列表", notes = "参数包括：页码，页面大小，房间id（房间id为空是查询全部）")
-    public ResultBean<PageInfo<?>> getCompanyRoomDeviceByRoomId(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer roomId){
+    @ApiOperation(value = "根据房间id获取企业房间设备列表", notes = "参数包括：页码，页面大小，房间id（房间id为空是查询当前登录企业账号全部房间的设备）")
+    public ResultBean<List<CompanyRoomDevice>> getCompanyRoomDeviceByRoomId(Integer roomId){
 
-        return companyInfoRoomInfoService.getCompanyRoomDeviceByRoomId(pageNum, pageSize, roomId);
+        Subject currentUser = SecurityUtils.getSubject();
+        Role role = (Role) currentUser.getPrincipal();
+        return companyInfoRoomInfoService.getCompanyRoomDeviceByRoomIdCompanyId(roomId, role.getEnterpriseInformation().getCId());
 
     }
 }
