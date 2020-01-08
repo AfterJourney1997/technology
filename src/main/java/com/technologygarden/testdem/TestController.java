@@ -81,6 +81,7 @@ public class TestController {
             zipfile.getParentFile().mkdirs();
         }
         FileOutputStream fos2 = new FileOutputStream(zipfile);
+        FilUploadUtils.toZip(fileList, fos2);
         //下载压缩文件并删除压缩文件
         try {
             return FilUploadUtils.downloadFile(name);

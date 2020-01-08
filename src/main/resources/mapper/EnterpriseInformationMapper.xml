@@ -69,13 +69,13 @@
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
     c_product, file_name, c_employee, c_information, c_status
     from technology.enterprise_information
-    where c_Id = 2
+    where c_status = 2
   </select>
   <select id="searchEnterpriseStatistics" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
     c_product, file_name, c_employee, c_information, c_status
     from technology.enterprise_information
-    where c_Id = 2 and c_name like concat('%', #{search,jdbcType=VARCHAR}, '%')
+    where c_status = 2 and c_name like concat('%', #{search,jdbcType=VARCHAR}, '%')
   </select>
 
   <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
