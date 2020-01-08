@@ -90,27 +90,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public ResultBean updateEmployee(MultipartFile blFile[], Employee employee) throws IOException {
-        //删除原来的文件
-        String fileNameString= employee.getFileName();
-        if(!StringUtils.isEmpty(fileNameString)){
-            String fileNameArray []=fileNameString.split("/");
-            for(int i=0;i<fileNameArray.length;i++) {
-                FilUploadUtils.deleteFile(fileNameArray[i]);
+        if(blFile.length>0) {
+            //删除原来的文件
+            String fileNameString = employee.getFileName();
+            if (!StringUtils.isEmpty(fileNameString)) {
+                String fileNameArray[] = fileNameString.split("/");
+                for (int i = 0; i < fileNameArray.length; i++) {
+                    FilUploadUtils.deleteFile(fileNameArray[i]);
+                }
             }
-        }
 
 
-        String []fileNameList=new String[blFile.length];
-        String UUName;
-        int i=0;
-        for (MultipartFile file:blFile){
-            UUName=FilUploadUtils.saveFile(file);
-            fileNameList[i]=UUName;
-            i++;
-        }
-        if(fileNameList.length>0){
-            String fileName = ArrayUtil.join(fileNameList, "/");
-            employee.setFileName(fileName);
+            String[] fileNameList = new String[blFile.length];
+            String UUName;
+            int i = 0;
+            for (MultipartFile file : blFile) {
+                UUName = FilUploadUtils.saveFile(file);
+                fileNameList[i] = UUName;
+                i++;
+            }
+            if (fileNameList.length > 0) {
+                String fileName = ArrayUtil.join(fileNameList, "/");
+                employee.setFileName(fileName);
+            }
         }
         return new ResultBean(employeeMapper.updateByPrimaryKey(employee));
     }
