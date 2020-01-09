@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin
 @RestController
 //@RequiresPermissions("/service/conditionEnter")
-@RequestMapping(value = "/service")
+@RequestMapping(value = "/service/conditionEnter")
 @Api(tags = "孵化服务 / 入驻条件接口", value = "ServiceConditionEnterController")
 public class ServiceConditionEnterController {
 
@@ -26,7 +26,7 @@ public class ServiceConditionEnterController {
         this.serviceConditionEnterService = serviceConditionEnterService;
     }
 
-    @RequestMapping(value = "/conditionEnter", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取入驻条件列表", notes = "参数包括：页数，每页数量，均必填")
     public ResultBean<PageInfo<?>> getConditionEnterListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
@@ -34,7 +34,7 @@ public class ServiceConditionEnterController {
 
     }
 
-    @RequestMapping(value = "/conditionEnter", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增入驻条件", notes = "参数包括：入驻条件对象")
     public ResultBean<?> insertConditionEnter(MultipartFile file, String conditionEnter){
 
@@ -43,7 +43,7 @@ public class ServiceConditionEnterController {
 
     }
 
-    @RequestMapping(value = "/conditionEnter", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "根据id删除入驻条件", notes = "参数包括：入驻条件主键id")
     public ResultBean<?> deleteConditionEnterById(@NonNull Integer conditionEnterId){
 
@@ -51,7 +51,7 @@ public class ServiceConditionEnterController {
 
     }
 
-    @RequestMapping(value = "/conditionEnter", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "根据id修改入驻条件", notes = "参数包括：入驻条件对象，id必填，修改项选填")
     public ResultBean<?> updateConditionEnterById(MultipartFile file, String conditionEnter){
 
@@ -60,7 +60,7 @@ public class ServiceConditionEnterController {
 
     }
 
-    @RequestMapping(value = "/conditionEnter/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页搜索入驻条件列表", notes = "参数包括：页数，每页数量，入驻条件标题title")
     public ResultBean<PageInfo<?>> searchConditionEnterListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String title){
 

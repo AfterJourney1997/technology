@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping(value = "/platformManage/incubation")
 @Api(tags = "平台管理/孵化平台接口", value = "IncubationPlatformController")
 public class IncubationPlatformController {
+
     private final PlaformService plaformService;
 
     @Autowired
@@ -27,7 +28,7 @@ public class IncubationPlatformController {
 
     @RequestMapping(value = "/enterprise", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有的企业", notes = "参数包括：无")
-    public ResultBean<List<EnterpriseInformation>> getAllEnterprise(){
+    public ResultBean<List<EnterpriseInformation>> getAllEnterprise() {
         return plaformService.getAllEnterprise();
     }
 

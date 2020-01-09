@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 //@RequiresPermissions("/room/company")
-@RequestMapping(value = "/room")
+@RequestMapping(value = "/room/company")
 @Api(tags = "房产管理 / 企业房产接口", value = "RoomCompanyController")
 public class RoomCompanyController {
 
@@ -35,7 +35,7 @@ public class RoomCompanyController {
         this.assetBuildingService = assetBuildingService;
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取企业房产信息列表", notes = "参数包括：页数，每页数量（rStatus为房产状态，1为空闲，2为入驻）")
     public ResultBean<PageInfo<?>> getCompanyGardenByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
@@ -43,7 +43,7 @@ public class RoomCompanyController {
 
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除企业房产", notes = "参数包括：企业房产主键id")
     public ResultBean<?> deleteCompanyGardenById(Integer companyRoomId) {
 
@@ -51,7 +51,7 @@ public class RoomCompanyController {
 
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改企业房产", notes = "参数包括：企业房产对象，无需修改的值设空")
     public ResultBean<?> updateCompanyGardenById(@RequestBody Room roomCompany) {
 
@@ -59,7 +59,7 @@ public class RoomCompanyController {
 
     }
 
-    @RequestMapping(value = "/company", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增企业房产", notes = "参数包括：企业房产list，一个也需放进list中")
     public ResultBean<?> insertCompanyGarden(@RequestBody List<Room> roomCompanyList) {
 
@@ -67,7 +67,7 @@ public class RoomCompanyController {
 
     }
 
-    @RequestMapping(value = "/company/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索企业房产", notes = "参数包括：页数、每页数量、房区id、状态id、房间名称，不需要的填空即可")
     public ResultBean<PageInfo<?>> searchCompanyGarden(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer buildingId, Integer status, String roomName) {
 
@@ -75,7 +75,7 @@ public class RoomCompanyController {
 
     }
 
-    @RequestMapping(value = "/company/enterprise", method = RequestMethod.GET)
+    @RequestMapping(value = "/enterprise", method = RequestMethod.GET)
     @ApiOperation(value = "获取全部企业信息列表包括管委会", notes = "参数包括：无")
     public ResultBean<List<EnterpriseInformation>> getEnterpriseInformationList() {
 
@@ -83,7 +83,7 @@ public class RoomCompanyController {
 
     }
 
-    @RequestMapping(value = "/company/building", method = RequestMethod.GET)
+    @RequestMapping(value = "/building", method = RequestMethod.GET)
     @ApiOperation(value = "获取全部房区的列表", notes = "参数包括：无")
     public ResultBean<List<Building>> getBuildingList() {
 

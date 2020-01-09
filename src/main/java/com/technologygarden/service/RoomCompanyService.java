@@ -1,10 +1,8 @@
 package com.technologygarden.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.Room;
-import com.technologygarden.entity.RoomCompany;
 
 import java.util.List;
 

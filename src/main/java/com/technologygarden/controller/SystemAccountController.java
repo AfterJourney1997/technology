@@ -29,7 +29,7 @@ public class SystemAccountController {
         this.systemAccountService = systemAccountService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取全部管理员账号列表", notes = "参数包括：页数、每页数量")
     public ResultBean<?> getAllAccount(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
@@ -37,7 +37,7 @@ public class SystemAccountController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增管理员账号，密码默认为123456", notes = "参数包括：管理员账号")
     public ResultBean<?> insertAdmin(@NonNull String account){
 
@@ -45,7 +45,7 @@ public class SystemAccountController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除管理员账号", notes = "参数包括：管理员账号主键id")
     public ResultBean<?> deleteAdmin(@NonNull Integer id){
 

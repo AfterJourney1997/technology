@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/gardenManage")
+@RequestMapping(value = "/gardenManage/powerLoad")
 @Api(tags = "园区管理 / 用电负荷接口", value = "GardenManagePowerLoadController")
 public class GardenManagePowerLoadController {
 
@@ -32,7 +32,7 @@ public class GardenManagePowerLoadController {
         this.enterpriseInformationService = enterpriseInformationService;
     }
 
-    @RequestMapping(value = "/powerLoad", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取用电负荷", notes = "参数包括：页数，每页数量")
     public ResultBean<PageInfo<?>> getPowerLoadListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
@@ -40,7 +40,7 @@ public class GardenManagePowerLoadController {
 
     }
 
-    @RequestMapping(value = "/powerLoad", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增用电负荷", notes = "参数包括：用电负荷对象，除主键id外其他均必填（startTime必须小于endTime）")
     public ResultBean<?> insertPowerLoad(@RequestBody PowerLoad powerLoad) {
 
@@ -48,7 +48,7 @@ public class GardenManagePowerLoadController {
 
     }
 
-    @RequestMapping(value = "/powerLoad", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除用电负荷", notes = "参数包括：用电负荷主键id")
     public ResultBean<?> deletePowerLoadById(@NonNull Integer powerLoadId) {
 
@@ -56,7 +56,7 @@ public class GardenManagePowerLoadController {
 
     }
 
-    @RequestMapping(value = "/powerLoad", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改用电负荷", notes = "参数包括：用电负荷对象，主键id必填（startTime必须小于endTime）")
     public ResultBean<?> updatePowerLoadById(@RequestBody PowerLoad powerLoad) {
 
@@ -64,7 +64,7 @@ public class GardenManagePowerLoadController {
 
     }
 
-    @RequestMapping(value = "/powerLoad/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索用电负荷", notes = "参数包括：页数，每页数量，房间id，房区id，企业名称")
     public ResultBean<PageInfo<?>> searchPowerLoad(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer roomId, Integer buildingId, String companyName) {
 
@@ -72,7 +72,7 @@ public class GardenManagePowerLoadController {
 
     }
 
-    @RequestMapping(value = "/powerLoad/room", method = RequestMethod.GET)
+    @RequestMapping(value = "/room", method = RequestMethod.GET)
     @ApiOperation(value = "根据企业id和房区id获取状态房间", notes = "参数包括：企业id，房区id（不填即为查询全部，如填写需按顺序，不填的填null）")
     public ResultBean<?> getRoomEntered(Integer companyId, Integer buildingId) {
 
@@ -80,7 +80,7 @@ public class GardenManagePowerLoadController {
 
     }
 
-    @RequestMapping(value = "/powerLoad/building", method = RequestMethod.GET)
+    @RequestMapping(value = "/building", method = RequestMethod.GET)
     @ApiOperation(value = "根据房区id获取房区", notes = "参数包括：房区id（不填即为查询全部）")
     public ResultBean<?> getBuildingById(Integer buildingId) {
 
@@ -88,7 +88,7 @@ public class GardenManagePowerLoadController {
 
     }
 
-    @RequestMapping(value = "/powerLoad/company", method = RequestMethod.GET)
+    @RequestMapping(value = "/company", method = RequestMethod.GET)
     @ApiOperation(value = "获取全部企业包括管委会", notes = "参数包括：")
     public ResultBean<?> getAllCompany() {
 

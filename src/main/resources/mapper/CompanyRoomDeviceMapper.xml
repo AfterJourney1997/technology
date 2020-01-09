@@ -70,7 +70,7 @@
     where crd_id = #{crdId,jdbcType=INTEGER}
   </update>
 
-  <select id="selectWithInfoByPage" resultMap="AssetCountWithInfo">
+  <select id="selectWithInfoList" resultMap="AssetCountWithInfo">
     SELECT
       crd.*,
       b.*,
@@ -145,7 +145,7 @@
     </association>
   </resultMap>
 
-  <select id="searchAssetCountByPage" resultMap="AssetCountWithInfo">
+  <select id="searchAssetCountList" resultMap="AssetCountWithInfo">
     SELECT
       crd.*,
       b.*,

@@ -17,7 +17,7 @@ import javax.validation.Valid;
 @CrossOrigin
 @RestController
 //@RequiresPermissions("/system/jobTitle")
-@RequestMapping(value = "/system")
+@RequestMapping(value = "/system/jobTitle")
 @Api(tags = "系统配置 / 职称管理接口", value = "SystemJobTitleController")
 public class SystemJobTitleController {
 
@@ -28,7 +28,7 @@ public class SystemJobTitleController {
         this.systemJobTitleService = systemJobTitleService;
     }
 
-    @RequestMapping(value = "/jobTitle", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取职称列表", notes = "参数包括：页数、每页数量")
     public ResultBean<PageInfo<?>> getSystemJobTitleListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
@@ -36,7 +36,7 @@ public class SystemJobTitleController {
 
     }
 
-    @RequestMapping(value = "/jobTitle", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增职称", notes = "参数包括：职称对象")
     public ResultBean<?> insertSystemJobTitle(@Valid @RequestBody JobTitle jobTitle, BindingResult errors) {
 
@@ -49,7 +49,7 @@ public class SystemJobTitleController {
 
     }
 
-    @RequestMapping(value = "/jobTitle", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除职称", notes = "参数包括：职称主键id")
     public ResultBean<?> deleteSystemJobTitleById(@NonNull Integer jobTitleId) {
 
@@ -57,7 +57,7 @@ public class SystemJobTitleController {
 
     }
 
-    @RequestMapping(value = "/jobTitle", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改职称", notes = "参数包括：职称对象，主键必填，其他选填")
     public ResultBean<?> updateSystemJobTitleById(@RequestBody JobTitle jobTitle) {
 
@@ -65,7 +65,7 @@ public class SystemJobTitleController {
 
     }
 
-    @RequestMapping(value = "/jobTitle/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页获取职称列表", notes = "参数包括：页数、每页数量、职称")
     public ResultBean<PageInfo<?>> searchSystemJobTitleListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String jobTitle) {
 

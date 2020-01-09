@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/asset")
+@RequestMapping(value = "/asset/assetCountForm")
 @Api(tags = "资产管理 / 资产统计报表接口", value = "AssetAssetCountFormController")
 public class AssetAssetCountFormController {
 
@@ -24,7 +24,7 @@ public class AssetAssetCountFormController {
         this.assetAssetCountFormService = assetAssetCountFormService;
     }
 
-    @GetMapping("/assetCountForm/category")
+    @GetMapping("/category")
     @ApiOperation(value = "获取类别的资产统计报表", notes = "参数包括：无")
     public ResultBean<?> getAssetCountCategoryFormJSON(){
 

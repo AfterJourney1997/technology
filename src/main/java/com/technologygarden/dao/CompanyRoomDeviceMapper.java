@@ -23,9 +23,9 @@ public interface CompanyRoomDeviceMapper {
 
     int updateNumber(@Param("crdId") Integer crdId, @Param("number") Integer number);
 
-    Page<CompanyRoomDevice> selectWithInfoByPage();
+    List<CompanyRoomDevice> selectWithInfoList();
 
-    Page<CompanyRoomDevice> searchAssetCountByPage(@Param("companyName") String companyName, @Param("roomName") String roomName, @Param("categoryId") Integer categoryId);
+    List<CompanyRoomDevice> searchAssetCountList(@Param("companyName") String companyName, @Param("roomName") String roomName, @Param("categoryId") Integer categoryId);
 
     List<CompanyRoomDevice> selectWithInfoPageByRoomIdCompanyId(@Param("roomId") Integer roomId, @Param("companyId") Integer companyId);
 

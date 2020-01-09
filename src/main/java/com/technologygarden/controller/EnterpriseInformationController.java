@@ -41,8 +41,8 @@ public class EnterpriseInformationController {
     @RequestMapping(value = "/company", method = RequestMethod.POST)
     @ApiOperation(value = "企业入住申请提交", notes = "参数包括：EnterpriseInformation对象包含当前登录对象的infoid，和法人信息")
     public ResultBean<?> insertApplicationAdmission(MultipartFile[] blFile, String enterpriseInformation) throws IOException {
-        EnterpriseInformation enterprise= JSONArray.parseObject(enterpriseInformation,EnterpriseInformation.class);
-        return enterpriseInformationService.updateByPrimaryKey(blFile,enterprise);
+        EnterpriseInformation enterprise = JSONArray.parseObject(enterpriseInformation, EnterpriseInformation.class);
+        return enterpriseInformationService.updateByPrimaryKey(blFile, enterprise);
     }
 //    //企业信息完善
 //    @RequestMapping(value = "/information", method = RequestMethod.POST)

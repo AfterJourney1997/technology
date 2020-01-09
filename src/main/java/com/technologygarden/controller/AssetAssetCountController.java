@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
-//@RequiresPermissions("/asset/assetCount")
-@RequestMapping(value = "/asset")
+@RequestMapping(value = "/asset/assetCount")
 @Api(tags = "资产管理 / 资产统计接口", value = "AssetAssetCountController")
 public class AssetAssetCountController {
 
@@ -24,7 +23,7 @@ public class AssetAssetCountController {
         this.assetAssetCountService = assetAssetCountService;
     }
 
-    @RequestMapping(value = "/assetCount", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取资产统计列表", notes = "参数包括：页数，每页数量，均必填")
     public ResultBean<PageInfo<?>> getAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize){
 
@@ -32,7 +31,15 @@ public class AssetAssetCountController {
 
     }
 
-    @RequestMapping(value = "/assetCount/search", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ApiOperation(value = "回收资产", notes = "参数包括：资产分配对象，只需资产分配id crdId，设备id crdDeviceId，设备分配数量 crdNumber")
+    public ResultBean<?> deleteAssetCount(@RequestBody CompanyRoomDevice companyRoomDevice){
+
+        return assetAssetCountService.deleteAssetCount(companyRoomDevice);
+
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiOperation(value = "分页搜索资产统计列表", notes = "参数包括：页数，每页数量，企业名称，房间名称，类别id")
     public ResultBean<PageInfo<?>> searchAssetCountByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String companyName, String roomName, Integer categoryId){
 
@@ -40,13 +47,7 @@ public class AssetAssetCountController {
 
     }
 
-    @RequestMapping(value = "/assetCount", method = RequestMethod.DELETE)
-    @ApiOperation(value = "回收资产", notes = "参数包括：资产分配对象，只需资产分配id crdId，设备id crdDeviceId，设备分配数量 crdNumber")
-    public ResultBean<?> deleteAssetCount(@RequestBody CompanyRoomDevice companyRoomDevice){
 
-        return assetAssetCountService.deleteAssetCount(companyRoomDevice);
-
-    }
 
 
 }

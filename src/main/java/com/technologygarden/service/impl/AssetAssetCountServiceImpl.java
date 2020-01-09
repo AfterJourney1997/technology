@@ -1,7 +1,5 @@
 package com.technologygarden.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.dao.CompanyRoomDeviceMapper;
 import com.technologygarden.dao.DeviceMapper;
@@ -10,10 +8,13 @@ import com.technologygarden.entity.Device;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.service.AssetAssetCountService;
+import com.technologygarden.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Service("assetAssetCountService")
@@ -32,18 +33,16 @@ public class AssetAssetCountServiceImpl implements AssetAssetCountService {
     @Override
     public ResultBean<PageInfo<?>> getAssetCountByPage(Integer pageNum, Integer pageSize) {
 
-        PageHelper.startPage(pageNum, pageSize);
-        Page<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.selectWithInfoByPage();
-        PageInfo<?> pageInfo = new PageInfo<>(companyRoomDevices);
+        List<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.selectWithInfoList();
+        PageInfo<CompanyRoomDevice> pageInfo = PageUtil.startPage(companyRoomDevices, pageNum, pageSize);
         return new ResultBean<>(pageInfo);
     }
 
     @Override
     public ResultBean<PageInfo<?>> searchAssetCountByPage(Integer pageNum, Integer pageSize, String companyName, String roomName, Integer categoryId) {
 
-        PageHelper.startPage(pageNum, pageSize);
-        Page<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.searchAssetCountByPage(companyName, roomName, categoryId);
-        PageInfo<?> pageInfo = new PageInfo<>(companyRoomDevices);
+        List<CompanyRoomDevice> companyRoomDevices = companyRoomDeviceMapper.searchAssetCountList(companyName, roomName, categoryId);
+        PageInfo<CompanyRoomDevice> pageInfo = PageUtil.startPage(companyRoomDevices, pageNum, pageSize);
         return new ResultBean<>(pageInfo);
     }
 

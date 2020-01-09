@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/gardenManage")
+@RequestMapping(value = "/gardenManage/institution")
 @Api(tags = "园区管理 / 园区制度接口", value = "GardenManageGardenInstitutionController")
 public class GardenManageGardenInstitutionController {
 
@@ -28,7 +28,7 @@ public class GardenManageGardenInstitutionController {
         this.gardenManageGardenInstitutionService = gardenManageGardenInstitutionService;
     }
 
-    @RequestMapping(value = "/institution", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取园区制度", notes = "参数包括：页数，每页数量，均必填（kind 1为园区，2为企业）")
     public ResultBean<PageInfo<?>> getGardenInstitutionListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
@@ -36,7 +36,7 @@ public class GardenManageGardenInstitutionController {
 
     }
 
-    @RequestMapping(value = "/institution", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增园区制度", notes = "参数包括：文件，园区制度对象json")
     public ResultBean<?> insertGardenInstitution(MultipartFile file, String gardenInstitution) {
 
@@ -45,7 +45,7 @@ public class GardenManageGardenInstitutionController {
 
     }
 
-    @RequestMapping(value = "/institution", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除园区制度", notes = "参数包括：页数，每页数量，均必填")
     public ResultBean<?> deleteGardenInstitutionById(Integer gardenInstitutionId) {
 
@@ -53,7 +53,7 @@ public class GardenManageGardenInstitutionController {
 
     }
 
-    @RequestMapping(value = "/institution", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改园区制度", notes = "参数包括：文件，园区制度对象json")
     public ResultBean<?> updateGardenInstitutionById(MultipartFile file, String gardenInstitution) {
 
@@ -62,7 +62,7 @@ public class GardenManageGardenInstitutionController {
 
     }
 
-    @RequestMapping(value = "/institution/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索园区制度", notes = "参数包括：页数，每页数量，制度标题，制度类别id")
     public ResultBean<PageInfo<?>> searchGardenInstitutionByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String institutionTitle, Integer kindId) {
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 //@RequiresPermissions("/system/activityCategory")
-@RequestMapping(value = "/system")
+@RequestMapping(value = "/system/activityCategory")
 @Api(tags = "系统配置 / 活动类别管理接口", value = "SystemActivityCategoryController")
 public class SystemActivityCategoryController {
     
@@ -24,7 +24,7 @@ public class SystemActivityCategoryController {
         this.systemActivityCategoryService = systemActivityCategoryService;
     }
 
-    @RequestMapping(value = "/activityCategory", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "分页获取活动类别列表", notes = "参数包括：页数、每页数量")
     public ResultBean<PageInfo<?>> getSystemActivityCategoryListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize) {
 
@@ -32,7 +32,7 @@ public class SystemActivityCategoryController {
 
     }
 
-    @RequestMapping(value = "/activityCategory", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "新增活动类别", notes = "参数包括：活动类别对象")
     public ResultBean<?> insertSystemActivityCategory(@RequestBody ActivityCategory activityCategory) {
 
@@ -40,7 +40,7 @@ public class SystemActivityCategoryController {
 
     }
 
-    @RequestMapping(value = "/activityCategory", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     @ApiOperation(value = "删除活动类别", notes = "参数包括：活动类别id")
     public ResultBean<?> deleteSystemActivityCategoryById(@NonNull Integer id) {
 
@@ -48,7 +48,7 @@ public class SystemActivityCategoryController {
 
     }
 
-    @RequestMapping(value = "/activityCategory", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改活动", notes = "参数包括：活动类别对象")
     public ResultBean<?> updateSystemActivityCategoryById(@RequestBody ActivityCategory activityCategory) {
 
@@ -56,7 +56,7 @@ public class SystemActivityCategoryController {
 
     }
 
-    @RequestMapping(value = "/activityCategory/search", method = RequestMethod.GET)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     @ApiOperation(value = "搜索活动类别", notes = "参数包括：页数、每页数量、活动类别名")
     public ResultBean<PageInfo<?>> searchSystemActivityCategoryByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, String category) {
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/enterprise")
+@RequestMapping(value = "/enterprise/roomInfo")
 @Api(tags = "企业房间信息接口", value = "CompanyInfoRoomInfoController")
 public class CompanyInfoRoomInfoController {
 
@@ -29,8 +29,7 @@ public class CompanyInfoRoomInfoController {
         this.companyInfoRoomInfoService = companyInfoRoomInfoService;
     }
 
-
-    @RequestMapping(value = "/roomInfo", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "根据企业id获取企业房间列表", notes = "参数包括：企业id")
     public ResultBean<List<Room>> getCompanyRoomList(@NonNull Integer companyId){
 
@@ -38,7 +37,7 @@ public class CompanyInfoRoomInfoController {
 
     }
 
-    @RequestMapping(value = "/roomInfo/device", method = RequestMethod.GET)
+    @RequestMapping(value = "/device", method = RequestMethod.GET)
     @ApiOperation(value = "根据房间id获取企业房间设备列表", notes = "参数包括：页码，页面大小，房间id（房间id为空是查询当前登录企业账号全部房间的设备）")
     public ResultBean<PageInfo<?>> getCompanyRoomDeviceByRoomId(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer roomId){
 

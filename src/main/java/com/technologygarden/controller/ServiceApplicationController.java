@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping(value = "/serviceApplication")
 @Api(tags = "服务申报接口", value = "ServiceApplicationController")
 public class ServiceApplicationController {
+
     private final ServiceApplicationService serviceApplicationService;
     private final MaintainService maintainService;
 
