@@ -47,7 +47,7 @@
   </select>
 
 
-    <select id="selectDeviceListWithPropertyByPage" resultMap="DeviceWithCategoryProperty">
+    <select id="selectDeviceListWithPropertyList" resultMap="DeviceWithCategoryProperty">
     SELECT
 	d.id AS d_id,
 	d.category_id AS d_category_id,
@@ -124,7 +124,7 @@
         where device.id = #{deviceId,jdbcType=INTEGER}
     </update>
 
-    <select id="searchDeviceListWithPropertyByPage" resultMap="DeviceWithCategoryProperty">
+    <select id="searchDeviceListWithPropertyList" resultMap="DeviceWithCategoryProperty">
         SELECT
         d.id AS d_id,
         d.category_id AS d_category_id,
@@ -170,7 +170,7 @@
 
 
 
-    <select id="selectFurnitureListWithPropertyByPage" resultMap="DeviceWithCategoryProperty">
+    <select id="selectFurnitureListWithPropertyList" resultMap="DeviceWithCategoryProperty">
         SELECT
         d.id AS d_id,
         d.category_id AS d_category_id,
@@ -201,7 +201,7 @@
         and d.kind = 2
     </select>
 
-    <select id="searchFurnitureListWithPropertyByPage" resultMap="DeviceWithCategoryProperty">
+    <select id="searchFurnitureListWithPropertyList" resultMap="DeviceWithCategoryProperty">
         SELECT
         d.id AS d_id,
         d.category_id AS d_category_id,

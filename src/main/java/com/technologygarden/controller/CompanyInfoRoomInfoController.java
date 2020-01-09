@@ -40,11 +40,11 @@ public class CompanyInfoRoomInfoController {
 
     @RequestMapping(value = "/roomInfo/device", method = RequestMethod.GET)
     @ApiOperation(value = "根据房间id获取企业房间设备列表", notes = "参数包括：页码，页面大小，房间id（房间id为空是查询当前登录企业账号全部房间的设备）")
-    public ResultBean<List<CompanyRoomDevice>> getCompanyRoomDeviceByRoomId(Integer roomId){
+    public ResultBean<PageInfo<?>> getCompanyRoomDeviceByRoomId(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer roomId){
 
         Subject currentUser = SecurityUtils.getSubject();
         Role role = (Role) currentUser.getPrincipal();
-        return companyInfoRoomInfoService.getCompanyRoomDeviceByRoomIdCompanyId(roomId, role.getEnterpriseInformation().getCId());
+        return companyInfoRoomInfoService.getCompanyRoomDeviceByRoomIdCompanyId(pageNum, pageSize, roomId, role.getEnterpriseInformation().getCId());
 
     }
 }

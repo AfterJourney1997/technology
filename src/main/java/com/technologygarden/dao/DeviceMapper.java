@@ -19,18 +19,18 @@ public interface DeviceMapper {
 
     int updateByPrimaryKey(Device record);
 
-    Page<Device> selectDeviceListWithPropertyByPage();
+    List<Device> selectDeviceListWithPropertyList();
 
     int updateByIdDynamic(Device device);
 
-    Page<Device> searchDeviceListWithPropertyByPage(@Param("categoryId") Integer categoryId, @Param("deviceName") String deviceName, @Param("owner") Integer owner);
+    List<Device> searchDeviceListWithPropertyList(@Param("categoryId") Integer categoryId, @Param("deviceName") String deviceName, @Param("owner") Integer owner);
 
 
 
 
-    Page<Device> selectFurnitureListWithPropertyByPage();
+    List<Device> selectFurnitureListWithPropertyList();
 
-    Page<Device> searchFurnitureListWithPropertyByPage(@Param("categoryId") Integer categoryId, @Param("furnitureName") String furnitureName, @Param("owner") Integer owner);
+    List<Device> searchFurnitureListWithPropertyList(@Param("categoryId") Integer categoryId, @Param("furnitureName") String furnitureName, @Param("owner") Integer owner);
 
 
 }
