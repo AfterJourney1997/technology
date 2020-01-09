@@ -63,7 +63,7 @@ public class SystemAccountController {
 
     @RequestMapping(value = "/rights", method = RequestMethod.POST)
     @ApiOperation(value = "分配权限到指定账号", notes = "参数包括：账号主键 id，权限idList rightsList，以JSON传过来即可")
-    public ResultBean<?> distributeRightsToAccount(String JSONString){
+    public ResultBean<?> distributeRightsToAccount(@RequestBody String JSONString){
 
         JSONObject jsonObject = JSONObject.parseObject(JSONString);
         Integer id = jsonObject.getInteger("id");
@@ -73,7 +73,7 @@ public class SystemAccountController {
         // 判断参数是否缺失
         if (id == null || rightsList == null){
 
-            log.warn("分配权限 参数缺失。");
+            log.warn("分配权限 参数缺失 ---> [{}]", JSONString);
             return new ResultBean<>(ResultStatus.PARAMETER_ERROR);
         }
         return systemAccountService.distributeRightsToAccount(id, rightsList);
