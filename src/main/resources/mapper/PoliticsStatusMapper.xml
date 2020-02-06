@@ -6,34 +6,34 @@
     <result column="z_name" jdbcType="VARCHAR" property="zName" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.politics_status
+    delete from politics_status
     where z_Id = #{zId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.PoliticsStatus">
-    insert into technology.politics_status (z_Id, z_name)
+    insert into politics_status (z_Id, z_name)
     values (#{zId,jdbcType=INTEGER}, #{zName,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PoliticsStatus">
-    update technology.politics_status
+    update politics_status
     set z_name = #{zName,jdbcType=VARCHAR}
     where z_Id = #{zId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select z_Id, z_name
-    from technology.politics_status
+    from politics_status
     where z_Id = #{zId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select z_Id, z_name
-    from technology.politics_status
+    from politics_status
   </select>
   <select id="selectByPage" resultMap="BaseResultMap">
     select z_Id, z_name
-    from technology.politics_status
+    from politics_status
   </select>
   <select id="searchPoliticsStatusByName" resultMap="BaseResultMap">
     select z_Id, z_name
-    from technology.politics_status
+    from politics_status
     where z_name like concat('%', #{politicsStatusName,jdbcType=VARCHAR}, '%')
   </select>
 </mapper>

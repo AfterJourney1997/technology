@@ -6,35 +6,35 @@
     <result column="jt_title" jdbcType="VARCHAR" property="jtTitle" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.job_title
+    delete from job_title
     where jt_id = #{jtId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.JobTitle">
-    insert into technology.job_title (jt_title)
+    insert into job_title (jt_title)
     values ( #{jtTitle,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.JobTitle">
-    update technology.job_title
+    update job_title
     set jt_title = #{jtTitle,jdbcType=VARCHAR}
     where jt_id = #{jtId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select jt_id, jt_title
-    from technology.job_title
+    from job_title
     where jt_id = #{jtId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select jt_id, jt_title
-    from technology.job_title
+    from job_title
   </select>
 
   <select id="selectSystemJobTitleListByPage" resultMap="BaseResultMap">
     select jt_id, jt_title
-    from technology.job_title
+    from job_title
   </select>
 
   <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.JobTitle">
-    update technology.job_title
+    update job_title
     <set>
       <if test="jtTitle != null and jtTitle != ''">
         jt_title = #{jtTitle,jdbcType=VARCHAR}
@@ -45,7 +45,7 @@
 
   <select id="searchSystemJobTitleListByPage" resultMap="BaseResultMap">
     select jt_id, jt_title
-    from technology.job_title
+    from job_title
     <where>
       <if test="jobTitle != null and jobTitle != ''">
         and jt_title like concat('%', #{jobTitle,jdbcType=VARCHAR}, '%')

@@ -3,6 +3,7 @@ package com.technologygarden.util;
 
 import com.github.pagehelper.PageInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,11 +12,13 @@ public class PageUtil {
 
     public static <E> PageInfo<E> startPage(List<E> list, Integer pageNum, Integer pageSize) {
 
-        if (list == null) {
-            return null;
-        }
-        if (list.size() == 0) {
-            return null;
+        PageInfo<E> pageInfo = new PageInfo<>();
+
+        if (list == null || list.size() == 0) {
+
+            pageInfo.setList(new ArrayList<>());
+            return pageInfo;
+
         }
 
         // 记录总数
@@ -46,7 +49,6 @@ public class PageUtil {
 
         List<E> pageList = list.subList(fromIndex, toIndex);
 
-        PageInfo<E> pageInfo = new PageInfo<>();
         pageInfo.setTotal(count);
         pageInfo.setList(pageList);
 

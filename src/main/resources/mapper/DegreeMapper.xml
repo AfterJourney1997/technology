@@ -6,34 +6,34 @@
     <result column="x_name" jdbcType="VARCHAR" property="xName" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.degree
+    delete from degree
     where x_Id = #{xId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Degree">
-    insert into technology.degree (x_Id, x_name)
+    insert into degree (x_Id, x_name)
     values (#{xId,jdbcType=INTEGER}, #{xName,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Degree">
-    update technology.degree
+    update degree
     set x_name = #{xName,jdbcType=VARCHAR}
     where x_Id = #{xId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select x_Id, x_name
-    from technology.degree
+    from degree
     where x_Id = #{xId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select x_Id, x_name
-    from technology.degree
+    from degree
   </select>
   <select id="selectByPage" resultMap="BaseResultMap">
     select x_Id, x_name
-    from technology.degree
+    from degree
   </select>
   <select id="searchDegreeName" resultMap="BaseResultMap">
     select x_Id, x_name
-    from technology.degree
+    from degree
     where x_name like concat('%', #{degreeName,jdbcType=VARCHAR}, '%')
   </select>
 </mapper>

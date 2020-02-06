@@ -9,17 +9,17 @@
     <result column="ce_content" jdbcType="LONGVARCHAR" property="ceContent" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.condition_enter
+    delete from condition_enter
     where ce_id = #{ceId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ConditionEnter">
-    insert into technology.condition_enter (ce_title, ce_time,
+    insert into condition_enter (ce_title, ce_time,
       ce_file, ce_content)
     values (#{ceTitle,jdbcType=VARCHAR}, #{ceTime,jdbcType=DATE},
       #{ceFile,jdbcType=VARCHAR}, #{ceContent,jdbcType=LONGVARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ConditionEnter">
-    update technology.condition_enter
+    update condition_enter
     set ce_title = #{ceTitle,jdbcType=VARCHAR},
       ce_time = #{ceTime,jdbcType=DATE},
       ce_file = #{ceFile,jdbcType=VARCHAR},
@@ -28,21 +28,21 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select ce_id, ce_title, ce_time, ce_file, ce_content
-    from technology.condition_enter
+    from condition_enter
     where ce_id = #{ceId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select ce_id, ce_title, ce_time, ce_file, ce_content
-    from technology.condition_enter
+    from condition_enter
   </select>
 
   <select id="selectConditionEnterListByPage" resultMap="BaseResultMap">
     select *
-    from technology.condition_enter
+    from condition_enter
   </select>
 
   <update id="updateConditionEnterByIdDynamic" parameterType="com.technologygarden.entity.ConditionEnter">
-    update technology.condition_enter
+    update condition_enter
     <set>
       <if test="ceTitle != null and ceTitle != ''">
         condition_enter.ce_title = #{ceTitle,jdbcType=VARCHAR},
@@ -62,7 +62,7 @@
 
   <select id="searchConditionEnterListByPage" resultMap="BaseResultMap">
     select *
-    from technology.condition_enter
+    from condition_enter
     <where>
       <if test="title != null and title != ''">
         and condition_enter.ce_title like concat('%', #{title,jdbcType=VARCHAR}, '%')

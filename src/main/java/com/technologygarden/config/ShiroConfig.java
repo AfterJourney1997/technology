@@ -75,6 +75,7 @@ public class ShiroConfig {
         right.put("/image/**", "anon");
         right.put("/downloadFile/**", "anon");
         right.put("/downZip/**", "anon");
+        right.put("/index.html", "anon");
 
         // swagger权限
         right.put("/swagger-ui.html", "anon");

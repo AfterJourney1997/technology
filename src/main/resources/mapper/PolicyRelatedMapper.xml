@@ -11,12 +11,12 @@
     <result column="pr_content" jdbcType="LONGVARCHAR" property="prContent" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.policy_related
+    delete from policy_related
     where pr_id = #{prId,jdbcType=INTEGER}
   </delete>
 
   <insert id="insert" parameterType="com.technologygarden.entity.PolicyRelated">
-    insert into technology.policy_related (pr_title, pr_level,
+    insert into policy_related (pr_title, pr_level,
       pr_time, pr_serial_number, pr_file, pr_content
       )
     values
@@ -27,7 +27,7 @@
   </insert>
 
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PolicyRelated">
-    update technology.policy_related
+    update policy_related
     set pr_title = #{prTitle,jdbcType=VARCHAR},
       pr_level = #{prLevel,jdbcType=INTEGER},
       pr_time = #{prTime,jdbcType=DATE},
@@ -39,23 +39,23 @@
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
-    from technology.policy_related
+    from policy_related
     where pr_id = #{prId,jdbcType=INTEGER}
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
     select *
-    from technology.policy_related
+    from policy_related
   </select>
 
   <select id="getPolicyRelatedListByPage" resultMap="BaseResultMap">
     select *
-    from technology.policy_related
+    from policy_related
   </select>
 
 
   <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.PolicyRelated">
-    update technology.policy_related
+    update policy_related
     <set>
       <if test="prTitle != null and prTitle != ''">
         policy_related.pr_title = #{prTitle,jdbcType=VARCHAR},
@@ -81,7 +81,7 @@
 
   <select id="searchPolicyRelatedListByPage" resultMap="BaseResultMap">
     select *
-    from technology.policy_related
+    from policy_related
     <where>
       <if test="level != null">
         and policy_related.pr_level = #{level,jdbcType=INTEGER}

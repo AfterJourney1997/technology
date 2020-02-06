@@ -6,36 +6,36 @@
     <result column="ac_category" jdbcType="VARCHAR" property="acCategory" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.activity_category
+    delete from activity_category
     where ac_id = #{acId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ActivityCategory">
-    insert into technology.activity_category ( ac_category)
+    insert into activity_category ( ac_category)
     values ( #{acCategory,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ActivityCategory">
-    update technology.activity_category
+    update activity_category
     set ac_category = #{acCategory,jdbcType=VARCHAR}
     where ac_id = #{acId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select ac_id, ac_category
-    from technology.activity_category
+    from activity_category
     where ac_id = #{acId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select ac_id, ac_category
-    from technology.activity_category
+    from activity_category
   </select>
 
   <select id="selectSystemActivityCategoryListByPage" resultMap="BaseResultMap">
     select ac_id, ac_category
-    from technology.activity_category
+    from activity_category
   </select>
 
   <select id="searchSystemActivityCategoryByPage" resultMap="BaseResultMap">
     select ac_id, ac_category
-    from technology.activity_category
+    from activity_category
     <where>
       <if test="category != null and category != ''">
         and activity_category.ac_category like concat('%', #{category,jdbcType=VARCHAR}, '%')

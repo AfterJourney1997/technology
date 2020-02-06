@@ -10,11 +10,11 @@
     <result column="gi_content" jdbcType="LONGVARCHAR" property="giContent" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.garden_institution
+    delete from garden_institution
     where gi_id = #{giId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.GardenInstitution">
-    insert into technology.garden_institution (gi_title, gi_time,
+    insert into garden_institution (gi_title, gi_time,
       gi_kind, gi_file, gi_content
       )
     values (#{giTitle,jdbcType=VARCHAR}, #{giTime,jdbcType=DATE},
@@ -22,7 +22,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.GardenInstitution">
-    update technology.garden_institution
+    update garden_institution
     set gi_title = #{giTitle,jdbcType=VARCHAR},
       gi_time = #{giTime,jdbcType=DATE},
       gi_kind = #{giKind,jdbcType=INTEGER},
@@ -32,20 +32,20 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select gi_id, gi_title, gi_time, gi_kind, gi_file, gi_content
-    from technology.garden_institution
+    from garden_institution
     where gi_id = #{giId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select gi_id, gi_title, gi_time, gi_kind, gi_file, gi_content
-    from technology.garden_institution
+    from garden_institution
   </select>
   <select id="selectAllByPage" resultMap="BaseResultMap">
     select *
-    from technology.garden_institution
+    from garden_institution
   </select>
   
   <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.GardenInstitution">
-    update technology.garden_institution
+    update garden_institution
     <set>
       <if test="giTitle != null and giTitle != ''">
         gi_title = #{giTitle,jdbcType=VARCHAR},
@@ -67,7 +67,7 @@
   </update>
   <select id="searchGardenInstitutionByPage" resultMap="BaseResultMap">
     select *
-    from technology.garden_institution
+    from garden_institution
     <where>
       <if test="institutionTitle != null and institutionTitle != ''">
         and gi_title like concat('%', #{institutionTitle,jdbcType=VARCHAR}, '%')

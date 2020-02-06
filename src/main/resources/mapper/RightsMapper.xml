@@ -9,17 +9,17 @@
     <result column="r_menu_id" jdbcType="INTEGER" property="rMenuId" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.rights
+    delete from rights
     where r_id = #{rId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Rights">
-    insert into technology.rights (r_id, r_perms, r_url, 
+    insert into rights (r_id, r_perms, r_url, 
       r_description, r_menu_id)
     values (#{rId,jdbcType=INTEGER}, #{rPerms,jdbcType=VARCHAR}, #{rUrl,jdbcType=VARCHAR}, 
       #{rDescription,jdbcType=VARCHAR}, #{rMenuId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Rights">
-    update technology.rights
+    update rights
     set r_perms = #{rPerms,jdbcType=VARCHAR},
       r_url = #{rUrl,jdbcType=VARCHAR},
       r_description = #{rDescription,jdbcType=VARCHAR},
@@ -28,17 +28,17 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
-    from technology.rights
+    from rights
     where r_id = #{rId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select *
-    from technology.rights
+    from rights
   </select>
 
   <select id="selectRightsByRoleId" resultMap="BaseResultMap">
     select rights.*
-    from technology.rights, technology.role_rights
+    from rights, role_rights
     where role_rights.rr_role_id = #{roleId,jdbcType=INTEGER}
     and rights.r_id = role_rights.rr_rights_id
   </select>

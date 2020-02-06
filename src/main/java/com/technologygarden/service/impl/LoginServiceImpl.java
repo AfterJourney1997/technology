@@ -45,15 +45,15 @@ public class LoginServiceImpl implements LoginService {
             subject.login(token);
         } catch (UnknownAccountException e) {
 
-            log.info(account + "：该账号不存在！");
+            log.info("该账号不存在 ---> [{}]", account);
             return new ResultBean<>(ResultStatus.UNKNOWN_ACCOUNT_ERROR);
         } catch (IncorrectCredentialsException e) {
 
-            log.info(account + "：该账号输入的密码错误！");
+            log.info("该账号输入的密码错误 ---> [{}]", account);
             return new ResultBean<>(ResultStatus.PASSWORD_ERROR);
         } catch (AuthenticationException e) {
 
-            log.error("登录错误：" + e.getMessage());
+            log.error("登录错误 ---> [{}]", e.getMessage());
             return new ResultBean<>(ResultStatus.PARAMETER_ERROR);
         }
 
@@ -71,7 +71,7 @@ public class LoginServiceImpl implements LoginService {
         Role role = roleMapper.selectByPrimaryKey(id);
 
         if(!oldPassword.equals(role.getPassword())){
-            log.warn("修改密码失败，输入的旧密码错误 ---> " + role);
+            log.warn("修改密码失败，输入的旧密码错误 ---> [{}]", role);
             return new ResultBean<>(ResultStatus.PARAMETER_ERROR);
         }
 

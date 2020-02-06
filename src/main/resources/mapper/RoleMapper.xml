@@ -9,21 +9,21 @@
     <result column="infoid" jdbcType="INTEGER" property="infoid" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.role
+    delete from role
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteBycId" parameterType="java.lang.Integer">
-    delete from technology.role
+    delete from role
     where infoid = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Role">
-    insert into technology.role (account, password,
+    insert into role (account, password,
       role, infoid)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{role,jdbcType=INTEGER}, #{infoid,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Role">
-    update technology.role
+    update role
     set account = #{account,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       role = #{role,jdbcType=INTEGER},
@@ -32,27 +32,27 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, account, password, role, infoid
-    from technology.role
+    from role
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, account, password, role, infoid
-    from technology.role
+    from role
   </select>
   <select id="selectBycId" resultMap="BaseResultMap">
     select id, account, password, role, infoid
-    from technology.role
+    from role
     where infoid = #{cId,jdbcType=INTEGER}
   </select>
 
   <select id="selectByAccount" resultMap="BaseResultMap">
     select *
-    from technology.role
+    from role
     where role.account = #{account,jdbcType=VARCHAR}
   </select>
 
   <update id="updateDynamic" parameterType="com.technologygarden.entity.Role">
-    update technology.role
+    update role
     <set>
       <if test="account != null and account != ''">
         role.account = #{account,jdbcType=VARCHAR},
@@ -72,7 +72,7 @@
 
   <select id="selectAllAdminWithoutPassword" resultMap="BaseResultMap">
     select r.id, r.account, r.role, r.infoid
-    from technology.role r
+    from role r
     where r.role = 1
   </select>
 </mapper>

@@ -43,7 +43,6 @@ public class MyRealm extends AuthorizingRealm {
         }
 
         Role role = (Role) getAvailablePrincipal(principalCollection);
-        log.info("shiro realm 鉴权 ---> " + role);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         Set<String> roleSet = new LinkedHashSet<>();
@@ -61,7 +60,6 @@ public class MyRealm extends AuthorizingRealm {
         if (role.getRole() == 2) {
 
             EnterpriseInformation companyInfo = role.getEnterpriseInformation();
-            log.info("企业鉴权 ---> {}", companyInfo);
 
             // 企业状态0为未申请，1为已申请，2为已审批，3为拒绝审批
             if (companyInfo.getCStatus() == 2) {
@@ -94,25 +92,25 @@ public class MyRealm extends AuthorizingRealm {
         ResultBean<Role> roleResultBean = roleService.getRoleByAccount(username);
         Role role = roleResultBean.getData();
 
+        // 账号不存在
         if (role == null) {
-            log.info(username + "：该账号不存在。");
             throw new UnknownAccountException(username + "：该账号不存在。");
         }
 
         // role为1该账户为管理员，需获取其权限列表
         if (role.getRole() == 1) {
             ResultBean<List<Rights>> rightsList = rightsService.getRightsByRoleId(role.getId());
+            log.info("[{}] 管理员登录 ---> [{}]", role.getAccount(), role);
             role.setRightsList(rightsList.getData());
-            log.info("[" + role.getAccount() + "] 管理员登录 ---> " + role);
-            log.info("[" + role.getAccount() + "] 管理员登录，获取对应权限 ---> " + rightsList.getData());
+            log.info("[{}] 管理员登录，获取对应权限 ---> [{}]", role.getAccount(), rightsList.getData());
         }
 
         // role为2该账户为企业，需获取该企业信息
         if (role.getRole() == 2) {
             ResultBean<EnterpriseInformation> companyInfo = enterpriseInformationService.getEnterpriseInformationById(role.getInfoid());
+            log.info("[{}] 企业登录 ---> [{}]", role.getAccount(), role);
             role.setEnterpriseInformation(companyInfo.getData());
-            log.info("[" + role.getAccount() + "] 企业登录 ---> " + role);
-            log.info("[" + role.getAccount() + "] 企业登录，获取对应信息 ---> " + companyInfo.getData());
+            log.info("[{}] 企业登录，获取对应信息 ---> [{}]", role.getAccount(), companyInfo.getData());
         }
 
         return new SimpleAuthenticationInfo(role, role.getPassword(), getName());

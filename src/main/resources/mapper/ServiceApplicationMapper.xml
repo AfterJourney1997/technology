@@ -10,21 +10,21 @@
     <result column="room_id" jdbcType="INTEGER" property="roomId" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.service_application
+    delete from service_application
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteBycId" parameterType="java.lang.Integer">
-    delete from technology.service_application
+    delete from service_application
     where c_Id = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ServiceApplication">
-    insert into technology.service_application (Id, maintain_id, date,
+    insert into service_application (Id, maintain_id, date,
       status, c_Id, room_id)
     values (#{id,jdbcType=INTEGER}, #{maintainId,jdbcType=INTEGER}, #{date,jdbcType=TIMESTAMP},
       #{status,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{roomId,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ServiceApplication">
-    update technology.service_application
+    update service_application
     set maintain_id = #{maintainId,jdbcType=INTEGER},
       date = #{date,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
@@ -34,25 +34,25 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, maintain_id, date, status, c_Id, room_id
-    from technology.service_application
+    from service_application
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select Id, maintain_id, date, status, c_Id, room_id
-    from technology.service_application
+    from service_application
   </select>
   <select id="getAllServiceApplication" resultMap="BaseResultMap">
     select Id, maintain_id, date, status, c_Id, room_id
-    from technology.service_application
+    from service_application
   </select>
   <select id="getServiceApplicationByPage" resultMap="BaseResultMap">
     select Id, maintain_id, date, status, c_Id, room_id
-    from technology.service_application
+    from service_application
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
   <select id="selectBymaintainId" resultMap="BaseResultMap">
     select Id, maintain_id, date, status, c_Id, room_id
-    from technology.service_application
+    from service_application
     where maintain_id = #{maintainId,jdbcType=INTEGER}
   </select>
 </mapper>

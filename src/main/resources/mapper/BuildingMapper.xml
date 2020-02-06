@@ -9,17 +9,17 @@
     <result column="money" jdbcType="REAL" property="money" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.building
+    delete from building
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Building">
-    insert into technology.building (id, name, area, 
+    insert into building (id, name, area, 
       createtime, money)
     values (#{id,jdbcType=INTEGER}, #{buildingName,jdbcType=VARCHAR}, #{area,jdbcType=REAL},
       #{createtime,jdbcType=DATE}, #{money,jdbcType=REAL})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Building">
-    update technology.building
+    update building
     set name = #{buildingName,jdbcType=VARCHAR},
       area = #{area,jdbcType=REAL},
       createtime = #{createtime,jdbcType=DATE},
@@ -28,21 +28,21 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, name, area, createtime, money
-    from technology.building
+    from building
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, name, area, createtime, money
-    from technology.building
+    from building
   </select>
 
     <select id="selectByPage" resultMap="BaseResultMap">
      select id, name, area, createtime, money
-     from technology.building
+     from building
     </select>
 
   <update id="updateBuildingById" parameterType="com.technologygarden.entity.Building">
-    update technology.building
+    update building
     <set>
       <if test="buildingName != null and buildingName != ''">
         building.name = #{buildingName,jdbcType=VARCHAR},
@@ -61,7 +61,7 @@
   </update>
 
   <insert id="insertBuildingForeach">
-    insert into technology.building
+    insert into building
     (building.name, building.area, building.createtime, building.money)
     values
     <foreach collection="list" index="index" item="item" separator=",">
@@ -76,13 +76,13 @@
 
   <select id="searchBuildingByName" resultMap="BaseResultMap">
     select *
-    from technology.building
+    from building
     where building.name like concat('%', #{buildingName,jdbcType=VARCHAR}, '%')
   </select>
 
   <select id="getBuildingById" resultMap="BaseResultMap">
     select *
-    from technology.building
+    from building
     <where>
       <if test="buildingId != null">
         and building.id = #{buildingId,jdbcType=INTEGER}

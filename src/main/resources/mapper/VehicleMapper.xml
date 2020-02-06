@@ -11,15 +11,15 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.vehicle
+    delete from vehicle
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteBycId" parameterType="java.lang.Integer">
-    delete from technology.vehicle
+    delete from vehicle
     where cId = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Vehicle">
-    insert into technology.vehicle (Id, number_plate, vehicle_model,
+    insert into vehicle (Id, number_plate, vehicle_model,
       owner, cId, roomId, 
       phone)
     values (#{id,jdbcType=INTEGER}, #{numberPlate,jdbcType=VARCHAR}, #{vehicleModel,jdbcType=VARCHAR}, 
@@ -27,7 +27,7 @@
       #{phone,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Vehicle">
-    update technology.vehicle
+    update vehicle
     set number_plate = #{numberPlate,jdbcType=VARCHAR},
       vehicle_model = #{vehicleModel,jdbcType=VARCHAR},
       owner = #{owner,jdbcType=VARCHAR},
@@ -38,20 +38,20 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, number_plate, vehicle_model, owner, cId, roomId, phone
-    from technology.vehicle
+    from vehicle
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select Id, number_plate, vehicle_model, owner, cId, roomId, phone
-    from technology.vehicle
+    from vehicle
   </select>
   <select id="selectVehicleByPage" resultMap="BaseResultMap">
     select Id, number_plate, vehicle_model, owner, cId, roomId, phone
-    from technology.vehicle
+    from vehicle
   </select>
   <select id="searchVehicleByNumberPlate" resultMap="BaseResultMap">
     select Id, number_plate, vehicle_model, owner, cId, roomId, phone
-    from technology.vehicle
+    from vehicle
     where number_plate like concat('%', #{search,jdbcType=VARCHAR}, '%')
   </select>
 </mapper>

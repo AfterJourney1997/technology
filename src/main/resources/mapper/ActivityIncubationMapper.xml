@@ -12,11 +12,11 @@
     <result column="ai_content" jdbcType="LONGVARCHAR" property="aiContent" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.activity_incubation
+    delete from activity_incubation
     where ai_id = #{aiId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ActivityIncubation">
-    insert into technology.activity_incubation ( ai_name, ai_time,
+    insert into activity_incubation ( ai_name, ai_time,
       ai_category_id, ai_people_number, ai_pic, 
       ai_file, ai_content)
     values ( #{aiName,jdbcType=VARCHAR}, #{aiTime,jdbcType=DATE},
@@ -24,7 +24,7 @@
       #{aiFile,jdbcType=VARCHAR}, #{aiContent,jdbcType=LONGVARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ActivityIncubation">
-    update technology.activity_incubation
+    update activity_incubation
     set ai_name = #{aiName,jdbcType=VARCHAR},
       ai_time = #{aiTime,jdbcType=DATE},
       ai_category_id = #{aiCategoryId,jdbcType=INTEGER},
@@ -37,18 +37,18 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select ai_id, ai_name, ai_time, ai_category_id, ai_people_number, ai_pic, ai_file, 
     ai_content
-    from technology.activity_incubation
+    from activity_incubation
     where ai_id = #{aiId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select ai_id, ai_name, ai_time, ai_category_id, ai_people_number, ai_pic, ai_file, 
     ai_content
-    from technology.activity_incubation
+    from activity_incubation
   </select>
 
   <select id="selectActivityIncubationListByPage" resultMap="ActivityIncubationWithCategory">
     select ai.*, ac.*
-    from technology.activity_incubation ai, technology.activity_category ac
+    from activity_incubation ai, activity_category ac
     where ai.ai_category_id = ac.ac_id
   </select>
   <resultMap id="ActivityIncubationWithCategory" type="com.technologygarden.entity.ActivityIncubation">
@@ -67,7 +67,7 @@
   </resultMap>
 
   <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.ActivityIncubation">
-    update technology.activity_incubation
+    update activity_incubation
     <set>
       <if test="aiName != null and aiName != ''">
         activity_incubation.ai_name = #{aiName,jdbcType=VARCHAR},
@@ -96,7 +96,7 @@
 
   <select id="searchActivityIncubationListByPage" resultMap="BaseResultMap">
     select ai.*, ac.*
-    from technology.activity_incubation ai, technology.activity_category ac
+    from activity_incubation ai, activity_category ac
     <where>
       and ai.ai_category_id = ac.ac_id
       <if test="activityCategoryId != null">

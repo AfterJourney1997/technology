@@ -7,37 +7,37 @@
     <result column="serviceDescribe" jdbcType="VARCHAR" property="servicedescribe" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.maintain
+    delete from maintain
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Maintain">
-    insert into technology.maintain (Id, serviceName, serviceDescribe
+    insert into maintain (Id, serviceName, serviceDescribe
       )
     values (#{id,jdbcType=INTEGER}, #{servicename,jdbcType=VARCHAR}, #{servicedescribe,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Maintain">
-    update technology.maintain
+    update maintain
     set serviceName = #{servicename,jdbcType=VARCHAR},
       serviceDescribe = #{servicedescribe,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, serviceName, serviceDescribe
-    from technology.maintain
+    from maintain
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select Id, serviceName, serviceDescribe
-    from technology.maintain
+    from maintain
   </select>
   <select id="getMaintainByPage" resultMap="BaseResultMap">
     select Id, serviceName, serviceDescribe
-    from technology.maintain
+    from maintain
   </select>
   <select id="searchMaintainByName" resultMap="BaseResultMap">
     select Id, serviceName, serviceDescribe
-    from technology.maintain
+    from maintain
     where serviceName like concat('%', #{maintainName,jdbcType=VARCHAR}, '%')
   </select>
 </mapper>

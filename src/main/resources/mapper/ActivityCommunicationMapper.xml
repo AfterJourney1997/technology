@@ -11,11 +11,11 @@
     <result column="acom_file" jdbcType="VARCHAR" property="acomFile" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.activity_communication
+    delete from activity_communication
     where acom_id = #{acomId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ActivityCommunication">
-    insert into technology.activity_communication (acom_id, acom_name, acom_time, 
+    insert into activity_communication (acom_id, acom_name, acom_time, 
       acom_category_id, acom_place, acom_people, 
       acom_file)
     values (#{acomId,jdbcType=INTEGER}, #{acomName,jdbcType=VARCHAR}, #{acomTime,jdbcType=DATE}, 
@@ -23,7 +23,7 @@
       #{acomFile,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ActivityCommunication">
-    update technology.activity_communication
+    update activity_communication
     set acom_name = #{acomName,jdbcType=VARCHAR},
       acom_time = #{acomTime,jdbcType=DATE},
       acom_category_id = #{acomCategoryId,jdbcType=INTEGER},
@@ -35,18 +35,18 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select acom_id, acom_name, acom_time, acom_category_id, acom_place, acom_people, 
     acom_file
-    from technology.activity_communication
+    from activity_communication
     where acom_id = #{acomId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select acom_id, acom_name, acom_time, acom_category_id, acom_place, acom_people, 
     acom_file
-    from technology.activity_communication
+    from activity_communication
   </select>
 
   <select id="selectAllWithCategoryByPage" resultMap="ActivityCommunicationWithCategory">
     select activity_communication.*, activity_category.*
-    from technology.activity_communication, technology.activity_category
+    from activity_communication, activity_category
     where activity_communication.acom_category_id = activity_category.ac_id
   </select>
   <resultMap id="ActivityCommunicationWithCategory" type="com.technologygarden.entity.ActivityCommunication">
@@ -64,7 +64,7 @@
   </resultMap>
 
   <update id="updateDynamicById" parameterType="com.technologygarden.entity.ActivityCommunication">
-    update technology.activity_communication
+    update activity_communication
     <set>
       <if test="acomName != null and acomName != ''">
         acom_name = #{acomName,jdbcType=VARCHAR},
@@ -90,7 +90,7 @@
 
   <select id="searchByPage" resultMap="ActivityCommunicationWithCategory">
     select activity_communication.*, activity_category.*
-    from technology.activity_communication, technology.activity_category
+    from activity_communication, activity_category
     <where>
       and activity_communication.acom_category_id = activity_category.ac_id
       <if test="activityCategoryId != null">

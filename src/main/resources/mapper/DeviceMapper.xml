@@ -12,12 +12,12 @@
         <result column="kind" jdbcType="INTEGER" property="kind"/>
     </resultMap>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.device
+    delete from device
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
     <insert id="insert" parameterType="com.technologygarden.entity.Device">
-    insert into technology.device (category_id, name,
+    insert into device (category_id, name,
       total, remain, piece, owner,
       kind)
     values (#{categoryId,jdbcType=INTEGER}, #{deviceName,jdbcType=VARCHAR},
@@ -26,7 +26,7 @@
   </insert>
 
     <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Device">
-    update technology.device
+    update device
     set category_id = #{categoryId,jdbcType=INTEGER},
       name = #{deviceName,jdbcType=VARCHAR},
       total = #{total,jdbcType=INTEGER},
@@ -38,12 +38,12 @@
   </update>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
-    from technology.device
+    from device
     where id = #{id,jdbcType=INTEGER}
   </select>
     <select id="selectAll" resultMap="BaseResultMap">
     select *
-    from technology.device
+    from device
   </select>
 
 
@@ -68,9 +68,9 @@
 	dp.property_id AS dp_property_id,
 	dp.VALUE AS dp_value
     FROM
-	technology.device d,
-	technology.property_device pd,
-	technology.device_property dp
+	device d,
+	property_device pd,
+	device_property dp
 	WHERE
 	d.category_id = pd.category_id
 	and pd.id = dp.property_id
@@ -103,7 +103,7 @@
     </resultMap>
 
     <update id="updateByIdDynamic" parameterType="com.technologygarden.entity.Device">
-        update technology.device
+        update device
         <set>
             <if test="deviceName != null and deviceName != ''">
                 device.name = #{deviceName,jdbcType=VARCHAR},
@@ -145,9 +145,9 @@
         dp.property_id AS dp_property_id,
         dp.VALUE AS dp_value
         FROM
-        technology.device d,
-        technology.property_device pd,
-        technology.device_property dp
+        device d,
+        property_device pd,
+        device_property dp
         <where>
             and d.category_id = pd.category_id
             and pd.id = dp.property_id
@@ -191,9 +191,9 @@
         dp.property_id AS dp_property_id,
         dp.VALUE AS dp_value
         FROM
-        technology.device d,
-        technology.property_device pd,
-        technology.device_property dp
+        device d,
+        property_device pd,
+        device_property dp
         WHERE
         d.category_id = pd.category_id
         and pd.id = dp.property_id
@@ -222,9 +222,9 @@
         dp.property_id AS dp_property_id,
         dp.VALUE AS dp_value
         FROM
-        technology.device d,
-        technology.property_device pd,
-        technology.device_property dp
+        device d,
+        property_device pd,
+        device_property dp
         <where>
             and d.category_id = pd.category_id
             and pd.id = dp.property_id
@@ -243,7 +243,7 @@
     </select>
 
     <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.Device">
-        insert into technology.device
+        insert into device
         (category_id, name, total, remain, piece, owner, kind)
         values
         (#{categoryId,jdbcType=INTEGER}, #{deviceName,jdbcType=VARCHAR},

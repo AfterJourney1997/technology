@@ -13,11 +13,11 @@
     <result column="building_id" jdbcType="INTEGER" property="buildingId" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.room_company
+    delete from room_company
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.RoomCompany">
-    insert into technology.room_company (id, room, area, 
+    insert into room_company (id, room, area, 
       status, company_id, company_name, 
       owner, owning_time, building_id
       )
@@ -27,7 +27,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.RoomCompany">
-    update technology.room_company
+    update room_company
     set room = #{room,jdbcType=VARCHAR},
       area = #{area,jdbcType=REAL},
       status = #{status,jdbcType=INTEGER},
@@ -40,17 +40,17 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, room, area, status, company_id, company_name, owner, owning_time, building_id
-    from technology.room_company
+    from room_company
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, room, area, status, company_id, company_name, owner, owning_time, building_id
-    from technology.room_company
+    from room_company
   </select>
 
   <select id="selectWithBuildingByPage" resultMap="RoomCompanyWithBuilding">
     select rc.*, b.*
-    from technology.room_company rc, technology.building b
+    from room_company rc, building b
     where rc.building_id = b.id
   </select>
   <resultMap id="RoomCompanyWithBuilding" type="com.technologygarden.entity.RoomCompany">
@@ -73,7 +73,7 @@
   </resultMap>
 
   <update id="updateRoomCompanyDynamic" parameterType="com.technologygarden.entity.RoomCompany">
-    update technology.room_company
+    update room_company
     <set>
       <if test="room != null and room != ''">
         room = #{room, jdbcType=VARCHAR},
@@ -104,7 +104,7 @@
   </update>
 
   <insert id="insertRoomCompanyForeach">
-    insert into technology.room_company
+    insert into room_company
     (room, area, status, building_id)
     values
     <foreach collection="list" index="index" item="item" separator=",">
@@ -119,7 +119,7 @@
 
   <select id="searchByPage" resultMap="RoomCompanyWithBuilding">
     select rc.*, b.*
-    from technology.room_company rc, technology.building b
+    from room_company rc, building b
     <where>
       and rc.building_id = b.id
       <if test="buildingId != null">

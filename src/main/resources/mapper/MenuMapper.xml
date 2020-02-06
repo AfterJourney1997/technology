@@ -5,9 +5,9 @@
 
     <select id="selectAllMenuWithRightsByRoleId" resultMap="MenuWithRights">
         select m.*, r.*
-        from technology.menu m, technology.rights r
+        from menu m, rights r
         <if test="roleId != null">
-            , technology.role_rights rr
+            , role_rights rr
         </if>
         <where>
             and m.m_id = r.r_menu_id

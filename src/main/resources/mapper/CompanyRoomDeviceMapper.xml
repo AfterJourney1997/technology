@@ -9,17 +9,17 @@
     <result column="crd_number" jdbcType="INTEGER" property="crdNumber" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.company_room_device
+    delete from company_room_device
     where crd_id = #{crdId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.CompanyRoomDevice">
-    insert into technology.company_room_device (crd_company_id, crd_room_id,
+    insert into company_room_device (crd_company_id, crd_room_id,
       crd_device_id, crd_number)
     values (#{crdCompanyId,jdbcType=INTEGER}, #{crdRoomId,jdbcType=INTEGER},
       #{crdDeviceId,jdbcType=INTEGER}, #{crdNumber,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.CompanyRoomDevice">
-    update technology.company_room_device
+    update company_room_device
     set crd_company_id = #{crdCompanyId,jdbcType=INTEGER},
       crd_room_id = #{crdRoomId,jdbcType=INTEGER},
       crd_device_id = #{crdDeviceId,jdbcType=INTEGER},
@@ -28,17 +28,17 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select crd_id, crd_company_id, crd_room_id, crd_device_id, crd_number
-    from technology.company_room_device
+    from company_room_device
     where crd_id = #{crdId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select crd_id, crd_company_id, crd_room_id, crd_device_id, crd_number
-    from technology.company_room_device
+    from company_room_device
   </select>
 
   <select id="selectByCompanyDeviceRoom" resultMap="BaseResultMap">
     select *
-    from technology.company_room_device
+    from company_room_device
     where
     crd_company_id = #{companyId,jdbcType=INTEGER}
     and crd_room_id = #{roomId,jdbcType=INTEGER}
@@ -46,7 +46,7 @@
   </select>
 
   <update id="updateDynamic">
-    update technology.company_room_device
+    update company_room_device
     <set>
       <if test="crdCompanyId != null">
         crd_company_id = #{crdCompanyId,jdbcType=INTEGER},
@@ -65,7 +65,7 @@
   </update>
 
   <update id="updateNumber">
-    update technology.company_room_device
+    update company_room_device
     set crd_number = #{number,jdbcType=INTEGER}
     where crd_id = #{crdId,jdbcType=INTEGER}
   </update>
@@ -89,11 +89,11 @@
       pd.NAME AS pd_name,
       pd.property AS pd_property
     FROM
-      technology.company_room_device crd,
-      technology.device d,
-      technology.room r,
-      technology.building b,
-      technology.property_device pd
+      company_room_device crd,
+      device d,
+      room r,
+      building b,
+      property_device pd
     WHERE
       crd.crd_room_id = r.r_id
       AND r.r_building_id = b.id
@@ -164,11 +164,11 @@
       pd.NAME AS pd_name,
       pd.property AS pd_property
     FROM
-      technology.company_room_device crd,
-      technology.device d,
-      technology.room r,
-      technology.building b,
-      technology.property_device pd
+      company_room_device crd,
+      device d,
+      room r,
+      building b,
+      property_device pd
     <where>
       and crd.crd_room_id = r.r_id
       and r.r_building_id = b.id
@@ -211,12 +211,12 @@
       dp.category_id AS dp_category_id,
       dp.value AS dp_value
     FROM
-      technology.company_room_device crd,
-      technology.device d,
-      technology.room r,
-      technology.building b,
-      technology.property_device pd,
-      technology.device_property dp
+      company_room_device crd,
+      device d,
+      room r,
+      building b,
+      property_device pd,
+      device_property dp
       <where>
         AND b.id = r.r_building_id
         AND r.r_company_id = #{companyId,jdbcType=INTEGER}
@@ -284,7 +284,7 @@
 
   <select id="selectByCompanyId" resultMap="BaseResultMap">
     select *
-    from technology.company_room_device
+    from company_room_device
     where crd_company_id = #{companyId,jdbcType=INTEGER}
   </select>
 

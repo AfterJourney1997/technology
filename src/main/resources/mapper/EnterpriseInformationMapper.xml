@@ -17,11 +17,11 @@
     <result column="c_status" jdbcType="INTEGER" property="cStatus" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.enterprise_information
+    delete from enterprise_information
     where c_Id = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.EnterpriseInformation">
-    insert into technology.enterprise_information (c_Id, c_name, c_category,
+    insert into enterprise_information (c_Id, c_name, c_category,
       c_legalPerson, c_code, c_date,
       taxpayer_Type, c_fund, c_product,
       file_name, c_employee, c_information,
@@ -33,7 +33,7 @@
       #{cStatus,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
-    update technology.enterprise_information
+    update enterprise_information
     set c_name = #{cName,jdbcType=VARCHAR},
       c_category = #{cCategory,jdbcType=VARCHAR},
       c_legalPerson = #{cLegalperson,jdbcType=INTEGER},
@@ -51,35 +51,35 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund, 
     c_product, file_name, c_employee, c_information, c_status
-    from technology.enterprise_information
+    from enterprise_information
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund, 
     c_product, file_name, c_employee, c_information, c_status
-    from technology.enterprise_information
+    from enterprise_information
   </select>
   <select id="selectAllByPageWithoutCommittee" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
     c_product, file_name, c_employee, c_information, c_status
-    from technology.enterprise_information
+    from enterprise_information
     where c_Id > 0
   </select>
   <select id="getEnterpriseStatistics" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
     c_product, file_name, c_employee, c_information, c_status
-    from technology.enterprise_information
+    from enterprise_information
     where c_status = 2
   </select>
   <select id="searchEnterpriseStatistics" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
     c_product, file_name, c_employee, c_information, c_status
-    from technology.enterprise_information
+    from enterprise_information
     where c_status = 2 and c_name like concat('%', #{search,jdbcType=VARCHAR}, '%')
   </select>
 
   <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
-    insert into technology.enterprise_information (c_Id, c_name, c_category,
+    insert into enterprise_information (c_Id, c_name, c_category,
     c_legalPerson, c_code, c_date,
     taxpayer_Type, c_fund, c_product,
     file_name, c_employee, c_information,
@@ -96,7 +96,7 @@
 
   <select id="selectAllWithoutCommittee" resultMap="BaseResultMap">
     select *
-    from technology.enterprise_information
+    from enterprise_information
     where c_Id > 0
   </select>
 

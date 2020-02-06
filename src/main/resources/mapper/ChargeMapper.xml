@@ -13,15 +13,15 @@
     <result column="notes" jdbcType="VARCHAR" property="notes" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.charge
+    delete from charge
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteChargeBycId" parameterType="java.lang.Integer">
-    delete from technology.charge
+    delete from charge
     where cId = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Charge">
-    insert into technology.charge (Id, start_time, end_time,
+    insert into charge (Id, start_time, end_time,
       cId, roomId, cost_sort, 
       charge, status, notes
       )
@@ -31,7 +31,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Charge">
-    update technology.charge
+    update charge
     set start_time = #{startTime,jdbcType=DATE},
       end_time = #{endTime,jdbcType=DATE},
       cId = #{cid,jdbcType=INTEGER},
@@ -44,15 +44,15 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, start_time, end_time, cId, roomId, cost_sort, charge, status, notes
-    from technology.charge
+    from charge
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select Id, start_time, end_time, cId, roomId, cost_sort, charge, status, notes
-    from technology.charge
+    from charge
   </select>
   <select id="selectChargeByPage" resultMap="BaseResultMap">
     select Id, start_time, end_time, cId, roomId, cost_sort, charge, status, notes
-    from technology.charge
+    from charge
   </select>
 </mapper>

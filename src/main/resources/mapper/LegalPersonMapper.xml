@@ -10,11 +10,11 @@
     <result column="lp_c_name" jdbcType="VARCHAR" property="lpCName" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.legal_person
+    delete from legal_person
     where lp_id = #{lpId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.LegalPerson">
-    insert into technology.legal_person (lp_name, lp_sex,
+    insert into legal_person (lp_name, lp_sex,
       lp_degree_id, lp_jt_id, lp_c_name
       )
     values (#{lpName,jdbcType=VARCHAR}, #{lpSex,jdbcType=INTEGER},
@@ -22,7 +22,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.LegalPerson">
-    update technology.legal_person
+    update legal_person
     set lp_name = #{lpName,jdbcType=VARCHAR},
       lp_sex = #{lpSex,jdbcType=INTEGER},
       lp_degree_id = #{lpDegreeId,jdbcType=INTEGER},
@@ -32,17 +32,17 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select lp_id, lp_name, lp_sex, lp_degree_id, lp_jt_id, lp_c_name
-    from technology.legal_person
+    from legal_person
     where lp_id = #{lpId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select lp_id, lp_name, lp_sex, lp_degree_id, lp_jt_id, lp_c_name
-    from technology.legal_person
+    from legal_person
   </select>
 
   <select id="selectLegalPersonByPage" resultMap="LegalPersonWithInfo">
     select legal_person.*, job_title.*, degree.*
-    from technology.legal_person, job_title, degree
+    from legal_person, job_title, degree
     where legal_person.lp_degree_id = degree.x_Id and legal_person.lp_jt_id = job_title.jt_id
   </select>
   <resultMap id="LegalPersonWithInfo" type="com.technologygarden.entity.LegalPerson">
@@ -64,7 +64,7 @@
 
   <select id="selectLegalPersonByDegreeId" resultMap="LegalPersonWithInfo">
     select legal_person.*, job_title.*, degree.*
-    from technology.legal_person, job_title, degree
+    from legal_person, job_title, degree
     where legal_person.lp_degree_id = #{degreeId,jdbcType=INTEGER}
     and legal_person.lp_degree_id = degree.x_Id
     and legal_person.lp_jt_id = job_title.jt_id
@@ -72,14 +72,14 @@
 
   <select id="selectLegalPersonByJobTitleId" resultMap="LegalPersonWithInfo">
     select legal_person.*, job_title.*, degree.*
-    from technology.legal_person, job_title, degree
+    from legal_person, job_title, degree
     where legal_person.lp_jt_id = #{jobTitleId,jdbcType=INTEGER}
     and legal_person.lp_degree_id = degree.x_Id
     and legal_person.lp_jt_id = job_title.jt_id
   </select>
 
   <insert id="insertReturnPrimaryKey" parameterType="com.technologygarden.entity.LegalPerson">
-    insert into technology.legal_person
+    insert into legal_person
     (lp_name, lp_sex,lp_degree_id, lp_jt_id, lp_c_name)
     values
     (#{lpName,jdbcType=VARCHAR}, #{lpSex,jdbcType=INTEGER},#{lpDegreeId,jdbcType=INTEGER},
@@ -91,7 +91,7 @@
 
   <select id="searchLegalPersonByPage" resultMap="LegalPersonWithInfo">
     select legal_person.*, job_title.*, degree.*
-    from technology.legal_person, job_title, degree
+    from legal_person, job_title, degree
     <where>
       and legal_person.lp_degree_id = degree.x_Id
       and legal_person.lp_jt_id = job_title.jt_id

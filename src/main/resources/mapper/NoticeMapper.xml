@@ -9,17 +9,17 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.notice
+    delete from notice
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Notice">
-    insert into technology.notice (title, time,
+    insert into notice (title, time,
       status, content)
     values (#{title,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
       1, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Notice">
-    update technology.notice
+    update notice
     set title = #{title,jdbcType=VARCHAR},
       time = #{time,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
@@ -28,12 +28,12 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, title, time, status, content
-    from technology.notice
+    from notice
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, title, time, status, content
-    from technology.notice
+    from notice
   </select>
 
   <select id="selectByPage" resultMap="BaseResultMap">
@@ -42,13 +42,13 @@
   </select>
 
     <update id="updateStatusToZero">
-      update technology.notice
+      update notice
       set notice.status = 0
       where notice.status = 1
     </update>
 
   <update id="updateNoticeByIdDynamic" parameterType="com.technologygarden.entity.Notice">
-    update technology.notice
+    update notice
     <set>
       <if test="title != null and title != ''">
         notice.title = #{title,jdbcType=VARCHAR},
@@ -68,7 +68,7 @@
 
   <select id="searchNoticeDynamic" resultMap="BaseResultMap">
     select *
-    from technology.notice
+    from notice
     <where>
       <if test="title != null and title != ''">
         and title like concat('%', #{title,jdbcType=VARCHAR}, '%')

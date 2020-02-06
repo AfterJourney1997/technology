@@ -8,17 +8,17 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.park_environment
+    delete from park_environment
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ParkEnvironment">
-    insert into technology.park_environment (Id, buildingId, principal,
+    insert into park_environment (Id, buildingId, principal,
       phone)
     values (#{id,jdbcType=INTEGER}, #{buildingid,jdbcType=INTEGER}, #{principal,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ParkEnvironment">
-    update technology.park_environment
+    update park_environment
     set buildingId = #{buildingid,jdbcType=INTEGER},
       principal = #{principal,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR}
@@ -26,15 +26,15 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, buildingId, principal, phone
-    from technology.park_environment
+    from park_environment
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select Id, buildingId, principal, phone
-    from technology.park_environment
+    from park_environment
   </select>
   <select id="getParkEnvironmentByPage" resultMap="BaseResultMap">
     select Id, buildingId, principal, phone
-    from technology.park_environment
+    from park_environment
   </select>
 </mapper>

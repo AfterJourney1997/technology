@@ -14,15 +14,15 @@
     <result column="c_Id" jdbcType="INTEGER" property="cId" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.cooperation
+    delete from cooperation
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteCooperationBycId" parameterType="java.lang.Integer">
-    delete from technology.cooperation
+    delete from cooperation
     where c_Id = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.Cooperation">
-    insert into technology.cooperation (Id, name, partner,
+    insert into cooperation (Id, name, partner,
       money, major, people, 
       category, day, date, c_Id
       )
@@ -32,7 +32,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.Cooperation">
-    update technology.cooperation
+    update cooperation
     set name = #{name,jdbcType=VARCHAR},
       partner = #{partner,jdbcType=VARCHAR},
       money = #{money,jdbcType=DOUBLE},
@@ -46,20 +46,20 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, name, partner, money, major, people, category, day, date, c_Id
-    from technology.cooperation
+    from cooperation
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select Id, name, partner, money, major, people, category, day, date, c_Id
-    from technology.cooperation
+    from cooperation
   </select>
   <select id="getCooperationByPage" resultMap="BaseResultMap">
     select Id, name, partner, money, major, people, category, day, date, c_Id
-    from technology.cooperation
+    from cooperation
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
   <select id="selectAllByManage" resultMap="BaseResultMap">
     select Id, name, partner, money, major, people, category, day, date, c_Id
-    from technology.cooperation
+    from cooperation
   </select>
 </mapper>

@@ -10,17 +10,17 @@
     <result column="pl_end_time" jdbcType="DATE" property="plEndTime" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.power_load
+    delete from power_load
     where pl_id = #{plId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.PowerLoad">
-    insert into technology.power_load (pl_room_id, pl_company_id, pl_power,
+    insert into power_load (pl_room_id, pl_company_id, pl_power,
       pl_start_time, pl_end_time)
     values (#{plRoomId,jdbcType=INTEGER}, #{plCompanyId,jdbcType=INTEGER}, #{plPower,jdbcType=REAL},
       #{plStartTime,jdbcType=DATE}, #{plEndTime,jdbcType=DATE})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PowerLoad">
-    update technology.power_load
+    update power_load
     set pl_room_id = #{plRoomId,jdbcType=INTEGER},
       pl_company_id = #{plCompanyId,jdbcType=INTEGER},
       pl_power = #{plPower,jdbcType=REAL},
@@ -30,17 +30,17 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select *
-    from technology.power_load
+    from power_load
     where pl_id = #{plId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select *
-    from technology.power_load
+    from power_load
   </select>
 
   <select id="selectAllWithRoomInfoByPage" resultMap="PowerLoadWithRoomInfo">
     select pl.*, r.r_id, r.r_name, r.r_company_id, r_company_name, b.id, b.name
-    from technology.power_load pl, technology.room r, technology.building b
+    from power_load pl, room r, building b
     where pl.pl_room_id = r.r_id and r.r_building_id = b.id
   </select>
   <resultMap id="PowerLoadWithRoomInfo" type="com.technologygarden.entity.PowerLoad">
@@ -63,7 +63,7 @@
   </resultMap>
 
   <update id="updateDynamicById" parameterType="com.technologygarden.entity.PowerLoad">
-    update technology.power_load
+    update power_load
     <set>
       <if test="plRoomId != null">
         pl_room_id = #{plRoomId,jdbcType=INTEGER},
@@ -86,7 +86,7 @@
 
   <select id="searchPowerLoadWithRoomInfoByPage" resultMap="PowerLoadWithRoomInfo">
     select pl.*, r.r_id, r.r_name, b.id, b.name
-    from technology.power_load pl, technology.room r, technology.building b
+    from power_load pl, room r, building b
     <where>
       and pl.pl_room_id = r.r_id
       and r.r_building_id = b.id
@@ -103,7 +103,7 @@
   </select>
 
   <delete id="deletePowerLoadByCompanyId">
-    delete from technology.power_load
+    delete from power_load
     where pl_company_id = #{companyId,jdbcType=INTEGER}
   </delete>
 

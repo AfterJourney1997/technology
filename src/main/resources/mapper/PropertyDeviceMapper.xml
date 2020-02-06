@@ -9,17 +9,17 @@
     <result column="property" jdbcType="VARCHAR" property="property" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.property_device
+    delete from property_device
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.PropertyDevice">
-    insert into technology.property_device (id, kind, category_id, 
+    insert into property_device (id, kind, category_id, 
       name, property)
     values (#{propertyDeviceId,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER},
       #{propertyDeviceId,jdbcType=INTEGER}, #{property,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PropertyDevice">
-    update technology.property_device
+    update property_device
     set kind = #{kind,jdbcType=INTEGER},
       category_id = #{categoryId,jdbcType=INTEGER},
       name = #{propertyDeviceId,jdbcType=INTEGER},
@@ -28,17 +28,17 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select id, kind, category_id, name, property
-    from technology.property_device
+    from property_device
     where id = #{propertyDeviceId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select id, kind, category_id, name, property
-    from technology.property_device
+    from property_device
   </select>
 
   <select id="selectSystemPropertyDeviceListByPage" resultMap="BaseResultMap">
     select *
-    from technology.property_device
+    from property_device
     <if test="categoryId == null">
       where property_device.category_id != 0
     </if>
@@ -48,7 +48,7 @@
   </select>
 
   <insert id="insertSystemPropertyDeviceDynamic" parameterType="com.technologygarden.entity.PropertyDevice">
-    insert into technology.property_device
+    insert into property_device
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="kind != null">
         kind,
@@ -80,12 +80,12 @@
   </insert>
 
   <delete id="deleteSystemPropertyDeviceByCategoryId" parameterType="java.lang.Integer">
-    delete from technology.property_device
+    delete from property_device
     where property_device.category_id = #{id,jdbcType=INTEGER}
   </delete>
 
   <update id="updateSystemPropertyDeviceByIdDynamic" parameterType="com.technologygarden.entity.PropertyDevice">
-    update technology.property_device
+    update property_device
     <set>
       <if test="kind != null">
         property_device.kind = #{kind,jdbcType=INTEGER},
@@ -104,14 +104,14 @@
   </update>
 
   <update id="updateSystemPropertyDeviceByCategoryId" parameterType="com.technologygarden.entity.PropertyDevice">
-    update technology.property_device
+    update property_device
     set property_device.name = #{propertyDeviceId,jdbcType=INTEGER}
     where property_device.category_id = #{propertyDeviceId,jdbcType=INTEGER}
   </update>
 
   <select id="searchSystemPropertyDeviceByPage" resultMap="BaseResultMap">
     select *
-    from technology.property_device
+    from property_device
     <where>
       and property_device.category_id != 0
       <if test="categoryId != null">
@@ -128,13 +128,13 @@
 
   <select id="selectCateGoryByKind" resultMap="BaseResultMap">
     select *
-    from technology.property_device
+    from property_device
     where property_device.kind = #{kind,jdbcType=INTEGER} and property_device.category_id = 0
   </select>
 
   <select id="selectPropertyByCategoryId" resultMap="BaseResultMap">
     select *
-    from technology.property_device
+    from property_device
     where property_device.category_id = #{categoryId,jdbcType=INTEGER} and property_device.category_id != 0
   </select>
 
@@ -180,7 +180,7 @@
 
   <select id="selectDeviceCategoryById" resultMap="BaseResultMap">
     select *
-    from technology.property_device
+    from property_device
     <where>
       and property_device.category_id = 0
       <if test="propertyDeviceId != null">

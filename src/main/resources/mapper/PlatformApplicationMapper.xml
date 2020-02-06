@@ -10,15 +10,15 @@
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.platform_application
+    delete from platform_application
     where p_Id = #{pId,jdbcType=INTEGER}
   </delete>
   <delete id="deleteBycId" parameterType="java.lang.Integer">
-    delete from technology.platform_application
+    delete from platform_application
     where c_Id = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.PlatformApplication">
-    insert into technology.platform_application (p_Id, p_name, p_category,
+    insert into platform_application (p_Id, p_name, p_category,
       p_grade, c_Id, status
       )
     values (#{pId,jdbcType=INTEGER}, #{pName,jdbcType=VARCHAR}, #{pCategory,jdbcType=VARCHAR}, 
@@ -26,7 +26,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PlatformApplication">
-    update technology.platform_application
+    update platform_application
     set p_name = #{pName,jdbcType=VARCHAR},
       p_category = #{pCategory,jdbcType=VARCHAR},
       p_grade = #{pGrade,jdbcType=VARCHAR},
@@ -36,16 +36,16 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select p_Id, p_name, p_category, p_grade, c_Id, status
-    from technology.platform_application
+    from platform_application
     where p_Id = #{pId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select p_Id, p_name, p_category, p_grade, c_Id, status
-    from technology.platform_application
+    from platform_application
   </select>
   <select id="selectByPage" resultMap="BaseResultMap">
     select p_Id, p_name, p_category, p_grade, c_Id, status
-    from technology.platform_application
+    from platform_application
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
 </mapper>
