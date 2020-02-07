@@ -32,6 +32,7 @@ public class EnterpriseInformation {
     private Integer cEmployee;
     private String cInformation;
     private int cStatus;
+    private String comment;//审批备注
 
     private List<String> filePathList;//存放所有的文件路径
     private List<String> filePathName;//存放所有的文件名字

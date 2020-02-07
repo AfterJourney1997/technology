@@ -15,6 +15,7 @@
     <result column="c_employee" jdbcType="INTEGER" property="cEmployee" />
     <result column="c_information" jdbcType="VARCHAR" property="cInformation" />
     <result column="c_status" jdbcType="INTEGER" property="cStatus" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from enterprise_information
@@ -25,12 +26,12 @@
       c_legalPerson, c_code, c_date,
       taxpayer_Type, c_fund, c_product,
       file_name, c_employee, c_information,
-      c_status)
+      c_status,comment)
     values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR},
       #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=DATE},
       #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR},
       #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR},
-      #{cStatus,jdbcType=INTEGER})
+      #{cStatus,jdbcType=INTEGER},#{comment,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.EnterpriseInformation">
     update enterprise_information
@@ -45,35 +46,36 @@
       file_name = #{fileName,jdbcType=VARCHAR},
       c_employee = #{cEmployee,jdbcType=INTEGER},
       c_information = #{cInformation,jdbcType=VARCHAR},
-      c_status = #{cStatus,jdbcType=INTEGER}
+      c_status = #{cStatus,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR}
     where c_Id = #{cId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund, 
-    c_product, file_name, c_employee, c_information, c_status
+    c_product, file_name, c_employee, c_information, c_status, comment
     from enterprise_information
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund, 
-    c_product, file_name, c_employee, c_information, c_status
+    c_product, file_name, c_employee, c_information, c_status, comment
     from enterprise_information
   </select>
   <select id="selectAllByPageWithoutCommittee" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
-    c_product, file_name, c_employee, c_information, c_status
+    c_product, file_name, c_employee, c_information, c_status, comment
     from enterprise_information
     where c_Id > 0
   </select>
   <select id="getEnterpriseStatistics" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
-    c_product, file_name, c_employee, c_information, c_status
+    c_product, file_name, c_employee, c_information, c_status, comment
     from enterprise_information
     where c_status = 2
   </select>
   <select id="searchEnterpriseStatistics" resultMap="BaseResultMap">
     select c_Id, c_name, c_category, c_legalPerson, c_code, c_date, taxpayer_Type, c_fund,
-    c_product, file_name, c_employee, c_information, c_status
+    c_product, file_name, c_employee, c_information, c_status, comment
     from enterprise_information
     where c_status = 2 and c_name like concat('%', #{search,jdbcType=VARCHAR}, '%')
   </select>
@@ -83,12 +85,12 @@
     c_legalPerson, c_code, c_date,
     taxpayer_Type, c_fund, c_product,
     file_name, c_employee, c_information,
-    c_status)
+    c_status,comment)
     values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cCategory,jdbcType=VARCHAR},
     #{cLegalperson,jdbcType=INTEGER}, #{cCode,jdbcType=CHAR}, #{cDate,jdbcType=DATE},
     #{taxpayerType,jdbcType=VARCHAR}, #{cFund,jdbcType=DOUBLE}, #{cProduct,jdbcType=VARCHAR},
     #{fileName,jdbcType=VARCHAR}, #{cEmployee,jdbcType=INTEGER}, #{cInformation,jdbcType=VARCHAR},
-    #{cStatus,jdbcType=INTEGER})
+    #{cStatus,jdbcType=INTEGER},comment = #{comment,jdbcType=VARCHAR})
     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="cId">
       SELECT LAST_INSERT_ID();
     </selectKey>

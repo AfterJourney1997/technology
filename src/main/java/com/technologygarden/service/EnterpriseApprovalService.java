@@ -11,7 +11,7 @@ public interface EnterpriseApprovalService {
 
     public ResultBean<PageInfo<?>> getEnterpriseAccount(Integer pageNum, Integer pageSize);
 
-    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state);
+    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state,String comment);
 
     public ResultBean<PageInfo<?>> getEnterpriseStatistics(Integer pageNum,Integer pageSize);
 

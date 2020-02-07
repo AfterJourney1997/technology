@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("EnterpriseApprovalService")
@@ -40,6 +41,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     private final CompanyRoomDeviceMapper companyRoomDeviceMapper;
     private final AssetAssetCountService assetAssetCountService;
     private final PowerLoadMapper powerLoadMapper;
+    private final ApprovedMemoMapper approvedMemoMapper;
 
     @Autowired
     public EnterpriseApprovalServiceImpl(RoleMapper roleMapper, LegalPersonMapper legalPersonMapper,
@@ -48,7 +50,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
                                          DeclareAwardMapper declareAwardMapper, DeclareAwardService declareAwardService,
                                          EmployeeMapper employeeMapper, EmployeeService employeeService,
                                          OpinionMapper opinionMapper, PlatformApplicationMapper platformApplicationMapper,
-                                         ServiceApplicationMapper serviceApplicationMapper, VehicleMapper vehicleMapper, RoomMapper roomMapper, CompanyRoomDeviceMapper companyRoomDeviceMapper, AssetAssetCountService assetAssetCountService, PowerLoadMapper powerLoadMapper) {
+                                         ServiceApplicationMapper serviceApplicationMapper, VehicleMapper vehicleMapper, RoomMapper roomMapper, CompanyRoomDeviceMapper companyRoomDeviceMapper, AssetAssetCountService assetAssetCountService, PowerLoadMapper powerLoadMapper, ApprovedMemoMapper approvedMemoMapper) {
         this.roleMapper = roleMapper;
         this.legalPersonMapper = legalPersonMapper;
         this.enterpriseInformationMapper = enterpriseInformationMapper;
@@ -66,6 +68,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         this.companyRoomDeviceMapper = companyRoomDeviceMapper;
         this.assetAssetCountService = assetAssetCountService;
         this.powerLoadMapper = powerLoadMapper;
+        this.approvedMemoMapper = approvedMemoMapper;
     }
 
     @Override
@@ -118,10 +121,19 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state) {
+    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state,String comment) {
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
         enterpriseInformation.setCStatus(state);
+        enterpriseInformation.setComment(comment);
         enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation);
+        //创建审核记录对象，记录当前审批
+        ApprovedMemo approvedMemo=new ApprovedMemo();
+        approvedMemo.setCId(enterpriseInformation.getCId());
+        approvedMemo.setCName(enterpriseInformation.getCName());
+        approvedMemo.setResult(state);
+        approvedMemo.setComment(comment);
+        approvedMemo.setDate(new Date());
+        approvedMemoMapper.insert(approvedMemo);
         return new ResultBean<>(enterpriseInformation);
     }
 
