@@ -11,6 +11,18 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-
-
+#企业入住申请文本框解释
+InputDescription:
+  Dname: 公司名称
+  Dcategory: 点击选择公司类别
+  Ddate: 点击选择注册时间
+  Dcode: 填写18位社会信用代码
+  DlegalPerson: 填写法人姓名
+  Dsex: 点击选择法人性别
+  Deducation: 点击选择法人学历
+  Drank: 点击选择法人职称
+  Dmoney: 输入注册资金
+  Dproduct: 填写产品简要说明
+  Demployee: 填写员工数量(数字填写)
+  Dfile: 上传公司复印件，仅支持图片格式
 

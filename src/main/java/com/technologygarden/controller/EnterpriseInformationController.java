@@ -3,6 +3,7 @@ package com.technologygarden.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.technologygarden.entity.Degree;
 import com.technologygarden.entity.EnterpriseInformation;
+import com.technologygarden.entity.InputDescription;
 import com.technologygarden.entity.JobTitle;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.DegreeService;
@@ -10,7 +11,6 @@ import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.service.SystemJobTitleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,19 +28,27 @@ public class EnterpriseInformationController {
     private final EnterpriseInformationService enterpriseInformationService;
     private final DegreeService degreeService;
     private final SystemJobTitleService systemJobTitleService;
+    private final InputDescription inputDescription;
 
 
     @Autowired
-    public EnterpriseInformationController(EnterpriseInformationService enterpriseInformationService, DegreeService degreeService, SystemJobTitleService systemJobTitleService) {
+    public EnterpriseInformationController(EnterpriseInformationService enterpriseInformationService, DegreeService degreeService, SystemJobTitleService systemJobTitleService, InputDescription inputDescription) {
         this.enterpriseInformationService = enterpriseInformationService;
         this.degreeService = degreeService;
         this.systemJobTitleService = systemJobTitleService;
+        this.inputDescription = inputDescription;
     }
     // 企业重新申请接口
     @RequestMapping(value = "/company/anew", method = RequestMethod.GET)
     @ApiOperation(value = "企业被拒绝后重新申请接口", notes = "参数包括：EnterpriseInformation对象包含当前登录对象的infoid")
     public ResultBean<?> companyAnew(Integer infoid) {
         return enterpriseInformationService.companyAnew(infoid);
+    }
+    // 获取企业入住申请备注
+    @RequestMapping(value = "/company/comment", method = RequestMethod.GET)
+    @ApiOperation(value = "获取企业入住申请备注", notes = "参数包括：无")
+    public ResultBean<?> getComment() {
+        return new ResultBean<>(inputDescription);
     }
 
     // 企业入住申请提交
