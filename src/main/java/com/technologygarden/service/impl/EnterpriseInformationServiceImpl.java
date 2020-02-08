@@ -65,6 +65,13 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
         System.out.println(enterpriseInformation);
         return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
     }
+    //企业被拒绝后重新申请
+    @Override
+    public ResultBean<?> companyAnew(Integer infoid) {
+        EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(infoid);
+        enterpriseInformation.setCStatus(0);
+        return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
+    }
 
     @Override
     public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer info) throws IOException {

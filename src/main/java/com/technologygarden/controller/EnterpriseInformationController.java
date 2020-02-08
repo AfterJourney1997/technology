@@ -36,6 +36,12 @@ public class EnterpriseInformationController {
         this.degreeService = degreeService;
         this.systemJobTitleService = systemJobTitleService;
     }
+    // 企业重新申请接口
+    @RequestMapping(value = "/company/anew", method = RequestMethod.GET)
+    @ApiOperation(value = "企业被拒绝后重新申请接口", notes = "参数包括：EnterpriseInformation对象包含当前登录对象的infoid")
+    public ResultBean<?> companyAnew(Integer infoid) {
+        return enterpriseInformationService.companyAnew(infoid);
+    }
 
     // 企业入住申请提交
     @RequestMapping(value = "/company", method = RequestMethod.POST)
