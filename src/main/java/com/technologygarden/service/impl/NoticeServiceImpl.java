@@ -32,6 +32,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public ResultBean<?> publishNotice(Notice notice) {
 
+        // status为1该公告为发布状态
+        notice.setStatus(1);
+
         noticeMapper.updateStatusToZero();
         noticeMapper.insert(notice);
         return new ResultBean<>();
@@ -62,5 +65,12 @@ public class NoticeServiceImpl implements NoticeService {
         PageInfo<?> pageInfo = new PageInfo<>(noticeList);
         return new ResultBean<>(pageInfo);
 
+    }
+
+    @Override
+    public ResultBean<Notice> getNoticePublished() {
+
+        Notice notice = noticeMapper.selectNoticePublished();
+        return new ResultBean<>(notice);
     }
 }

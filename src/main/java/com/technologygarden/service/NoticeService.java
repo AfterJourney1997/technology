@@ -1,6 +1,5 @@
 package com.technologygarden.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Notice;
 import com.technologygarden.entity.ResultBean.ResultBean;
@@ -16,4 +15,6 @@ public interface NoticeService {
     ResultBean<?> updateNoticeById(Notice notice);
 
     ResultBean<PageInfo<?>> searchNoticeByPage(Integer pageNum, Integer pageSize, String title, Integer status);
+
+    ResultBean<Notice> getNoticePublished();
 }

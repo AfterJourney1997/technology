@@ -16,6 +16,8 @@ public enum ResultStatus {
     UNKNOWN_ACCOUNT_ERROR(-21, "该账号不存在！"),
     PASSWORD_ERROR(-22, "密码错误！"),
 
+    REGISTER_ACCOUNT_REPEAT_ERROR(-40, "该账号已存在！"),
+
     AUTH_EMPTY_ERROR(-100, "权限错误！");
 
 

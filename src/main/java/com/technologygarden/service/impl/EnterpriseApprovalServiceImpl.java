@@ -72,16 +72,25 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean<?> insertEnterpriseAccount(String account, String enterpriseName) {
+    public ResultBean<?> insertEnterpriseAccount(String account, String enterpriseName, String phone) {
+
+        // 默认的企业密码
+        String password = "123456";
+
+        // 首先插入企业信息
         EnterpriseInformation enterpriseInformation = new EnterpriseInformation();
         enterpriseInformation.setCName(enterpriseName);
         enterpriseInformationMapper.insertReturnPrimaryKey(enterpriseInformation);
-        Role role = new Role();
-        role.setAccount(account);
-        role.setRole(2);
-        role.setPassword("123456");//设置默认密码
-        role.setInfoid(enterpriseInformation.getCId());
+
+        // 再插入企业的账号信息
+        Role role = Role.builder().account(account)
+                                    .role(2)    // role为2，该账户为企业
+                                    .password(password) // 密码为默认
+                                    .phone(phone)
+                                    .infoid(enterpriseInformation.getCId())
+                                    .build();
         roleMapper.insert(role);
+
         return new ResultBean<>();
     }
 
@@ -121,13 +130,13 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state,String comment) {
+    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state, String comment) {
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
         enterpriseInformation.setCStatus(state);
         enterpriseInformation.setComment(comment);
         enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation);
         //创建审核记录对象，记录当前审批
-        ApprovedMemo approvedMemo=new ApprovedMemo();
+        ApprovedMemo approvedMemo = new ApprovedMemo();
         approvedMemo.setCId(enterpriseInformation.getCId());
         approvedMemo.setCName(enterpriseInformation.getCName());
         approvedMemo.setResult(state);
@@ -256,7 +265,6 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         legalPersonMapper.deleteByPrimaryKey(enterpriseInformation.getCLegalperson());
 
 
-
         //删除企业信息表
         String fileNameString = enterpriseInformation.getFileName();
         if (!StringUtils.isEmpty(fileNameString)) {
@@ -274,7 +282,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean<?> getNoApprovalCompanyNum() {
+    public ResultBean<String> getNoApprovalCompanyNum() {
         return new ResultBean<>(Integer.toString(enterpriseInformationMapper.getNoApprovalCompanyNum()));
     }
 }

@@ -29,4 +29,8 @@ public interface RoleMapper {
     int updateDynamic(Role role);
 
     Page<Role> selectAllAdminWithoutPassword();
+
+    Role selectByPhone(String account);
+
+    Integer countCompanyNum();
 }

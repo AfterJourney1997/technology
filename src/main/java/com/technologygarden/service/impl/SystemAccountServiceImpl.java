@@ -8,6 +8,7 @@ import com.technologygarden.dao.RoleMapper;
 import com.technologygarden.dao.RoleRightsMapper;
 import com.technologygarden.entity.Menu;
 import com.technologygarden.entity.ResultBean.ResultBean;
+import com.technologygarden.entity.ResultBean.ResultStatus;
 import com.technologygarden.entity.Role;
 import com.technologygarden.service.SystemAccountService;
 import lombok.NonNull;
@@ -69,10 +70,18 @@ public class SystemAccountServiceImpl implements SystemAccountService {
     @Override
     public ResultBean<?> insertAdmin(String account) {
 
+        // 默认密码
+        String password = "123456";
+
+        // 首先需要检查该账号是否存在
+        if(roleMapper.selectByAccount(account) != null){
+            return new ResultBean<>(ResultStatus.REGISTER_ACCOUNT_REPEAT_ERROR);
+        }
+
         roleMapper.insert(Role.builder()
                                 .account(account)
-                                .password("123456")
-                                .role(1)
+                                .password(password)
+                                .role(1)    // role为1是管理员
                                 .build());
 
         return new ResultBean<>();

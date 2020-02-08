@@ -31,9 +31,9 @@ public class EnterpriseApprovalController {
 
     //新增企业账号
     @RequestMapping(value = "/account", method = RequestMethod.POST)
-    @ApiOperation(value = "新增账号", notes = "参数包括：账号，企业名称")
-    public ResultBean insertEnterpriseAccount(@RequestBody Map<String, String> param) {
-        return enterpriseApprovalService.insertEnterpriseAccount(param.get("account"), param.get("enterpriseName"));
+    @ApiOperation(value = "新增账号", notes = "参数包括：账号，手机号，企业名称")
+    public ResultBean<?> insertEnterpriseAccount(@RequestBody Map<String, String> param) {
+        return enterpriseApprovalService.insertEnterpriseAccount(param.get("account"), param.get("enterpriseName"), param.get("phone"));
     }
 
     //获取所有的企业和企业账号

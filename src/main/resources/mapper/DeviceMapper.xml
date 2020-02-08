@@ -62,6 +62,7 @@
 	pd.category_id AS pd_category_id,
 	pd.NAME AS pd_name,
 	pd.property AS pd_property,
+	pd.remark AS pd_remark,
 	dp.id AS dp_id,
 	dp.device_id AS dp_device_id,
 	dp.category_id AS dp_category_id,
@@ -92,6 +93,7 @@
             <result column="pd_category_id" jdbcType="INTEGER" property="categoryId"/>
             <result column="pd_name" jdbcType="VARCHAR" property="categoryName"/>
             <result column="pd_property" jdbcType="VARCHAR" property="property"/>
+            <result column="pd_remark" jdbcType="VARCHAR" property="remark" />
             <association property="deviceProperty" javaType="com.technologygarden.entity.DeviceProperty">
                 <id column="dp_id" jdbcType="INTEGER" property="devicePropertyId"/>
                 <result column="dp_device_id" jdbcType="INTEGER" property="deviceId"/>
@@ -139,6 +141,7 @@
         pd.category_id AS pd_category_id,
         pd.NAME AS pd_name,
         pd.property AS pd_property,
+        pd.remark AS pd_remark,
         dp.id AS dp_id,
         dp.device_id AS dp_device_id,
         dp.category_id AS dp_category_id,
@@ -185,6 +188,7 @@
         pd.category_id AS pd_category_id,
         pd.NAME AS pd_name,
         pd.property AS pd_property,
+        pd.remark AS pd_remark,
         dp.id AS dp_id,
         dp.device_id AS dp_device_id,
         dp.category_id AS dp_category_id,
@@ -216,6 +220,7 @@
         pd.category_id AS pd_category_id,
         pd.NAME AS pd_name,
         pd.property AS pd_property,
+        pd.remark AS pd_remark,
         dp.id AS dp_id,
         dp.device_id AS dp_device_id,
         dp.category_id AS dp_category_id,

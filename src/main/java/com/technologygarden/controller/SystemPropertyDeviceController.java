@@ -25,7 +25,7 @@ public class SystemPropertyDeviceController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "分页获取设备属性列表", notes = "参数包括：页数、每页数量、categoryId，categoryId非必填，如获取设备列表categoryId设0")
+    @ApiOperation(value = "分页获取设备属性列表", notes = "参数包括：页数、每页数量、categoryId，categoryId非必填，如获取设备列表categoryId填0")
     public ResultBean<PageInfo<?>> getSystemPropertyDeviceListByPage(@NonNull Integer pageNum, @NonNull Integer pageSize, Integer categoryId) {
 
         return systemPropertyDeviceService.getSystemPropertyDeviceListByPage(pageNum, pageSize, categoryId);

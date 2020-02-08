@@ -7,17 +7,17 @@ import java.io.IOException;
 
 public interface EnterpriseApprovalService {
 
-    public ResultBean<?> insertEnterpriseAccount(String account, String enterpriseName);
+    ResultBean<?> insertEnterpriseAccount(String account, String enterpriseName, String phone);
 
-    public ResultBean<PageInfo<?>> getEnterpriseAccount(Integer pageNum, Integer pageSize);
+    ResultBean<PageInfo<?>> getEnterpriseAccount(Integer pageNum, Integer pageSize);
 
-    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state,String comment);
+    ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state, String comment);
 
-    public ResultBean<PageInfo<?>> getEnterpriseStatistics(Integer pageNum,Integer pageSize);
+    ResultBean<PageInfo<?>> getEnterpriseStatistics(Integer pageNum, Integer pageSize);
 
-    public ResultBean<PageInfo<?>> searchEnterpriseStatistics( Integer pageNum, Integer pageSize, String search);
+    ResultBean<PageInfo<?>> searchEnterpriseStatistics(Integer pageNum, Integer pageSize, String search);
 
-    public ResultBean<?> deleteEnterprise(Integer cId) throws IOException;
+    ResultBean<?> deleteEnterprise(Integer cId) throws IOException;
 
-    public ResultBean<?> getNoApprovalCompanyNum();
+    ResultBean<String> getNoApprovalCompanyNum();
 }

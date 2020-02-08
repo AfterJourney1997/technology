@@ -79,6 +79,9 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
+        // 手机号的正则表达
+        String regex = "((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)";
+
         UsernamePasswordToken upToken = (UsernamePasswordToken) authenticationToken;
         String username = upToken.getUsername();
 
@@ -88,8 +91,13 @@ public class MyRealm extends AuthorizingRealm {
             throw new AccountException("获取的用户名为空！");
         }
 
-        // 获取角色信息
-        ResultBean<Role> roleResultBean = roleService.getRoleByAccount(username);
+        // 获取角色信息，通过正则判断是否通过手机号登录
+        ResultBean<Role> roleResultBean;
+        if(username.matches(regex)){
+            roleResultBean = roleService.getRoleByPhone(username);
+        }else {
+            roleResultBean = roleService.getRoleByAccount(username);
+        }
         Role role = roleResultBean.getData();
 
         // 账号不存在
@@ -113,6 +121,6 @@ public class MyRealm extends AuthorizingRealm {
             log.info("[{}] 企业登录，获取对应信息 ---> [{}]", role.getAccount(), companyInfo.getData());
         }
 
-        return new SimpleAuthenticationInfo(role, role.getPassword(), getName());
+        return new SimpleAuthenticationInfo(role, role.getPassword(), role.getAccount());
     }
 }

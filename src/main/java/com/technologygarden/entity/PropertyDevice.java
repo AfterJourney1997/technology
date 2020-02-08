@@ -18,6 +18,7 @@ public class PropertyDevice {
     private Integer categoryId;
     private String categoryName;
     private String property;
+    private String remark;
     private DeviceProperty deviceProperty = null;
     private List<Device> deviceList = null;
 

@@ -223,4 +223,10 @@
     </where>
   </select>
 
+  <select id="countAll" resultType="java.lang.Integer">
+    select
+    count(*)
+    from room
+  </select>
+
 </mapper>

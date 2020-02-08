@@ -78,4 +78,10 @@
       </if>
     </where>
   </select>
+
+  <select id="selectNoticePublished" resultMap="BaseResultMap">
+    select *
+    from notice
+    where status = 1
+  </select>
 </mapper>

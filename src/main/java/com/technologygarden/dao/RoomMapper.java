@@ -38,4 +38,6 @@ public interface RoomMapper {
     int emptyCompanyInfoByCId(@Param("cId") Integer cId);
 
     List<Room> selectRoomDynamic(@Param("status") Integer status, @Param("companyId") Integer companyId, @Param("buildingId") Integer buildingId);
+
+    Integer countAll();
 }

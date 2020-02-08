@@ -16,6 +16,7 @@ public class Role {
     private String password;
     private Integer role;
     private Integer infoid;
+    private String phone;
     private List<Rights> rightsList = null;
     private EnterpriseInformation enterpriseInformation = null;
 

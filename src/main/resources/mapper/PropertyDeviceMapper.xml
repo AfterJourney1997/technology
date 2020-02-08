@@ -7,6 +7,7 @@
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="name" jdbcType="VARCHAR" property="categoryName" />
     <result column="property" jdbcType="VARCHAR" property="property" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from property_device
@@ -14,25 +15,26 @@
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.PropertyDevice">
     insert into property_device (id, kind, category_id, 
-      name, property)
+      name, property, remark)
     values (#{propertyDeviceId,jdbcType=INTEGER}, #{kind,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER},
-      #{propertyDeviceId,jdbcType=INTEGER}, #{property,jdbcType=VARCHAR})
+      #{propertyDeviceId,jdbcType=INTEGER}, #{property,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.PropertyDevice">
     update property_device
     set kind = #{kind,jdbcType=INTEGER},
       category_id = #{categoryId,jdbcType=INTEGER},
       name = #{propertyDeviceId,jdbcType=INTEGER},
-      property = #{property,jdbcType=VARCHAR}
+      property = #{property,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{propertyDeviceId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, kind, category_id, name, property
+    select *
     from property_device
     where id = #{propertyDeviceId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, kind, category_id, name, property
+    select *
     from property_device
   </select>
 
@@ -62,6 +64,9 @@
       <if test="property != null and property != ''">
         property,
       </if>
+      <if test="remark != null and remark != ''">
+        remark,
+      </if>
     </trim>
     <trim prefix="values(" suffix=")" suffixOverrides=",">
       <if test="kind != null">
@@ -75,6 +80,9 @@
       </if>
       <if test="property != null and property != ''">
         #{property,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark != ''">
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -98,6 +106,9 @@
       </if>
       <if test="property != null and property != ''">
         property_device.property = #{property,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null and remark != ''">
+        property_device.remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where property_device.id = #{propertyDeviceId,jdbcType=INTEGER}
@@ -152,7 +163,8 @@
       pd.kind AS pd_kind,
       pd.category_id AS pd_category_id,
       pd.NAME AS pd_name,
-      pd.property AS pd_property
+      pd.property AS pd_property,
+      pd.remark AS pd_remark
     FROM
       `property_device` pd,
       device d
@@ -166,6 +178,7 @@
     <result column="pd_category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="pd_name" jdbcType="VARCHAR" property="categoryName" />
     <result column="pd_property" jdbcType="VARCHAR" property="property" />
+    <result column="pd_remark" jdbcType="VARCHAR" property="remark" />
     <collection property="deviceList" ofType="com.technologygarden.entity.Device">
       <id column="d_id" jdbcType="INTEGER" property="deviceId"/>
       <result column="d_category_id" jdbcType="INTEGER" property="categoryId"/>

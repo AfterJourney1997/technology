@@ -24,4 +24,6 @@ public interface NoticeMapper {
     int updateNoticeByIdDynamic(Notice notice);
 
     Page<Notice> searchNoticeDynamic(@Param("title") String title, @Param("status") Integer status);
+
+    Notice selectNoticePublished();
 }

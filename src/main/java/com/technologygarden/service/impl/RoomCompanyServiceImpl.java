@@ -80,4 +80,10 @@ public class RoomCompanyServiceImpl implements RoomCompanyService {
         return new ResultBean<>(roomList);
     }
 
+    @Override
+    public ResultBean<String> getRoomNum() {
+
+        return new ResultBean<>(Integer.toString(roomMapper.countAll()));
+    }
+
 }
