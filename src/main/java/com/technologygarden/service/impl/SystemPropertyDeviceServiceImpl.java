@@ -30,10 +30,10 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
     }
 
     @Override
-    public ResultBean<PageInfo<?>> getSystemPropertyDeviceListByPage(Integer pageNum, Integer pageSize, Integer categoryId) {
+    public ResultBean<PageInfo<?>> getFatherSystemPropertyDeviceListByPage(Integer pageNum, Integer pageSize, Integer kind) {
 
         PageHelper.startPage(pageNum, pageSize);
-        Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectSystemPropertyDeviceListByPage(categoryId);
+        Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectFatherSystemPropertyDeviceByKind(kind);
         PageInfo<?> pageInfo = new PageInfo<>(propertyDeviceList);
         return new ResultBean<>(pageInfo);
     }
@@ -108,5 +108,14 @@ public class SystemPropertyDeviceServiceImpl implements SystemPropertyDeviceServ
 
         List<PropertyDevice> propertyDeviceList = propertyDeviceMapper.selectDeviceCategoryById(propertyDeviceId);
         return new ResultBean<>(propertyDeviceList);
+    }
+
+    @Override
+    public ResultBean<PageInfo<?>> searchFatherSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, String categoryName) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        Page<PropertyDevice> propertyDeviceList = propertyDeviceMapper.searchFatherSystemPropertyDeviceByPage(categoryName);
+        PageInfo<?> pageInfo = new PageInfo<>(propertyDeviceList);
+        return new ResultBean<>(pageInfo);
     }
 }

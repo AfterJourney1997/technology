@@ -202,4 +202,26 @@
     </where>
   </select>
 
+  <select id="selectFatherSystemPropertyDeviceByKind" resultMap="BaseResultMap">
+    select *
+    from property_device
+    <where>
+      and property_device.category_id = 0
+      <if test="kind != null">
+        and property_device.kind = #{kind,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+
+  <select id="searchFatherSystemPropertyDeviceByPage" resultMap="BaseResultMap">
+    select *
+    from property_device
+    <where>
+      and property_device.category_id = 0
+      <if test="categoryName != null and categoryName != ''">
+        and property_device.name like concat('%', #{categoryName,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+
 </mapper>

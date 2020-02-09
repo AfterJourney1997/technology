@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SystemPropertyDeviceService {
 
-    ResultBean<PageInfo<?>> getSystemPropertyDeviceListByPage(Integer pageNum, Integer pageSize, Integer categoryId);
+    ResultBean<PageInfo<?>> getFatherSystemPropertyDeviceListByPage(Integer pageNum, Integer pageSize, Integer kind);
 
     ResultBean<?> insertSystemPropertyDeviceDynamic(PropertyDevice propertyDevice);
 
@@ -25,4 +25,6 @@ public interface SystemPropertyDeviceService {
     ResultBean<List<PropertyDevice>> getDevicePropertyDevice();
 
     ResultBean<List<PropertyDevice>> getDeviceCategoryById(Integer propertyDeviceId);
+
+    ResultBean<PageInfo<?>> searchFatherSystemPropertyDeviceByPage(Integer pageNum, Integer pageSize, String categoryName);
 }
