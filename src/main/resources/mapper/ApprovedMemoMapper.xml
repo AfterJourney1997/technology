@@ -10,11 +10,11 @@
     <result column="comment" jdbcType="VARCHAR" property="comment" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from technology.approved_memo
+    delete from approved_memo
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ApprovedMemo">
-    insert into technology.approved_memo (Id, c_Id, c_name,
+    insert into approved_memo (Id, c_Id, c_name,
       date, result, comment
       )
     values (#{id,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, 
@@ -22,7 +22,7 @@
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ApprovedMemo">
-    update technology.approved_memo
+    update approved_memo
     set c_Id = #{cId,jdbcType=INTEGER},
       c_name = #{cName,jdbcType=VARCHAR},
       date = #{date,jdbcType=TIMESTAMP},
@@ -32,16 +32,16 @@
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select Id, c_Id, c_name, date, result, comment
-    from technology.approved_memo
+    from approved_memo
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select Id, c_Id, c_name, date, result, comment
-    from technology.approved_memo
+    from approved_memo
   </select>
   <select id="getApprovedMemoBycId" resultMap="BaseResultMap">
     select Id, c_Id, c_name, date, result, comment
-    from technology.approved_memo
+    from approved_memo
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
 </mapper>
