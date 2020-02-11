@@ -1,11 +1,9 @@
 package com.technologygarden.controller;
 
 import com.technologygarden.entity.Notice;
+import com.technologygarden.entity.PolicyRelated;
 import com.technologygarden.entity.ResultBean.ResultBean;
-import com.technologygarden.service.EnterpriseApprovalService;
-import com.technologygarden.service.NoticeService;
-import com.technologygarden.service.RoleService;
-import com.technologygarden.service.RoomCompanyService;
+import com.technologygarden.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -24,13 +24,15 @@ public class AdminHomeController {
     private final NoticeService noticeService;
     private final RoleService roleService;
     private final RoomCompanyService roomCompanyService;
+    private final ServicePolicyRelatedService servicePolicyRelatedService;
 
     @Autowired
-    public AdminHomeController(EnterpriseApprovalService enterpriseApprovalService, NoticeService noticeService, RoleService roleService, RoomCompanyService roomCompanyService) {
+    public AdminHomeController(EnterpriseApprovalService enterpriseApprovalService, NoticeService noticeService, RoleService roleService, RoomCompanyService roomCompanyService, ServicePolicyRelatedService servicePolicyRelatedService) {
         this.enterpriseApprovalService = enterpriseApprovalService;
         this.noticeService = noticeService;
         this.roleService = roleService;
         this.roomCompanyService = roomCompanyService;
+        this.servicePolicyRelatedService = servicePolicyRelatedService;
     }
 
     @RequestMapping(value = "/sidebar/noApprovalCompany", method = RequestMethod.GET)
@@ -42,10 +44,18 @@ public class AdminHomeController {
     }
 
     @RequestMapping(value = "/notice", method = RequestMethod.GET)
-    @ApiOperation(value = "获取当前为发布状态的公告", notes = "参数包括：无")
-    public ResultBean<Notice> getNoticePublished(){
+    @ApiOperation(value = "获取全部公告（status为1的是当前发布公告，0是历史公告）", notes = "参数包括：无")
+    public ResultBean<List<Notice>> getAllNotice(){
 
-        return noticeService.getNoticePublished();
+        return noticeService.getAllNotice();
+
+    }
+
+    @RequestMapping(value = "/policy", method = RequestMethod.GET)
+    @ApiOperation(value = "获取全部相关政策", notes = "参数包括：无")
+    public ResultBean<List<PolicyRelated>> getPolicyRelatedList(){
+
+        return servicePolicyRelatedService.getAllPolicyRelated();
 
     }
 

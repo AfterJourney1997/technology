@@ -5,6 +5,8 @@ import com.technologygarden.entity.PolicyRelated;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface ServicePolicyRelatedService {
 
     ResultBean<PageInfo<?>> getPolicyRelatedListByPage(Integer pageNum, Integer pageSize);
@@ -16,4 +18,6 @@ public interface ServicePolicyRelatedService {
     ResultBean<?> updatePolicyRelatedById(MultipartFile file, PolicyRelated policyRelated);
 
     ResultBean<PageInfo<?>> searchPolicyRelatedListByPage(Integer pageNum, Integer pageSize, Integer level, String title);
+
+    ResultBean<List<PolicyRelated>> getAllPolicyRelated();
 }

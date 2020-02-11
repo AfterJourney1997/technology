@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.technologygarden.entity.Notice;
 import com.technologygarden.entity.ResultBean.ResultBean;
 
+import java.util.List;
+
 public interface NoticeService {
 
     ResultBean<PageInfo<?>> getNoticeListByPage(Integer pageNum, Integer pageSize);
@@ -17,4 +19,6 @@ public interface NoticeService {
     ResultBean<PageInfo<?>> searchNoticeByPage(Integer pageNum, Integer pageSize, String title, Integer status);
 
     ResultBean<Notice> getNoticePublished();
+
+    ResultBean<List<Notice>> getAllNotice();
 }

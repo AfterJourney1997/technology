@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Service("servicePolicyRelatedService")
@@ -123,5 +124,10 @@ public class ServicePolicyRelatedServiceImpl implements ServicePolicyRelatedServ
         PageInfo<?> pageInfo = new PageInfo<>(policyRelatedList);
         return new ResultBean<>(pageInfo);
 
+    }
+
+    @Override
+    public ResultBean<List<PolicyRelated>> getAllPolicyRelated() {
+        return new ResultBean<>(policyRelatedMapper.selectAll());
     }
 }

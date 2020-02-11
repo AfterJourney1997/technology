@@ -10,6 +10,8 @@ import com.technologygarden.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
 
@@ -72,5 +74,10 @@ public class NoticeServiceImpl implements NoticeService {
 
         Notice notice = noticeMapper.selectNoticePublished();
         return new ResultBean<>(notice);
+    }
+
+    @Override
+    public ResultBean<List<Notice>> getAllNotice() {
+        return new ResultBean<>(noticeMapper.selectAll());
     }
 }
