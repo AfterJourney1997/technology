@@ -41,5 +41,5 @@ logging:
 
 file:
   storagePath: /opt/technology/file/
-  url: http://39.96.43.60:8888/image/
+  url: http://121.36.90.221:8888/image/
 
