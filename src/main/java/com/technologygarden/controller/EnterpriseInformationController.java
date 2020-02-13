@@ -8,9 +8,11 @@ import com.technologygarden.entity.JobTitle;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.DegreeService;
 import com.technologygarden.service.EnterpriseInformationService;
+import com.technologygarden.service.RoleService;
 import com.technologygarden.service.SystemJobTitleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,14 +30,16 @@ public class EnterpriseInformationController {
     private final EnterpriseInformationService enterpriseInformationService;
     private final DegreeService degreeService;
     private final SystemJobTitleService systemJobTitleService;
+    private final RoleService roleService;
     private final InputDescription inputDescription;
 
 
     @Autowired
-    public EnterpriseInformationController(EnterpriseInformationService enterpriseInformationService, DegreeService degreeService, SystemJobTitleService systemJobTitleService, InputDescription inputDescription) {
+    public EnterpriseInformationController(EnterpriseInformationService enterpriseInformationService, DegreeService degreeService, SystemJobTitleService systemJobTitleService, RoleService roleService, InputDescription inputDescription) {
         this.enterpriseInformationService = enterpriseInformationService;
         this.degreeService = degreeService;
         this.systemJobTitleService = systemJobTitleService;
+        this.roleService = roleService;
         this.inputDescription = inputDescription;
     }
     // 企业重新申请接口
@@ -85,10 +89,18 @@ public class EnterpriseInformationController {
         return systemJobTitleService.getAllSystemJobTitle();
 
     }
-
+    //企业通过审核后可访问的:
+    //企业信息
     @RequestMapping(value = "/information", method = RequestMethod.GET)
     @ApiOperation(value = " ：获取企业信息对象EnterpriseInformation", notes = "参数包括：当前登录的对象的infoid")
     public ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer infoid) throws IOException {
         return enterpriseInformationService.getEnterpriseInformation(infoid);
+    }
+
+    //修改企业密码
+    @RequestMapping(value = "/information/statistics", method = RequestMethod.PUT)
+    @ApiOperation(value = "修改企业密码Password", notes = "参数包括：当前企业id，新的密码")
+    public ResultBean updateEnterprisePassword(@NonNull Integer cId, @NonNull String newPassword) {
+        return roleService.updateEnterprisePassword(cId, newPassword);
     }
 }
