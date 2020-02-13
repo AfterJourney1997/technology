@@ -59,8 +59,8 @@ public class EnterpriseApprovalController {
 
     //企业审批操作
     @RequestMapping(value = "/operation", method = RequestMethod.GET)
-    @ApiOperation(value = "企业审批的操作", notes = "参数包括：企业的cId,state由前端指定值：同意传2，拒绝传3,审批备注comment")
-    public ResultBean operationEnterpriseAccount(@NonNull Integer cId, @NonNull Integer state, @NonNull String comment) {
-        return enterpriseApprovalService.operationEnterpriseAccount(cId, state, comment);
+    @ApiOperation(value = "企业审批的操作", notes = "参数包括：企业的cId,state由前端指定值：同意传2，拒绝传3,审批备注comment,审批人approver")
+    public ResultBean operationEnterpriseAccount(@NonNull Integer cId, @NonNull Integer state, @NonNull String comment,@NonNull String approver) {
+        return enterpriseApprovalService.operationEnterpriseAccount(cId, state, comment,approver);
     }
 }

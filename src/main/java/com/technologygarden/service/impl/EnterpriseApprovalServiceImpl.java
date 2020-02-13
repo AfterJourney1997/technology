@@ -130,7 +130,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state, String comment) {
+    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state, String comment,String approver) {
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
         enterpriseInformation.setCStatus(state);
         enterpriseInformation.setComment(comment);
@@ -142,6 +142,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         approvedMemo.setResult(state);
         approvedMemo.setComment(comment);
         approvedMemo.setDate(new Date());
+        approvedMemo.setApprover(approver);
         approvedMemoMapper.insert(approvedMemo);
         return new ResultBean<>(enterpriseInformation);
     }

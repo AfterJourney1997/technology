@@ -8,6 +8,7 @@
     <result column="date" jdbcType="TIMESTAMP" property="date" />
     <result column="result" jdbcType="INTEGER" property="result" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="approver" jdbcType="VARCHAR" property="approver" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from approved_memo
@@ -15,10 +16,11 @@
   </delete>
   <insert id="insert" parameterType="com.technologygarden.entity.ApprovedMemo">
     insert into approved_memo (Id, c_Id, c_name,
-      date, result, comment
+      date, result, comment ,approver
       )
     values (#{id,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, 
       #{date,jdbcType=TIMESTAMP}, #{result,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}
+      ,#{approver,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.technologygarden.entity.ApprovedMemo">
@@ -27,20 +29,21 @@
       c_name = #{cName,jdbcType=VARCHAR},
       date = #{date,jdbcType=TIMESTAMP},
       result = #{result,jdbcType=INTEGER},
-      comment = #{comment,jdbcType=VARCHAR}
+      comment = #{comment,jdbcType=VARCHAR},
+      approver = #{approver,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select Id, c_Id, c_name, date, result, comment
+    select Id, c_Id, c_name, date, result, comment, approver
     from approved_memo
     where Id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select Id, c_Id, c_name, date, result, comment
+    select Id, c_Id, c_name, date, result, comment, approver
     from approved_memo
   </select>
   <select id="getApprovedMemoBycId" resultMap="BaseResultMap">
-    select Id, c_Id, c_name, date, result, comment
+    select Id, c_Id, c_name, date, result, comment, approver
     from approved_memo
     where c_Id = #{cId,jdbcType=INTEGER}
   </select>
