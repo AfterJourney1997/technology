@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -42,6 +43,14 @@ public class EnterpriseInformationController {
         this.roleService = roleService;
         this.inputDescription = inputDescription;
     }
+
+    // 企业主要产品图片提交接口
+    @RequestMapping(value = "/company/fileProduct", method = RequestMethod.POST)
+    @ApiOperation(value = "企业产品图片提交接口", notes = "参数包括：当前登录对象的infoid,blFile")
+    public ResultBean<?> updateByFileProduct(Integer infoid,MultipartFile[] blFile) throws IOException {
+        return enterpriseInformationService.updateByFileProduct(infoid,blFile);
+    }
+
     // 企业重新申请接口
     @RequestMapping(value = "/company/anew", method = RequestMethod.GET)
     @ApiOperation(value = "企业被拒绝后重新申请接口", notes = "参数包括：EnterpriseInformation对象包含当前登录对象的infoid")
@@ -100,7 +109,9 @@ public class EnterpriseInformationController {
     //修改企业密码
     @RequestMapping(value = "/information/statistics", method = RequestMethod.PUT)
     @ApiOperation(value = "修改企业密码Password", notes = "参数包括：当前企业id，新的密码")
-    public ResultBean updateEnterprisePassword(@NonNull Integer cId, @NonNull String newPassword) {
+    public ResultBean updateEnterprisePassword(@RequestBody Map<String, String> map) {
+        int cId= Integer.parseInt( map.get("cId"));
+        String newPassword = map.get("newPassword");
         return roleService.updateEnterprisePassword(cId, newPassword);
     }
 }

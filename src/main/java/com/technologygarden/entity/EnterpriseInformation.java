@@ -33,6 +33,7 @@ public class EnterpriseInformation {
     private String cInformation;
     private int cStatus;
     private String comment;//审批备注
+    private String fileProduct;//主要产品图片
 
     private List<String> filePathList;//存放所有的文件路径
     private List<String> filePathName;//存放所有的文件名字

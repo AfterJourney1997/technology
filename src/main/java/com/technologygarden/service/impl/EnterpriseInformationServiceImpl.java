@@ -65,6 +65,24 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
         System.out.println(enterpriseInformation);
         return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
     }
+    //上传主要产品图片
+    @Override
+    public ResultBean<?> updateByFileProduct(Integer infoid, MultipartFile[] blFile) throws IOException {
+        String[] fileNameList = new String[blFile.length];
+        String UUName;
+        int i = 0;
+        for (MultipartFile file : blFile) {
+            UUName = FilUploadUtils.saveFile(file);
+            fileNameList[i] = UUName;
+            i++;
+        }
+        String fileName = ArrayUtil.join(fileNameList, "/");//保存图片名
+        EnterpriseInformation enterpriseInformation=new EnterpriseInformation();
+        enterpriseInformation.setCId(infoid);
+        enterpriseInformation.setFileName(fileName);//获取文件名
+        return new ResultBean<>(enterpriseInformationMapper.updateByFileProduct(enterpriseInformation));
+    }
+
     //企业被拒绝后重新申请
     @Override
     public ResultBean<?> companyAnew(Integer infoid) {
