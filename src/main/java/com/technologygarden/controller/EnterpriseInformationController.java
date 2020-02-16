@@ -54,7 +54,7 @@ public class EnterpriseInformationController {
     // 企业重新申请接口
     @RequestMapping(value = "/company/anew", method = RequestMethod.GET)
     @ApiOperation(value = "企业被拒绝后重新申请接口", notes = "参数包括：EnterpriseInformation对象包含当前登录对象的infoid")
-    public ResultBean<?> companyAnew(Integer infoid) {
+    public ResultBean<?> companyAnew(Integer infoid) throws IOException {
         return enterpriseInformationService.companyAnew(infoid);
     }
     // 获取企业入住申请备注

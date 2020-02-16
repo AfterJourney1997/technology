@@ -16,7 +16,7 @@ public interface EnterpriseInformationService {
 
     ResultBean<?> updateByFileProduct(Integer infoid,MultipartFile[] blFile) throws IOException;
 
-    ResultBean<?> companyAnew(Integer infoid);
+    ResultBean<?> companyAnew(Integer infoid) throws IOException;
 
     ResultBean<EnterpriseInformation> getEnterpriseInformation(Integer cId) throws IOException;
 

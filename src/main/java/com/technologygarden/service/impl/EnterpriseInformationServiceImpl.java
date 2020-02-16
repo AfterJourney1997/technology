@@ -6,13 +6,16 @@ import com.technologygarden.dao.EnterpriseInformationMapper;
 import com.technologygarden.dao.JobTitleMapper;
 import com.technologygarden.dao.LegalPersonMapper;
 import com.technologygarden.entity.EnterpriseInformation;
+import com.technologygarden.entity.FileProduct;
 import com.technologygarden.entity.LegalPerson;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.util.FilUploadUtils;
 import com.technologygarden.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,6 +28,8 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
     private final LegalPersonMapper legalPersonMapper;
     private final DegreeMapper degreeMapper;
     private final JobTitleMapper jobTitleMapper;
+    @Value("${file.url}")
+    private String fileUrl;
 
     @Autowired
     public EnterpriseInformationServiceImpl(EnterpriseInformationMapper enterpriseInformationMapper, LegalPersonMapper legalPersonMapper, DegreeMapper degreeMapper, JobTitleMapper jobTitleMapper) {
@@ -68,27 +73,75 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
     //上传主要产品图片
     @Override
     public ResultBean<?> updateByFileProduct(Integer infoid, MultipartFile[] blFile) throws IOException {
-        String[] fileNameList = new String[blFile.length];
-        String UUName;
-        int i = 0;
-        for (MultipartFile file : blFile) {
-            UUName = FilUploadUtils.saveFile(file);
-            fileNameList[i] = UUName;
-            i++;
+        FileProduct fileProduct=new FileProduct();
+        if(blFile.length>0){
+            String[] fileNameList = new String[blFile.length];
+            List<String> fileProductName=new ArrayList<>();
+            String UUName;
+            int i = 0;
+            for (MultipartFile file : blFile) {
+                UUName = FilUploadUtils.saveFile(file);
+                fileNameList[i] = UUName;
+                fileProductName.add(fileUrl+UUName);
+                i++;
+            }
+            String fileName = ArrayUtil.join(fileNameList, "/");//保存图片名
+            EnterpriseInformation enterpriseInformation=enterpriseInformationMapper.selectByPrimaryKey(infoid);
+            if(enterpriseInformation.getFileProduct()!=null){
+                //如果有之前上传的，先删除
+                //删除企业信息表
+                String fileNameString = enterpriseInformation.getFileProduct();
+                if (!StringUtils.isEmpty(fileNameString)) {
+                    String[] fileNameArray = fileNameString.split("/");
+                    for (String s : fileNameArray) {
+                        FilUploadUtils.deleteFile(s);
+                    }
+                }
+            }
+            enterpriseInformation.setFileProduct(fileName);//获取文件名
+            enterpriseInformationMapper.updateByFileProduct(enterpriseInformation);
+            fileProduct.setData(fileProductName);
+            fileProduct.setErrno(0);
+        }else{
+            fileProduct.setErrno(-1);
         }
-        String fileName = ArrayUtil.join(fileNameList, "/");//保存图片名
-        EnterpriseInformation enterpriseInformation=new EnterpriseInformation();
-        enterpriseInformation.setCId(infoid);
-        enterpriseInformation.setFileName(fileName);//获取文件名
-        return new ResultBean<>(enterpriseInformationMapper.updateByFileProduct(enterpriseInformation));
+        return new ResultBean<>(fileProduct);
     }
 
     //企业被拒绝后重新申请
     @Override
-    public ResultBean<?> companyAnew(Integer infoid) {
+    public ResultBean<?> companyAnew(Integer infoid) throws IOException {
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(infoid);
-        enterpriseInformation.setCStatus(0);
-        return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(enterpriseInformation));
+        //删除原来的企业附件
+        if(enterpriseInformation.getFileName()!=null){
+            String fileNameString = enterpriseInformation.getFileName();
+            if (!StringUtils.isEmpty(fileNameString)) {
+                String[] fileNameArray = fileNameString.split("/");
+                for (String s : fileNameArray) {
+                    FilUploadUtils.deleteFile(s);
+                }
+            }
+        }
+        //删除原来的企业产品文件
+        if(enterpriseInformation.getFileProduct()!=null){
+            String fileNameString = enterpriseInformation.getFileProduct();
+            if (!StringUtils.isEmpty(fileNameString)) {
+                String[] fileNameArray = fileNameString.split("/");
+                for (String s : fileNameArray) {
+                    FilUploadUtils.deleteFile(s);
+                }
+            }
+        }
+        //删除原来的法人
+        if(enterpriseInformation.getCLegalperson()!=null){
+            legalPersonMapper.deleteByPrimaryKey(enterpriseInformation.getCLegalperson());
+        }
+        EnterpriseInformation newEnterprise=new EnterpriseInformation();
+        newEnterprise.setCStatus(0);
+        newEnterprise.setCId(enterpriseInformation.getCId());
+        newEnterprise.setCName(enterpriseInformation.getCName());
+        enterpriseInformationMapper.updateByFileProduct(newEnterprise);
+        return new ResultBean<>(enterpriseInformationMapper.updateByPrimaryKey(newEnterprise));
     }
 
     @Override
