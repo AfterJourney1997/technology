@@ -266,9 +266,16 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         legalPersonMapper.deleteByPrimaryKey(enterpriseInformation.getCLegalperson());
 
 
-        //删除企业信息表
+        //删除企业信息表（删除企业附件和产品文件）
         String fileNameString = enterpriseInformation.getFileName();
+        String fileProduct = enterpriseInformation.getFileProduct();
         if (!StringUtils.isEmpty(fileNameString)) {
+            String[] fileNameArray = fileNameString.split("/");
+            for (String s : fileNameArray) {
+                FilUploadUtils.deleteFile(s);
+            }
+        }
+        if (!StringUtils.isEmpty(fileProduct)) {
             String[] fileNameArray = fileNameString.split("/");
             for (String s : fileNameArray) {
                 FilUploadUtils.deleteFile(s);

@@ -149,6 +149,7 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
 
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(info);
         String fileNameString = enterpriseInformation.getFileName();
+        String fileProductString = enterpriseInformation.getFileProduct();
 
         if (!StringUtil.empty(fileNameString)) {
             String fileNameArray[] = fileNameString.split("/");
@@ -160,6 +161,18 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
                 fileNameList.add(fileNameArray[i]);//存放带UUID的图片名
                 enterpriseInformation.setFilePathName(fileNameList);
                 enterpriseInformation.setFilePathList(filePathList);
+            }
+        }
+
+        if (!StringUtil.empty(fileProductString)) {
+            String fileNameArray[] = fileProductString.split("/");
+            List<String> fileProductName = new ArrayList<>();
+            List<String> fileProductPath = new ArrayList<>();
+            for (int i = 0; i < fileNameArray.length; i++) {
+                fileProductPath.add(FilUploadUtils.getImageShowPath() + fileNameArray[i]);
+                fileProductName.add(fileNameArray[i]);//存放带UUID的图片名
+                enterpriseInformation.setFileProductName(fileProductName);
+                enterpriseInformation.setFileProductPath(fileProductPath);
             }
         }
 

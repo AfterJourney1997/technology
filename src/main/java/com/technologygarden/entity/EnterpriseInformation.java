@@ -38,6 +38,7 @@ public class EnterpriseInformation {
     private List<String> filePathList;//存放所有的文件路径
     private List<String> filePathName;//存放所有的文件名字
     private List<String> fileProductName;//存放产品所有的文件名字
+    private List<String> fileProductPath;//存放产品所有的文件地址
     private Integer infoid;//当前登录对象的infoid
     private LegalPerson legalPerson = null;//存放法人信息
 
