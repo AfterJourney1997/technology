@@ -8,6 +8,7 @@ import com.technologygarden.dao.LegalPersonMapper;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.FileProduct;
 import com.technologygarden.entity.LegalPerson;
+import com.technologygarden.entity.ResultBean.FileProductResultBean;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.EnterpriseInformationService;
 import com.technologygarden.util.FilUploadUtils;
@@ -72,17 +73,17 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
     }
     //上传主要产品图片
     @Override
-    public ResultBean<?> updateByFileProduct(Integer infoid, MultipartFile[] blFile) throws IOException {
-        FileProduct fileProduct=new FileProduct();
+    public FileProductResultBean updateByFileProduct(Integer infoid, MultipartFile[] blFile) throws IOException {
+        Integer errno;
+        List<String> fileProduct=new ArrayList<>();
         if(blFile.length>0){
             String[] fileNameList = new String[blFile.length];
-            List<String> fileProductName=new ArrayList<>();
             String UUName;
             int i = 0;
             for (MultipartFile file : blFile) {
                 UUName = FilUploadUtils.saveFile(file);
                 fileNameList[i] = UUName;
-                fileProductName.add(fileUrl+UUName);
+                fileProduct.add(fileUrl+UUName);
                 i++;
             }
             String fileName = ArrayUtil.join(fileNameList, "/");//保存图片名
@@ -100,12 +101,11 @@ public class EnterpriseInformationServiceImpl implements EnterpriseInformationSe
             }
             enterpriseInformation.setFileProduct(fileName);//获取文件名
             enterpriseInformationMapper.updateByFileProduct(enterpriseInformation);
-            fileProduct.setData(fileProductName);
-            fileProduct.setErrno(0);
+            errno=0;
         }else{
-            fileProduct.setErrno(-1);
+            errno=-1;
         }
-        return new ResultBean<>(fileProduct);
+        return new FileProductResultBean(errno,fileProduct);
     }
 
     //企业被拒绝后重新申请

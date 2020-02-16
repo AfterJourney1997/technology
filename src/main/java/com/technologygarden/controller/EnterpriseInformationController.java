@@ -5,6 +5,7 @@ import com.technologygarden.entity.Degree;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.InputDescription;
 import com.technologygarden.entity.JobTitle;
+import com.technologygarden.entity.ResultBean.FileProductResultBean;
 import com.technologygarden.entity.ResultBean.ResultBean;
 import com.technologygarden.service.DegreeService;
 import com.technologygarden.service.EnterpriseInformationService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +49,7 @@ public class EnterpriseInformationController {
     // 企业主要产品图片提交接口
     @RequestMapping(value = "/company/fileProduct", method = RequestMethod.POST)
     @ApiOperation(value = "企业产品图片提交接口", notes = "参数包括：当前登录对象的infoid,blFile")
-    public ResultBean<?> updateByFileProduct(Integer infoid,MultipartFile[] blFile) throws IOException {
+    public FileProductResultBean updateByFileProduct(Integer infoid, MultipartFile[] blFile) throws IOException {
         return enterpriseInformationService.updateByFileProduct(infoid,blFile);
     }
 
