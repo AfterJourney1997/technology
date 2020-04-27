@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.technologygarden.entity.EnterpriseInformation;
 import com.technologygarden.entity.LegalPerson;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public interface EnterpriseInformationMapper {
     Page<EnterpriseInformation> searchEnterpriseStatistics(String search);
 
     int updateByPrimaryKey(EnterpriseInformation record);
+
+    int updateByFileProduct(EnterpriseInformation record);
 
     int insertReturnPrimaryKey(EnterpriseInformation enterpriseInformation);
 

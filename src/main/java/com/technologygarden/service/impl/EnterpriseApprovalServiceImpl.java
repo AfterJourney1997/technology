@@ -130,7 +130,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
     }
 
     @Override
-    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state, String comment) {
+    public ResultBean<?> operationEnterpriseAccount(Integer cId, Integer state, String comment,String approver) {
         EnterpriseInformation enterpriseInformation = enterpriseInformationMapper.selectByPrimaryKey(cId);
         enterpriseInformation.setCStatus(state);
         enterpriseInformation.setComment(comment);
@@ -142,6 +142,7 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         approvedMemo.setResult(state);
         approvedMemo.setComment(comment);
         approvedMemo.setDate(new Date());
+        approvedMemo.setApprover(approver);
         approvedMemoMapper.insert(approvedMemo);
         return new ResultBean<>(enterpriseInformation);
     }
@@ -265,9 +266,16 @@ public class EnterpriseApprovalServiceImpl implements EnterpriseApprovalService 
         legalPersonMapper.deleteByPrimaryKey(enterpriseInformation.getCLegalperson());
 
 
-        //删除企业信息表
+        //删除企业信息表（删除企业附件和产品文件）
         String fileNameString = enterpriseInformation.getFileName();
+        String fileProduct = enterpriseInformation.getFileProduct();
         if (!StringUtils.isEmpty(fileNameString)) {
+            String[] fileNameArray = fileNameString.split("/");
+            for (String s : fileNameArray) {
+                FilUploadUtils.deleteFile(s);
+            }
+        }
+        if (!StringUtils.isEmpty(fileProduct)) {
             String[] fileNameArray = fileNameString.split("/");
             for (String s : fileNameArray) {
                 FilUploadUtils.deleteFile(s);

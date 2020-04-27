@@ -8,12 +8,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -39,7 +37,9 @@ public class CompanyStatisticsController {
     //修改企业密码
     @RequestMapping(value = "/statistics", method = RequestMethod.PUT)
     @ApiOperation(value = "修改企业密码Password", notes = "参数包括：当前企业id，新的密码")
-    public ResultBean updateEnterprisePassword(@NonNull Integer cId, @NonNull String newPassword) {
+    public ResultBean updateEnterprisePassword(@RequestBody Map<String, String> map) {
+        int cId= Integer.parseInt( map.get("cId"));
+        String newPassword = map.get("newPassword");
         return roleService.updateEnterprisePassword(cId, newPassword);
     }
 

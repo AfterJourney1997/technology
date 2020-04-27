@@ -17,4 +17,5 @@ public class ApprovedMemo {
     private Date date;
     private Integer result;
     private String comment;
+    private String approver;//审批人
 }
