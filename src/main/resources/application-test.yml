@@ -4,9 +4,9 @@ server:
 # 数据库连接
 spring:
   datasource:
-    url: jdbc:mysql://120.79.31.239:3306/technologytest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    url: jdbc:mysql://139.9.137.114:3306/technologytest?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: root
-    password: yunb3306Mysql...
+    password: Root123@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     # Hikari连接池配置
