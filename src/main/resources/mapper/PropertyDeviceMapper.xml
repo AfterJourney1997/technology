@@ -116,7 +116,7 @@
 
   <update id="updateSystemPropertyDeviceByCategoryId" parameterType="com.technologygarden.entity.PropertyDevice">
     update property_device
-    set property_device.name = #{propertyDeviceId,jdbcType=INTEGER}
+    set property_device.name = #{categoryName,jdbcType=VARCHAR}
     where property_device.category_id = #{propertyDeviceId,jdbcType=INTEGER}
   </update>
 
